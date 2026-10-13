@@ -8,6 +8,7 @@ from . import store
 from .agent import run, markdown
 from .models import TaskRequest
 from .tools import normalize_repository
+from .provider import settings, ModelService, ModelError
 
 pool = ThreadPoolExecutor(max_workers=2)
 
@@ -54,8 +55,11 @@ def create(request: TaskRequest):
         raise HTTPException(422,str(error))
     request.repositories = list(dict.fromkeys(request.repositories))
     if request.mode == 'deepseek':
-        import os
-        if not os.getenv('DEEPSEEK_API_KEY'):
+        try:
+            configured = bool(settings().key)
+        except ModelError as error:
+            raise HTTPException(422, str(error))
+        if not configured:
             raise HTTPException(422,'未配置 DeepSeek，先使用演示或 GitHub 采集模式')
     ident = store.create(request.model_dump())
     pool.submit(run,ident,request)
@@ -110,3 +114,20 @@ def export(ident: str, format: str = 'markdown'):
     text = markdown(report) if format == 'markdown' else json.dumps(report,ensure_ascii=False,indent=2)
     ext = 'md' if format == 'markdown' else 'json'
     return Response(text,media_type='text/plain; charset=utf-8',headers={'Content-Disposition':f'attachment; filename="reposcout-{ident}.{ext}"'})
+
+
+@app.get('/api/model/config')
+def model_config():
+    try:
+        config = settings()
+        return {'provider': 'DeepSeek', 'configured': bool(config.key), 'model': config.model}
+    except ModelError as error:
+        raise HTTPException(422, str(error))
+
+
+@app.post('/api/model/test')
+def model_test():
+    try:
+        return ModelService().test_connection()
+    except ModelError as error:
+        raise HTTPException(422, str(error))

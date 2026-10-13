@@ -18,3 +18,7 @@
 ## 证据缺口与补查回归
 
 22 项测试通过（新增 7 项），包含五次离线模拟模型响应的完整补查闭环；JavaScript 语法检查通过。浏览器实际运行演示任务，显示 1 个证据缺口、0/2 补查轮次；Markdown 导出包含缺口记录。截图：images/evidence-gaps.png。真实模型尚未调用。
+
+## 模型接入层回归
+
+29 项测试通过；页面显示未配置、禁用测试按钮，刷新配置正常。连接测试和重试采用 HTTP MockTransport 验证，没有真实模型请求。截图 images/model-settings.png。.env 已被 git check-ignore 确认忽略。

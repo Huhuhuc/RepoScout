@@ -110,12 +110,13 @@ class ResearchTests(unittest.TestCase):
         responses = []
         for index, (name, args) in enumerate(script):
             response = Mock()
+            response.status_code = 200
             response.json.return_value = {'choices': [{'message': {'role': 'assistant', 'content': None,
                 'tool_calls': [{'id': str(index), 'type': 'function', 'function': {'name': name, 'arguments': json.dumps(args)}}]}}]}
             responses.append(response)
         client = Mock()
-        client.post.side_effect = responses
-        with patch.dict('os.environ', {'DEEPSEEK_API_KEY': 'test-only-not-a-real-key'}), patch('reposcout.agent.httpx.Client') as factory:
+        client.request.side_effect = responses
+        with patch.dict('os.environ', {'DEEPSEEK_API_KEY': 'test-only-not-a-real-key'}), patch('reposcout.provider.httpx.Client') as factory:
             factory.return_value.__enter__.return_value = client
             report = deepseek_agent(r)
         self.assertEqual(report['metrics']['model_calls'], 5)

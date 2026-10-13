@@ -30,14 +30,20 @@ python -m venv .venv
 
 GitHub 模式建议输入明确仓库，例如 `langchain-ai/local-deep-researcher`。无候选时直接将问题用作 GitHub 查询；复杂中文查询质量有限。实际模型模式尚未调用验证。
 
-可选配置在启动前设置环境变量：
+## 配置 DeepSeek
 
-```powershell
-$env:DEEPSEEK_API_KEY = '<在本机填写>'
-$env:GITHUB_TOKEN = '<可选的 GitHub 公共资料访问令牌>'
+复制 `.env.example` 为 `.env`，在本地填写：
+
+```dotenv
+DEEPSEEK_API_KEY=你的密钥
+DEEPSEEK_MODEL=deepseek-chat
 ```
 
-密钥不传给浏览器，也不写入任务。`.env.example` 是说明模板，当前不自动读取 `.env`。
+运行服务后，在页面点击“刷新配置”，再点“测试连接”。配置每次从本地读取，无需重启；已开始的调查继续使用启动时的配置。系统环境变量优先于 `.env`。不要提交真实密钥；`.env` 已被 Git 忽略。可用模型名称以你账户的模型列表为准，测试会提示所选模型是否存在。
+
+测试连接仅请求官方 `/models`，不会生成回答；认证成功不代表 Agent 工具链已完成真实验收。选择 DeepSeek 调查模式才会发送任务内容并生成回答，产生模型调用费用。页面和状态接口不返回密钥。
+
+可选的 `GITHUB_TOKEN` 仍通过进程环境变量配置。模型服务地址固定为官方 DeepSeek，暂不支持自定义网关。
 
 ## 当前实现
 
