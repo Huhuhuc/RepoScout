@@ -41,3 +41,11 @@ class RepositoryArgs(BaseModel):
 
 class SearchArgs(BaseModel):
     query: str = Field(min_length=1, max_length=200)
+
+
+class DocumentArgs(RepositoryArgs):
+    path: str = Field(min_length=1, max_length=300)
+
+
+class IssueArgs(RepositoryArgs):
+    query: str = Field(default='', max_length=200)

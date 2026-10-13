@@ -1,0 +1,205 @@
+{
+  "task_id": "3072edb69ebe4c8e9dce73a90d759665",
+  "metrics": {
+    "tool_calls": 8,
+    "http_requests": 19
+  },
+  "sources": [
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "readme",
+      "title": "README",
+      "url": "https://github.com/langchain-ai/local-deep-researcher/blob/03537326ffa0dd90c9702bece2f3aeba5d84162a/README.md",
+      "ref": "03537326ffa0dd90c9702bece2f3aeba5d84162a",
+      "fetched_at": "2026-10-13T02:53:09.651106+00:00",
+      "hash": "92e6559fa780f8efe83108b4a24c31572b893331c2f54dddc7ebb25e84bc59f0"
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "issue",
+      "title": "memory",
+      "url": "https://github.com/langchain-ai/local-deep-researcher/issues/138",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:18.815647+00:00",
+      "hash": "14919c7c798150a665641d89ede75bad88b5182f413cd528cfe5986c2364a3a2"
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "issue",
+      "title": "Support Webz.io News Search as a search backend",
+      "url": "https://github.com/langchain-ai/local-deep-researcher/issues/140",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:18.825346+00:00",
+      "hash": "9ab40769025fcc1a315af4d3d0fc213f04635427f22b35be82952ec9e9d009b8"
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "issue",
+      "title": "langchain + xinference  llm.with_structured_output    Probabilistic error reporting occurs under high concurrency",
+      "url": "https://github.com/langchain-ai/local-deep-researcher/issues/107",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:18.834577+00:00",
+      "hash": "be5f7c43787d9bf5c5a96b063148d65180d0ffa67cf20e8d80237c6d1d1f9c08"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "readme",
+      "title": "README",
+      "url": "https://github.com/assafelovic/gpt-researcher/blob/3582a6841fe7dc801e2a34e34ee408641aea9bce/README.md",
+      "ref": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "fetched_at": "2026-10-13T02:53:25.536703+00:00",
+      "hash": "a43c071ae3d19ae35631ae325742b973a8a925ecc3669563c67ed759398ec0e2"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "documentation",
+      "title": "docs/README.md",
+      "url": "https://github.com/assafelovic/gpt-researcher/blob/3582a6841fe7dc801e2a34e34ee408641aea9bce/docs/README.md",
+      "ref": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "fetched_at": "2026-10-13T02:53:37.558076+00:00",
+      "hash": "73187788ea171664312c4344ae8459f9d1a6b29033ca0d5bc860d4ede860e67e"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "documentation",
+      "title": "docs/docs/faq.md",
+      "url": "https://github.com/assafelovic/gpt-researcher/blob/3582a6841fe7dc801e2a34e34ee408641aea9bce/docs/docs/faq.md",
+      "ref": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "fetched_at": "2026-10-13T02:53:39.936097+00:00",
+      "hash": "6dcb9a67dabf74ecf9abfbe4da50c5141d339696eefe351e0038e47e96a220c0"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "documentation",
+      "title": "docs/docs/roadmap.md",
+      "url": "https://github.com/assafelovic/gpt-researcher/blob/3582a6841fe7dc801e2a34e34ee408641aea9bce/docs/docs/roadmap.md",
+      "ref": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "fetched_at": "2026-10-13T02:53:42.268997+00:00",
+      "hash": "1a584d2d241ae72f433efb36443dfc2aa01e8224e2db463cff88a8427fc9fba5"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "release",
+      "title": "v3.7.0",
+      "url": "https://github.com/assafelovic/gpt-researcher/releases/tag/v3.7.0",
+      "ref": "v3.7.0",
+      "fetched_at": "2026-10-13T02:53:44.654793+00:00",
+      "hash": "fab872028f31869b7ee243038e8c5d20d3787108491fdf69e68f476f0ebe02a1"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "release",
+      "title": "v3.6.1",
+      "url": "https://github.com/assafelovic/gpt-researcher/releases/tag/v3.6.1",
+      "ref": "v3.6.1",
+      "fetched_at": "2026-10-13T02:53:44.662464+00:00",
+      "hash": "780277ec3f3eb6bf60f0ac82fb8e148f8c6e5be9ea9682459dc21f5b2bdc7c6b"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "release",
+      "title": "v3.6.0",
+      "url": "https://github.com/assafelovic/gpt-researcher/releases/tag/v3.6.0",
+      "ref": "v3.6.0",
+      "fetched_at": "2026-10-13T02:53:44.666827+00:00",
+      "hash": "087e5b8a2b89b7f46342ed1f80f6c9b576845ad1ecfc40c9a742b6e9e0195f80"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "issue",
+      "title": "Add DemonRoute as a custom-endpoint provider example",
+      "url": "https://github.com/assafelovic/gpt-researcher/issues/2207",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:47.201075+00:00",
+      "hash": "02cf488be11de3b9d5f91572e64df78404ca743a322652c60cb1f942a62bf7e6"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "issue",
+      "title": "MCP configuration lists are reset during Config initialization",
+      "url": "https://github.com/assafelovic/gpt-researcher/issues/2192",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:47.210164+00:00",
+      "hash": "bba0845184972ab113a1cb67dfdc683acb2aed9ce6a1b366bc232b7115cec654"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "issue",
+      "title": "Add streaming-only provider support for OpenAI-compatible gateways that reject non-stream requests",
+      "url": "https://github.com/assafelovic/gpt-researcher/issues/2197",
+      "ref": null,
+      "fetched_at": "2026-10-13T02:53:47.219564+00:00",
+      "hash": "8dd60f25c3b3448de325c17272ae4e89d531329790c9e6d8f11cb3154a658674"
+    }
+  ],
+  "collections": [
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "documentation",
+      "status": "empty",
+      "source_ids": [],
+      "error": null,
+      "discovered_paths": [],
+      "coverage": "最多扫描四个目录、读取三篇仓库维护文档；未抓取外部文档网站"
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "release",
+      "status": "empty",
+      "source_ids": [],
+      "error": null
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "issue",
+      "status": "collected",
+      "source_ids": [
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "error": null
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "documentation",
+      "status": "collected",
+      "source_ids": [
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "error": null,
+      "discovered_paths": [
+        "docs/README.md",
+        "docs/docs/faq.md",
+        "docs/docs/roadmap.md",
+        "docs/docs/welcome.md",
+        "docs/docs/contribute.md"
+      ],
+      "coverage": "最多扫描四个目录、读取三篇仓库维护文档；未抓取外部文档网站"
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "release",
+      "status": "collected",
+      "source_ids": [
+        "S9",
+        "S10",
+        "S11"
+      ],
+      "error": null
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "kind": "issue",
+      "status": "collected",
+      "source_ids": [
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "error": null
+    }
+  ]
+}

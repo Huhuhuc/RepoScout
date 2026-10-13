@@ -4,6 +4,7 @@ import re
 import time
 import httpx
 from .store import now
+from .collection import CollectionMixin
 
 DEMO = {
     'demo/AtlasKB': 'AtlasKB 示例资料（虚构）。支持本地部署。支持 PDF 导入。回答包含来源引用。',
@@ -22,10 +23,11 @@ def normalize_repository(value):
     return value
 
 
-class Runtime:
+class Runtime(CollectionMixin):
     def __init__(self, request, check, emit):
         self.request, self.check, self.emit = request, check, emit
         self.sources, self.evidence, self.repositories = {}, {}, []
+        self.contexts, self.collections = {}, []
         self.calls = self.http_calls = 0
         self.started = time.monotonic()
         self.headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'RepoScout/0.1'}
@@ -80,7 +82,7 @@ class Runtime:
             if len(self.repositories) >= 3:
                 raise ValueError('最多调查三个候选仓库')
             self.repositories.append(repository)
-        existing = next((s for s in self.sources.values() if s['repository'] == repository), None)
+        existing = next((s for s in self.sources.values() if s['repository'] == repository and s.get('kind') == 'readme'), None)
         if existing:
             return existing
         if self.request.mode == 'demo':
@@ -89,8 +91,7 @@ class Runtime:
             text, ref, sha = DEMO[repository], 'fixture-v1', None
             metadata = {'description': '虚构评测样例', 'archived': False, 'license': None}
         else:
-            metadata = self.fetch('/repos/' + repository)
-            ref = metadata['default_branch']
+            repository, (metadata, ref) = self.repository_context(repository)
             from urllib.parse import urlencode
             readme = self.fetch('/repos/' + repository + '/readme?' + urlencode({'ref': ref}))
             sha = readme.get('sha')
@@ -101,7 +102,7 @@ class Runtime:
             truncated = len(text) > 60000
             text = text[:60000]
         ident = 'S' + str(len(self.sources) + 1)
-        source = {'id': ident, 'repository': repository, 'url': 'https://github.com/' + repository,
+        source = {'id': ident, 'repository': repository, 'kind': 'readme', 'title': 'README', 'url': 'https://github.com/' + repository if self.request.mode == 'demo' else readme['html_url'],
                   'fetched_at': now(), 'ref': ref, 'sha': sha, 'text': text,
                   'hash': hashlib.sha256(text.encode()).hexdigest(), 'demo': self.request.mode == 'demo',
                   'truncated': False if self.request.mode == 'demo' else truncated,
@@ -133,8 +134,10 @@ class Runtime:
         if self.calls >= self.request.max_tools:
             raise TimeoutError('工具调用预算已耗尽')
         self.calls += 1
-        from .models import SearchArgs, RepositoryArgs, EvidenceArgs
-        schemas = {'search_repositories': SearchArgs, 'read_repository': RepositoryArgs, 'save_evidence': EvidenceArgs}
+        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs
+        schemas = {'search_repositories': SearchArgs, 'read_repository': RepositoryArgs, 'save_evidence': EvidenceArgs,
+                   'read_documentation': RepositoryArgs, 'read_document': DocumentArgs,
+                   'read_releases': RepositoryArgs, 'search_issues': IssueArgs}
         if name not in schemas:
             raise ValueError('未知工具')
         parsed = schemas[name].model_validate(args).model_dump()
