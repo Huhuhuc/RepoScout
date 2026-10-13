@@ -49,3 +49,13 @@ class DocumentArgs(RepositoryArgs):
 
 class IssueArgs(RepositoryArgs):
     query: str = Field(default='', max_length=200)
+
+
+class GapTarget(RepositoryArgs):
+    requirement_id: str
+    query: str = Field(min_length=1, max_length=200)
+    document_path: str | None = Field(default=None, max_length=300)
+
+
+class FollowupArgs(BaseModel):
+    targets: list[GapTarget] = Field(min_length=1, max_length=3)

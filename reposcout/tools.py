@@ -5,6 +5,7 @@ import time
 import httpx
 from .store import now
 from .collection import CollectionMixin
+from .research import ResearchMixin
 
 DEMO = {
     'demo/AtlasKB': 'AtlasKB 示例资料（虚构）。支持本地部署。支持 PDF 导入。回答包含来源引用。',
@@ -23,11 +24,12 @@ def normalize_repository(value):
     return value
 
 
-class Runtime(CollectionMixin):
+class Runtime(CollectionMixin, ResearchMixin):
     def __init__(self, request, check, emit):
         self.request, self.check, self.emit = request, check, emit
         self.sources, self.evidence, self.repositories = {}, {}, []
         self.contexts, self.collections = {}, []
+        self.reviews, self.followups = [], []
         self.calls = self.http_calls = 0
         self.started = time.monotonic()
         self.headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'RepoScout/0.1'}
@@ -134,10 +136,11 @@ class Runtime(CollectionMixin):
         if self.calls >= self.request.max_tools:
             raise TimeoutError('工具调用预算已耗尽')
         self.calls += 1
-        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs
+        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs, ReportArgs, FollowupArgs
         schemas = {'search_repositories': SearchArgs, 'read_repository': RepositoryArgs, 'save_evidence': EvidenceArgs,
                    'read_documentation': RepositoryArgs, 'read_document': DocumentArgs,
-                   'read_releases': RepositoryArgs, 'search_issues': IssueArgs}
+                   'read_releases': RepositoryArgs, 'search_issues': IssueArgs,
+                   'review_evidence': ReportArgs, 'investigate_gaps': FollowupArgs}
         if name not in schemas:
             raise ValueError('未知工具')
         parsed = schemas[name].model_validate(args).model_dump()

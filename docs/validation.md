@@ -14,3 +14,7 @@
 ## 多来源升级回归
 
 15 项 unittest 全部通过，新增：文档 commit 固定与缓存/引用、非法路径拒绝、Issue 仓库范围和社区来源标记、空发布列表、部分采集失败保留、有限文档发现。JavaScript 语法检查通过。真实双仓库抓取记录见 collection-smoke.json；未调用 DeepSeek。
+
+## 证据缺口与补查回归
+
+22 项测试通过（新增 7 项），包含五次离线模拟模型响应的完整补查闭环；JavaScript 语法检查通过。浏览器实际运行演示任务，显示 1 个证据缺口、0/2 补查轮次；Markdown 导出包含缺口记录。截图：images/evidence-gaps.png。真实模型尚未调用。
