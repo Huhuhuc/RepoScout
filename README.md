@@ -28,7 +28,7 @@ python -m venv .venv
 | github | 真实 GitHub README、仓库文档、Release、Issue | 只采集，功能判断为未知 |
 | deepseek | 真实 GitHub README、仓库文档、Release、Issue | 模型动态选工具并提交结构化报告 |
 
-GitHub 模式建议输入明确仓库，例如 `langchain-ai/local-deep-researcher`。无候选时直接将问题用作 GitHub 查询；复杂中文查询质量有限。实际模型模式尚未调用验证。
+GitHub 模式建议输入明确仓库，例如 `langchain-ai/local-deep-researcher`。无候选时直接将问题用作 GitHub 查询；复杂中文查询质量有限。已开始真实 DeepSeek 验收，过程与发现见 docs/deepseek-acceptance.md。
 
 ## 配置 DeepSeek
 
@@ -36,7 +36,7 @@ GitHub 模式建议输入明确仓库，例如 `langchain-ai/local-deep-research
 
 ```dotenv
 DEEPSEEK_API_KEY=你的密钥
-DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_MODEL=deepseek-flash
 ```
 
 运行服务后，在页面点击“刷新配置”，再点“测试连接”。配置每次从本地读取，无需重启；已开始的调查继续使用启动时的配置。系统环境变量优先于 `.env`。不要提交真实密钥；`.env` 已被 Git 忽略。可用模型名称以你账户的模型列表为准，测试会提示所选模型是否存在。
@@ -67,11 +67,11 @@ DEEPSEEK_MODEL=deepseek-chat
 
 DeepSeek 模式新增 `review_evidence` 和 `investigate_gaps`：初步矩阵 → 缺口检查 → 最多两轮定向文档/Issue 补查 → 保存摘录 → 更新矩阵。工作台与导出显示未解决项和判断变化。社区 Issue 不可单独支撑确定性功能判断。
 
-无密钥模式显示结构性缺口，功能判断仍保持未知。真实模型尚未调用；完整工具循环使用离线模拟响应验证。细节见 [补查设计与验证](docs/evidence-followup.md)。
+无密钥模式显示结构性缺口，功能判断仍保持未知。完整工具循环同时保留离线模拟回归；真实调用验收见 docs/deepseek-acceptance.md。细节见 [补查设计与验证](docs/evidence-followup.md)。
 
 ## 明确的边界
 
-第一版没有全网搜索、任意网页读取、语义引用审判、多 Agent、自动恢复或向量检索。GitHub HTTP 只允许固定 API 域名且不跟随重定向。报告的引用结构校验不能证明结论语义正确。采集模式不从 README 关键词推断真实能力。DeepSeek 默认兼容接口需真实调用验证。
+第一版没有全网搜索、任意网页读取、语义引用审判、多 Agent、自动恢复或向量检索。GitHub HTTP 只允许固定 API 域名且不跟随重定向。报告的引用结构校验不能证明结论语义正确。采集模式不从 README 关键词推断真实能力。DeepSeek 接口配置与真实任务验收记录见 docs/deepseek-acceptance.md。
 
 这是本地单用户原型，无登录、多租户与公网部署能力。保持绑定 127.0.0.1。README 长度和下载大小有限；报告保存抓取时间、ref 和哈希，源正文可能截断。
 

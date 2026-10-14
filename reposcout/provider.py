@@ -16,14 +16,14 @@ class ModelError(ValueError):
 @dataclass(frozen=True)
 class ModelConfig:
     key: str = field(repr=False)
-    model: str = 'deepseek-chat'
+    model: str = 'deepseek-flash'
 
 
 def settings(path=None):
     values = dotenv_values(path or ROOT / '.env', encoding='utf-8-sig', interpolate=False)
     def value(name, default=''):
         return (os.environ.get(name, values.get(name)) or default).strip()
-    model = value('DEEPSEEK_MODEL', 'deepseek-chat')
+    model = value('DEEPSEEK_MODEL', 'deepseek-flash')
     if len(model) > 100 or not all(c.isalnum() or c in '-_./' for c in model):
         raise ModelError('模型名称格式无效，请检查 DEEPSEEK_MODEL')
     return ModelConfig(value('DEEPSEEK_API_KEY'), model)
@@ -80,7 +80,7 @@ class ModelService:
 
     def chat(self, messages, tools):
         data = self.request('POST', '/chat/completions', {'model': self.config.model,
-            'messages': messages, 'tools': tools, 'max_tokens': 2500})
+            'messages': messages, 'tools': tools, 'max_tokens': 2500, 'thinking': {'type': 'disabled'}})
         try:
             message = data['choices'][0]['message']
             if not isinstance(message, dict) or message.get('role') != 'assistant':

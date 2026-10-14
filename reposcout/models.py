@@ -28,6 +28,7 @@ class Assessment(BaseModel):
     status: Literal['supported', 'unsupported', 'unknown', 'conflict']
     explanation: str = Field(max_length=1000)
     evidence_ids: list[str] = Field(default_factory=list)
+    evidence_basis: Literal['explicit_statement', 'absence_of_evidence', 'uncertain'] = 'uncertain'
 
 
 class ReportArgs(BaseModel):
@@ -58,4 +59,4 @@ class GapTarget(RepositoryArgs):
 
 
 class FollowupArgs(BaseModel):
-    targets: list[GapTarget] = Field(min_length=1, max_length=3)
+    targets: list[GapTarget] = Field(min_length=1, max_length=3, description='每个 repository + requirement_id 组合在本轮只能出现一次。多个关键词放在同一个 query 中；不要为同一条件创建多个目标。')

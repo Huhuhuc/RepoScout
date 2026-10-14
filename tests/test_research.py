@@ -10,6 +10,15 @@ from reposcout.tools import Runtime
 
 
 class ResearchTests(unittest.TestCase):
+    def test_absence_of_documentation_is_not_unsupported(self):
+        r = self.runtime()
+        e = r.save_evidence('S1', 'R1', 'Research agent')
+        for basis in ('uncertain', 'absence_of_evidence'):
+            with self.assertRaises(ValueError):
+                validate_report(r, ReportArgs(summary='', assessments=[dict(repository='a/b',
+                    requirement_id='R1', status='unsupported', explanation='No documentation found',
+                    evidence_ids=[e['id']], evidence_basis=basis)]))
+
     def runtime(self, max_tools=40):
         r = Runtime(TaskRequest(question='Local model research', mode='github', max_tools=max_tools,
             requirements=[Requirement(id='R1', text='local models')]), lambda: None, lambda *a: None)
@@ -35,6 +44,7 @@ class ResearchTests(unittest.TestCase):
         e = r.call('save_evidence', {'source_id': 'S2', 'requirement_id': 'R1', 'quote': 'Local models are supported.'})
         assessments = [dict(repository='a/b', requirement_id='R1', status='supported', explanation='document', evidence_ids=[e['id']])]
         self.review(r, assessments)
+        assessments[0]['explanation'] = 'Same decision with clearer wording'
         report = finalize_report(r, ReportArgs(assessments=assessments, summary='done'))
         self.assertFalse(report['research']['gaps'])
         self.assertEqual(report['research']['changes'][0]['before'], 'unknown')
@@ -102,6 +112,7 @@ class ResearchTests(unittest.TestCase):
             'https://github.com/a/b/docs/install.md', 'Local models are supported.'))
         assessments = [dict(repository='a/b', requirement_id='R1', status='supported', explanation='document', evidence_ids=['E1'])]
         script = [
+            ('save_evidence', {'source_id': 'missing', 'requirement_id': 'R1', 'quote': 'invalid'}),
             ('review_evidence', {'assessments': [], 'summary': 'initial'}),
             ('investigate_gaps', {'targets': [{'repository': 'a/b', 'requirement_id': 'R1', 'query': 'local', 'document_path': 'docs/install.md'}]}),
             ('save_evidence', {'source_id': 'S2', 'requirement_id': 'R1', 'quote': 'Local models are supported.'}),
@@ -119,7 +130,7 @@ class ResearchTests(unittest.TestCase):
         with patch.dict('os.environ', {'DEEPSEEK_API_KEY': 'test-only-not-a-real-key'}), patch('reposcout.provider.httpx.Client') as factory:
             factory.return_value.__enter__.return_value = client
             report = deepseek_agent(r)
-        self.assertEqual(report['metrics']['model_calls'], 5)
+        self.assertEqual(report['metrics']['model_calls'], 6)
         self.assertEqual(report['research']['rounds_used'], 1)
         self.assertFalse(report['research']['gaps'])
         self.assertEqual(report['research']['changes'][0]['after'], 'supported')

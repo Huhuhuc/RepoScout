@@ -61,8 +61,10 @@ class ResearchMixin:
         prior = {tuple(a['signature']) for round_ in self.followups for a in round_['actions']}
         for target in targets:
             key = (target['repository'], target['requirement_id'])
-            if key not in allowed or key in keys:
-                raise ValueError('补查目标必须是最近检查中的不同证据缺口')
+            if key not in allowed:
+                raise ValueError('该 repository + requirement_id 不在最近一次检查的缺口列表中')
+            if key in keys:
+                raise ValueError(f'同一目标 {key[0]} / {key[1]} 重复出现；请只保留一个 target，将关键词合并到其 query 字段')
             keys.add(key)
             query = ' '.join(re.findall(r'[\w-]+', target['query'].casefold()))
             if not query:
@@ -108,4 +110,4 @@ class ResearchMixin:
                 raise
             finally:
                 self.emit('followup', dict(message=f"补查第 {round_['index']} 轮 · {target['repository']} · {target['requirement_id']}", **action))
-        return copy.deepcopy(round_)
+        return {**copy.deepcopy(round_), 'next_action': '先保存确切摘录（如有），再调用 review_evidence 更新完整矩阵；未知项允许保持 unknown，之后调用 submit_report。'}

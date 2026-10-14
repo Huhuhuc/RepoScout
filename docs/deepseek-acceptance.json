@@ -1,0 +1,147 @@
+[
+  {
+    "task_id": "abce3567b2ed41ebb0c14016e2699d1a",
+    "status": "completed",
+    "error": null,
+    "metrics": {
+      "tool_calls": 14,
+      "http_requests": 7,
+      "model_calls": 10,
+      "model_requests": 10,
+      "tokens": {
+        "prompt_tokens": 68856,
+        "completion_tokens": 2978,
+        "total_tokens": 71834
+      }
+    },
+    "last_usage": {
+      "prompt_tokens": 68856,
+      "completion_tokens": 2978,
+      "total_tokens": 71834
+    },
+    "assessments": [
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R1",
+        "status": "supported",
+        "explanation": "README states the tool 'uses any LLM hosted by Ollama or LMStudio' and provides Ollama setup steps with env vars LLM_PROVIDER=ollama, OLLAMA_BASE_URL, LOCAL_LLM. Supported.",
+        "evidence_ids": [
+          "E1",
+          "E2",
+          "E3"
+        ]
+      },
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R2",
+        "status": "unsupported",
+        "explanation": "README describes the input as a user-provided topic plus web search tools (DuckDuckGo/SearXNG/Tavily/Perplexity) only; no PDF upload or file import is documented. A targeted issue search for PDF import returned empty and there are no releases indicating such a feature. No evidence of PDF import support.",
+        "evidence_ids": [
+          "E4"
+        ]
+      }
+    ],
+    "tool_errors": []
+  },
+  {
+    "task_id": "8ec27d953f714f31b3fc153a4f95622a",
+    "status": "partial",
+    "error": "达到 12 次模型请求预算",
+    "metrics": {
+      "tool_calls": 16,
+      "http_requests": 9
+    },
+    "last_usage": {
+      "prompt_tokens": 85876,
+      "completion_tokens": 3622,
+      "total_tokens": 89498
+    },
+    "assessments": [
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R1",
+        "status": "supported",
+        "explanation": "README 首段明确写明该助手使用由 Ollama 或 LMStudio 托管的任意 LLM，并在“Selecting local model with Ollama”一节给出 ollama pull、LLM_PROVIDER=ollama、OLLAMA_BASE_URL 与 LOCAL_LLM 等配置，Docker 一节也要求单独运行 Ollama 并通过 OLLAMA_BASE_URL 连接。属原文明确支持。",
+        "evidence_ids": [
+          "E1",
+          "E2"
+        ],
+        "evidence_basis": "explicit_statement"
+      },
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R2",
+        "status": "unknown",
+        "explanation": "README 全篇将能力描述为“web research”（生成 web 搜索查询、抓取 web 结果、摘要、反思），输出中仅提及 web 搜索来源，未出现 PDF/文件导入的任何说明；仓库文档扫描为空、Release 为空，两轮 Issue 关键词搜索（“PDF file import upload document”“ingest local file as research source”）均为空。无支持证据也无原文否定，故判 unknown，而非 unsupported。",
+        "evidence_ids": [],
+        "evidence_basis": "absence_of_evidence"
+      }
+    ],
+    "tool_errors": []
+  },
+  {
+    "task_id": "316b946b8c4942128f9094e6611a747b",
+    "status": "partial",
+    "error": "达到 12 次模型请求预算",
+    "metrics": {
+      "tool_calls": 16,
+      "http_requests": 8,
+      "model_calls": 12,
+      "model_requests": 12,
+      "tokens": {
+        "prompt_tokens": 81732,
+        "completion_tokens": 2523,
+        "total_tokens": 84255
+      }
+    },
+    "last_usage": {
+      "prompt_tokens": 81732,
+      "completion_tokens": 2523,
+      "total_tokens": 84255
+    },
+    "assessments": [
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R1",
+        "status": "supported",
+        "explanation": "README 明确说明支持通过 Ollama 使用本地模型，并提供 LLM_PROVIDER=ollama、OLLAMA_BASE_URL、LOCAL_LLM 等配置。",
+        "evidence_ids": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "evidence_basis": "explicit_statement"
+      },
+      {
+        "repository": "langchain-ai/local-deep-researcher",
+        "requirement_id": "R2",
+        "status": "unknown",
+        "explanation": "README 未提及 PDF 导入/上传；针对 PDF 的关键词 Issue 搜索为空，仓库无发布说明。无任何官方资料或已核实来源证明该能力存在或被明确排除，因此判为 unknown。",
+        "evidence_ids": [],
+        "evidence_basis": "absence_of_evidence"
+      }
+    ],
+    "tool_errors": [
+      {
+        "tool": "save_evidence",
+        "message": "摘录必须完整存在于已读取原文"
+      },
+      {
+        "tool": "investigate_gaps",
+        "message": "补查目标必须是最近检查中的不同证据缺口"
+      },
+      {
+        "tool": "investigate_gaps",
+        "message": "补查目标必须是最近检查中的不同证据缺口"
+      },
+      {
+        "tool": "investigate_gaps",
+        "message": "补查目标必须是最近检查中的不同证据缺口"
+      },
+      {
+        "tool": "submit_report",
+        "message": "补查后必须再次 review_evidence，记录判断是否变化"
+      }
+    ]
+  }
+]
