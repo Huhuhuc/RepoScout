@@ -30,6 +30,8 @@ class Runtime(CollectionMixin, ResearchMixin):
         self.sources, self.evidence, self.repositories = {}, {}, []
         self.contexts, self.collections = {}, []
         self.reviews, self.followups = [], []
+        self.read_cache = {}
+        self.cache_hits = 0
         self.calls = self.http_calls = 0
         self.started = time.monotonic()
         self.headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'RepoScout/0.1'}
@@ -131,18 +133,41 @@ class Runtime(CollectionMixin, ResearchMixin):
         self.emit('evidence', evidence)
         return evidence
 
+    def read_source(self, source_id, offset=0, query=''):
+        source = self.sources.get(source_id)
+        if not source:
+            raise ValueError('来源不存在')
+        if query:
+            found = source['text'].lower().find(query.lower())
+            if found < 0:
+                return {'source_id': source_id, 'found': False, 'total_chars': len(source['text'])}
+            offset = max(0, found - 150)
+        return {'source_id': source_id, 'offset': offset, 'text': source['text'][offset:offset+2400],
+                'total_chars': len(source['text']), 'next_offset': min(offset+2400, len(source['text']))}
+
     def call(self, name, args):
         self.guard()
         if self.calls >= self.request.max_tools:
             raise TimeoutError('工具调用预算已耗尽')
         self.calls += 1
-        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs, ReportArgs, FollowupArgs
+        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs, ReportArgs, FollowupArgs, SourceSliceArgs
         schemas = {'search_repositories': SearchArgs, 'read_repository': RepositoryArgs, 'save_evidence': EvidenceArgs,
                    'read_documentation': RepositoryArgs, 'read_document': DocumentArgs,
                    'read_releases': RepositoryArgs, 'search_issues': IssueArgs,
-                   'review_evidence': ReportArgs, 'investigate_gaps': FollowupArgs}
+                   'review_evidence': ReportArgs, 'investigate_gaps': FollowupArgs, 'read_source': SourceSliceArgs}
         if name not in schemas:
             raise ValueError('未知工具')
         parsed = schemas[name].model_validate(args).model_dump()
         self.emit('action', {'tool': name, 'arguments': parsed, 'calls': self.calls})
-        return getattr(self, name)(**parsed)
+        import json
+        import copy
+        key = name + json.dumps(parsed, sort_keys=True, ensure_ascii=False)
+        cacheable = name in ('read_repository', 'read_documentation', 'read_document', 'read_releases', 'search_issues', 'read_source')
+        if cacheable and key in self.read_cache:
+            self.cache_hits += 1
+            self.emit('cache_hit', {'tool': name, 'message': '复用本任务已获取的相同查询结果'})
+            return copy.deepcopy(self.read_cache[key])
+        result = getattr(self, name)(**parsed)
+        if cacheable:
+            self.read_cache[key] = copy.deepcopy(result)
+        return result

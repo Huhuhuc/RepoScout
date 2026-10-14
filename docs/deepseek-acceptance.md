@@ -13,3 +13,8 @@
 逐轮任务 ID、状态和 Token 记录见 deepseek-acceptance.json。Token 数为接口累计用量，不等于金额；未按未经核实的价格估算费用。30 项离线测试通过。
 
 官方参考：https://api-docs.deepseek.com/guides/tool_calls/
+
+
+## 2026-10-14 后续验收
+
+本页前文为历史记录。最新预算收尾、真实模型完成记录、41 项回归及 12 项冻结评测见 [本地迭代与验收](completion-and-evaluation.md)。

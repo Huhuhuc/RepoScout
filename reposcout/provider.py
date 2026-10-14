@@ -79,8 +79,11 @@ class ModelService:
                 raise ModelError('模型服务返回了无效 JSON') from None
 
     def chat(self, messages, tools):
-        data = self.request('POST', '/chat/completions', {'model': self.config.model,
-            'messages': messages, 'tools': tools, 'max_tokens': 2500, 'thinking': {'type': 'disabled'}})
+        payload = {'model': self.config.model, 'messages': messages, 'tools': tools,
+                   'max_tokens': 2500, 'thinking': {'type': 'disabled'}}
+        if len(tools) == 1:
+            payload['tool_choice'] = {'type':'function', 'function': {'name':tools[0]['function']['name']}}
+        data = self.request('POST', '/chat/completions', payload)
         try:
             message = data['choices'][0]['message']
             if not isinstance(message, dict) or message.get('role') != 'assistant':

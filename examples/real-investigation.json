@@ -1,0 +1,88 @@
+{
+  "summary": "针对 langchain-ai/local-deep-researcher 的两项需求核查：R1（Ollama 本地模型）在 README 中有明确支持依据（开篇说明 + Ollama 配置专节），判定 supported；R2（PDF 文件导入）在 README 全文及检索中均未出现相关描述，既无支持也无明确否定，按证据缺失判定 unknown。已遵守预算，未做重复补查，保留未知项。",
+  "assessments": [
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "requirement_id": "R1",
+      "status": "supported",
+      "explanation": "README 开篇即说明该助手使用任何由 Ollama 或 LMStudio 托管的 LLM，并设有“Selecting local model with Ollama”专节，给出 ollama pull 示例及 LLM_PROVIDER=ollama、OLLAMA_BASE_URL、LOCAL_LLM 等配置，明确支持通过 Ollama 使用本地模型。",
+      "evidence_ids": [
+        "E1",
+        "E2"
+      ],
+      "evidence_basis": "explicit_statement"
+    },
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "requirement_id": "R2",
+      "status": "unknown",
+      "explanation": "已通读 README 关于功能简介、更新、快速开始与模型/搜索工具配置的内容，以及检索原文均未出现 PDF、文件上传或本地文档导入相关表述；未能找到任何支持或明确否定该能力的依据，故记为 unknown（证据缺失）。",
+      "evidence_ids": [],
+      "evidence_basis": "absence_of_evidence"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "source_id": "S1",
+      "requirement_id": "R1",
+      "quote": "Local Deep Researcher is a fully local web research assistant that uses any LLM hosted by [Ollama](https://ollama.com/search) or [LMStudio](https://lmstudio.ai/).",
+      "start": 25,
+      "end": 187
+    },
+    {
+      "id": "E2",
+      "source_id": "S1",
+      "requirement_id": "R1",
+      "quote": "### Selecting local model with Ollama\n\n1. Download the Ollama app for Mac [here](https://ollama.com/download).\n\n2. Pull a local LLM from [Ollama](https://ollama.com/search). As an [example](https://ollama.com/library/deepseek-r1:8b):\n```shell\nollama pull deepseek-r1:8b\n```",
+      "start": 2064,
+      "end": 2337
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "支持通过 Ollama 使用本地模型",
+      "mandatory": true
+    },
+    {
+      "id": "R2",
+      "text": "支持上传 PDF 文件作为研究资料",
+      "mandatory": true
+    }
+  ],
+  "mode": "deepseek",
+  "metrics": {
+    "tool_calls": 20,
+    "http_requests": 3,
+    "cache_hits": 8,
+    "model_calls": 11,
+    "model_requests": 11,
+    "tokens": {
+      "prompt_tokens": 36710,
+      "completion_tokens": 1723,
+      "total_tokens": 38433
+    },
+    "context_chars_sent": 66060
+  },
+  "completion": {
+    "type": "model_submitted",
+    "reason": "reserve_final_requests,tool_budget,no_progress"
+  },
+  "limitations": [
+    "仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。",
+    "候选范围有限，未执行全网搜索；不验证 README 中的性能声明。"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "repository": "langchain-ai/local-deep-researcher",
+      "kind": "readme",
+      "title": "README",
+      "url": "https://github.com/langchain-ai/local-deep-researcher/blob/03537326ffa0dd90c9702bece2f3aeba5d84162a/README.md",
+      "ref": "03537326ffa0dd90c9702bece2f3aeba5d84162a",
+      "fetched_at": "2026-10-14T05:04:31.327951+00:00",
+      "hash": "92e6559fa780f8efe83108b4a24c31572b893331c2f54dddc7ebb25e84bc59f0"
+    }
+  ]
+}

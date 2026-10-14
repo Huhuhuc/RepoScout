@@ -93,9 +93,7 @@ class ResearchTests(unittest.TestCase):
             finalize_report(r, ReportArgs(assessments=r.reviews[-1]['assessments'], summary='premature'))
         r.search_issues = Mock(side_effect=httpx.ConnectError('offline'))
         self.assertEqual(self.follow(r)['actions'][0]['status'], 'failed')
-        with self.assertRaises(ValueError):
-            finalize_report(r, ReportArgs(assessments=r.reviews[-1]['assessments'], summary='stale'))
-        self.review(r)
+        # Final submission now performs the final review atomically.
         self.assertTrue(finalize_report(r, ReportArgs(assessments=r.reviews[-1]['assessments'], summary='done')))
 
     def test_nested_tool_budget_and_partial_record(self):
@@ -116,7 +114,6 @@ class ResearchTests(unittest.TestCase):
             ('review_evidence', {'assessments': [], 'summary': 'initial'}),
             ('investigate_gaps', {'targets': [{'repository': 'a/b', 'requirement_id': 'R1', 'query': 'local', 'document_path': 'docs/install.md'}]}),
             ('save_evidence', {'source_id': 'S2', 'requirement_id': 'R1', 'quote': 'Local models are supported.'}),
-            ('review_evidence', {'assessments': assessments, 'summary': 'updated'}),
             ('submit_report', {'assessments': assessments, 'summary': 'done'})]
         responses = []
         for index, (name, args) in enumerate(script):
@@ -130,7 +127,7 @@ class ResearchTests(unittest.TestCase):
         with patch.dict('os.environ', {'DEEPSEEK_API_KEY': 'test-only-not-a-real-key'}), patch('reposcout.provider.httpx.Client') as factory:
             factory.return_value.__enter__.return_value = client
             report = deepseek_agent(r)
-        self.assertEqual(report['metrics']['model_calls'], 6)
+        self.assertEqual(report['metrics']['model_calls'], 5)
         self.assertEqual(report['research']['rounds_used'], 1)
         self.assertFalse(report['research']['gaps'])
         self.assertEqual(report['research']['changes'][0]['after'], 'supported')

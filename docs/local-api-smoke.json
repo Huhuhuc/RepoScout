@@ -1,0 +1,15 @@
+{
+  "task_id": "a6389e0880d34509996ecefabd41beaf",
+  "status": "completed",
+  "source_count": 4,
+  "kinds": [
+    "issue",
+    "readme"
+  ],
+  "exports": {
+    "markdown": 200,
+    "json": 200
+  },
+  "sse_finished": true,
+  "history_visible": true
+}

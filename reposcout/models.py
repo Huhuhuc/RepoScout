@@ -22,6 +22,12 @@ class EvidenceArgs(BaseModel):
     quote: str = Field(min_length=1, max_length=1200)
 
 
+class SourceSliceArgs(BaseModel):
+    source_id: str
+    offset: int = Field(default=0, ge=0)
+    query: str = Field(default='', max_length=100)
+
+
 class Assessment(BaseModel):
     repository: str
     requirement_id: str

@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-10-14T10:23:27.556484+00:00",
+  "query": "local-deep-researcher in:name",
+  "repositories": [
+    {
+      "repository": "langchain-ai/local-deep-researcher",
+      "verified": true,
+      "url": "https://github.com/langchain-ai/local-deep-researcher",
+      "github_id": 898736877,
+      "private": false,
+      "readme_chars": 10481,
+      "source_url": "https://github.com/langchain-ai/local-deep-researcher/blob/03537326ffa0dd90c9702bece2f3aeba5d84162a/README.md",
+      "commit": "03537326ffa0dd90c9702bece2f3aeba5d84162a"
+    },
+    {
+      "repository": "kaymen99/local-rag-researcher-deepseek",
+      "verified": true,
+      "url": "https://github.com/kaymen99/local-rag-researcher-deepseek",
+      "github_id": 928614826,
+      "private": false,
+      "readme_chars": 6433,
+      "source_url": "https://github.com/kaymen99/local-rag-researcher-deepseek/blob/98e83829a7e506b1092e90467245e0caed686331/README.md",
+      "commit": "98e83829a7e506b1092e90467245e0caed686331"
+    },
+    {
+      "repository": "devs-30/local-deep-researcher",
+      "verified": true,
+      "url": "https://github.com/devs-30/local-deep-researcher",
+      "github_id": 1296947916,
+      "private": false,
+      "readme_chars": 18671,
+      "source_url": "https://github.com/devs-30/local-deep-researcher/blob/972fe695fa1bd0775e0fb5e1d88804c71f688184/README.md",
+      "commit": "972fe695fa1bd0775e0fb5e1d88804c71f688184"
+    }
+  ],
+  "negative_control": {
+    "repository": "Huhuhuc/reposcout-does-not-exist-20261014-725d9a",
+    "rejected": true,
+    "status": 404
+  },
+  "http_requests": 14
+}

@@ -10,15 +10,19 @@
 
 ## 运行
 
-Windows 双击 `start-reposcout.bat`，首次安装依赖后打开 http://127.0.0.1:8011 。需要 Python 3.10+。
+Windows 双击 `start-reposcout.bat`，首次安装依赖后打开 http://127.0.0.1:8011 。需要 Python 3.11+。启动器不会覆盖已有 `.env`。
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock
 .\.venv\Scripts\python.exe -m uvicorn reposcout.app:app --host 127.0.0.1 --port 8011
 ```
 
 先选择演示模式，使用默认的本地部署、PDF、引用三个条件。示例仓库全部虚构，规则策略确定比较结果；它不模拟真实模型研究质量。
+
+Windows 自检：`powershell -ExecutionPolicy Bypass -File .\start-reposcout.ps1 -Check`。更换端口加 `-Port 8012`。Linux/macOS 可运行 `bash start-reposcout.sh`（本机尚未实跑该平台）。
+
+本地交付材料：[真实报告](examples/real-investigation.md) · [架构图](docs/architecture.md) · [验收记录](docs/completion-and-evaluation.md) · [截图导览视频](docs/demo/reposcout-walkthrough.mp4)。当前未发布或部署公网。
 
 ## 三种模式
 
@@ -54,6 +58,7 @@ DEEPSEEK_MODEL=deepseek-flash
 - SQLite 历史任务、执行事件、取消、重启中断标记。
 - 工具预算、60 次网络请求上限、12 次模型调用上限、5 分钟任务上限。
 - SSE 进度、证据查看、Markdown/JSON 导出。
+- 调查/收尾阶段切换、最终报告预算预留、任务内只读缓存与有界上下文；无有效最终提交明确标为部分完成。
 
 ## 多来源采集
 
@@ -81,7 +86,11 @@ DeepSeek 模式新增 `review_evidence` 和 `investigate_gaps`：初步矩阵 �
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-后续加入至少 12 个冻结评测任务、基线与消融，真实模型质量指标只根据实际实验填写。
+41 项自动测试通过。12 个冻结合成案例已用真实 DeepSeek 跑完：README 单次回答正确 7/12，调查模式正确 12/12；总 Token 分别为 6,133 与 178,197。调查模式可读取额外资料，这不是同资料推理对照，也不代表真实任务准确率 100%。[完整结果与限制](evals/README.md)。
+
+真实仓库存在性另行验证：搜索返回的 3 个仓库均读取到 GitHub 元数据和 README，不存在的负例返回 404。[验证记录](docs/github-live-verification.json)。可执行 `python -m scripts.verify_live_github` 复查（访问 GitHub，不调用模型）。
+
+`.github/workflows/ci.yml` 已包含 Windows/Linux 与 Python 3.11/3.13 测试矩阵；由于尚未推送，当前仅有本机验证结果。
 
 ## 学习来源
 

@@ -22,3 +22,8 @@
 ## 模型接入层回归
 
 29 项测试通过；页面显示未配置、禁用测试按钮，刷新配置正常。连接测试和重试采用 HTTP MockTransport 验证，没有真实模型请求。截图 images/model-settings.png。.env 已被 git check-ignore 确认忽略。
+
+
+## 2026-10-14 后续验收
+
+本页前文为历史记录。最新预算收尾、真实模型完成记录、41 项回归及 12 项冻结评测见 [本地迭代与验收](completion-and-evaluation.md)。
