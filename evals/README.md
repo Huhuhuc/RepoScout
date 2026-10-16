@@ -32,3 +32,17 @@
 ## 后续同资料对照
 
 另增真实仓库固定 README 的 3 个任务、每项两次重复，以及同资料单次回答/禁用补查/完整 Agent 对照。原始数据和局限见 [可靠性验收](../docs/reliability-results.md)。旧版 12 个合成案例结果保持不变，不能当作新版的重跑结果。
+
+
+## 多仓库资料集与自动策略（2026-10-16）
+
+`multi-repo-cases.json` 保存 HTTPX、Pydantic、FastAPI 三个仓库固定 commit 的 README 和官方仓库文档，共 12 个单条件任务。原文 URL、ref、采集时间及 SHA-256 均可检查，原项目许可证位于 `licenses/`。支持、明确限制、未知均有样例；未知只针对冻结资料。标签由编码助手依据原文整理，尚未由独立人员复核。没有 Release/Issue 冲突和多候选联合任务，不能视为完整真实场景基准。
+
+```powershell
+python -m evals.validate_dataset evals/multi-repo-cases.json
+python -m evals.compare --dataset evals/multi-repo-cases.json
+# 付费四策略对照，每题一次；显式执行才调用模型，另存结果
+python -m evals.compare --dataset evals/multi-repo-cases.json --max-cases 12 --repeats 1 --live --output evals/results/multi-repo-comparison.json
+```
+
+新增 auto 策略与原有 same_sources / no_followup / agent 共享同一资料池。旧评测结果保持原样。本次修正 grounded_correct：部分完成报告不能计为有证据的成功回答。完整数据集通过完整性校验不等于模型评测通过；模型成绩只在实际生成的结果文件中报告。

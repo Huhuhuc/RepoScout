@@ -25,7 +25,7 @@ def score(case, status, quotes, available_texts, completed):
     return {'correct':status==case['expected'], 'completed':completed,
             'citation_count':len(quotes),'exact_citations':sum(exact),
             'supported_citations':sum(a and b for a,b in zip(exact,semantic)),
-            'grounded_correct':status==case['expected'] and covered>=needed and all(exact)}
+            'grounded_correct':bool(completed) and status==case['expected'] and covered>=needed and all(exact)}
 
 
 def baseline(case, service):
@@ -88,6 +88,9 @@ def run(max_cases, output):
 
 
 def main():
+    import sys
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live',action='store_true',help='明确启用付费模型调用；冻结资料不访问外网')
     parser.add_argument('--max-cases',type=int,default=12,choices=range(1,13))

@@ -48,7 +48,7 @@ def validate_report(runtime, proposed):
             'verification': inspect_claims(runtime, result),
             'research': research_state(runtime, result), 'collections': runtime.collections, 'sources': list(runtime.sources.values()), 'evidence': list(runtime.evidence.values()),
             'requirements': [r.model_dump() for r in runtime.request.requirements],
-            'mode': runtime.request.mode, 'prior_run_metrics': getattr(runtime, 'prior_metrics', {}),
+            'mode': runtime.request.mode, 'routing': getattr(runtime, 'routing', {}), 'prior_run_metrics': getattr(runtime, 'prior_metrics', {}),
             'metrics': {'tool_calls': runtime.calls, 'http_requests': runtime.http_calls, 'cache_hits': runtime.cache_hits, **getattr(runtime, 'model_metrics', {})},
             'limitations': ['仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。', '候选范围有限，未执行全网搜索；不验证 README 中的性能声明。']}
 

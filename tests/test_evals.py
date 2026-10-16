@@ -36,3 +36,27 @@ class EvaluationTests(unittest.TestCase):
         case=load_cases()[0]
         result=score(case,'supported',case['accepted'],[case['sources'][0]['text']],False)
         self.assertFalse(result['completed'])
+        self.assertFalse(result['grounded_correct'])
+
+    def test_real_multirepo_integrity_and_no_label_leak(self):
+        from evals.validate_dataset import validate
+        cases=validate('evals/multi-repo-cases.json')
+        self.assertEqual(len(cases),12)
+        self.assertEqual(len({c['repository'] for c in cases}),3)
+        for case in cases:
+            runtime=FrozenRuntime(case)
+            self.assertNotIn('expected',runtime.request.model_dump())
+            self.assertNotIn('accepted',runtime.request.model_dump())
+
+    def test_grader_unknown_partial_is_not_grounded_success(self):
+        case={'expected':'unknown','accepted':[]}
+        self.assertFalse(score(case,'unknown',[],[],False)['grounded_correct'])
+
+    def test_cli_on_windows_legacy_output_encoding(self):
+        import os
+        import subprocess
+        import sys
+        result=subprocess.run([sys.executable,'-m','evals.run'],
+            env={**os.environ,'PYTHONIOENCODING':'cp1252'},capture_output=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('12',result.stdout.decode('utf-8'))

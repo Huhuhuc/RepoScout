@@ -1,0 +1,114 @@
+{
+  "scope": "Two frozen-source real-model smoke tasks, auto only, semantic review enabled. Not a benchmark or cost comparison.",
+  "rows": [
+    {
+      "case": "httpx-sync-async",
+      "expected": "supported",
+      "assessment": {
+        "repository": "fixture/httpx-sync-async",
+        "requirement_id": "R1",
+        "status": "supported",
+        "explanation": "README 开篇明确声明 \"provides both **sync and async APIs**\"（E1），功能列表进一步写明 \"Standard synchronous interface, but with [async support if you need it]\"（E2），均为原文直接陈述，判定为支持。",
+        "evidence_ids": [
+          "E1",
+          "E2"
+        ],
+        "evidence_basis": "explicit_statement",
+        "applicable_version": "",
+        "conditions": "适用于 Python 3 HTTP 客户端库；默认同步接口，异步能力需使用 async 客户端接口。"
+      },
+      "completion": {
+        "type": "model_submitted",
+        "reason": "evidence_ready"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "invalid_quick_assessment"
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "verdict": "supported_by_quotes",
+            "reason": "E1 原文直接声明该库 \"provides both **sync and async APIs**\"；E2 进一步写明 \"Standard synchronous interface, but with [async support if you need it]\"。两段摘录均为 README 原文直接陈述，明确支持“同时提供同步和异步 API”这一要求，未见任何反向或限定性冲突（E2 中 async 需按需使用属于使用条件，不影响能力存在）。判定为 supported_by_quotes。"
+          }
+        ]
+      },
+      "requests": 7,
+      "tokens": {
+        "prompt_tokens": 20683,
+        "completion_tokens": 1828,
+        "total_tokens": 22511
+      },
+      "seconds": 20.09,
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 2,
+        "exact_citations": 2,
+        "supported_citations": 1,
+        "grounded_correct": true
+      }
+    },
+    {
+      "case": "httpx-default-http2",
+      "expected": "unsupported",
+      "assessment": {
+        "repository": "fixture/httpx-default-http2",
+        "requirement_id": "R1",
+        "status": "unknown",
+        "explanation": "复核未通过：E2 明确说明 httpx 客户端默认不启用 HTTP/2（\"HTTP/2 support is not enabled by default\"），并需显式 http2=True 启用（E3），因此需求 R1「HTTP/2 默认开启，无需额外配置」被证据明确否定，claim 的 unsupported 状态由摘录支持。",
+        "evidence_ids": [
+          "E2",
+          "E3",
+          "E1"
+        ],
+        "evidence_basis": "uncertain",
+        "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254（文档所述行为；文档提到未来版本可能改为默认启用）",
+        "conditions": "结论适用于该文档所描述的当前 httpx 客户端行为；文档声明“未来的 httpx 版本可能默认启用 HTTP/2”，若版本变更需重新核对。"
+      },
+      "completion": {
+        "type": "model_submitted",
+        "reason": "tool_budget"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "evidence_gap_or_conditions"
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "verdict": "contradicted",
+            "reason": "E2 明确说明 httpx 客户端默认不启用 HTTP/2（\"HTTP/2 support is not enabled by default\"），并需显式 http2=True 启用（E3），因此需求 R1「HTTP/2 默认开启，无需额外配置」被证据明确否定，claim 的 unsupported 状态由摘录支持。"
+          }
+        ]
+      },
+      "requests": 9,
+      "tokens": {
+        "prompt_tokens": 35905,
+        "completion_tokens": 1721,
+        "total_tokens": 37626
+      },
+      "seconds": 21.6,
+      "score": {
+        "correct": false,
+        "completed": true,
+        "citation_count": 3,
+        "exact_citations": 3,
+        "supported_citations": 1,
+        "grounded_correct": false
+      }
+    }
+  ]
+}

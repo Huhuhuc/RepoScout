@@ -1,0 +1,140 @@
+{
+  "scope": "Two-task retest after negative-claim review prompt correction. Same-model review enabled, not broad benchmark. First failed smoke retained separately.",
+  "rows": [
+    {
+      "case": "httpx-sync-async",
+      "expected": "supported",
+      "assessment": {
+        "repository": "fixture/httpx-sync-async",
+        "requirement_id": "R1",
+        "status": "supported",
+        "explanation": "README 概述明确声明 \"provides both **sync and async APIs**\"，功能列表亦列出 \"Standard synchronous interface, but with async support if you need it\"，两处原文均直接支持该需求。",
+        "evidence_ids": [
+          "E1",
+          "E2"
+        ],
+        "evidence_basis": "explicit_statement",
+        "applicable_version": "",
+        "conditions": "README 未限定具体版本；声明涵盖同步与异步两类接口。"
+      },
+      "completion": {
+        "type": "model_submitted",
+        "reason": "evidence_ready"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "invalid_quick_assessment"
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "verdict": "supported_by_quotes",
+            "reason": "E1 原文明确声明 \"provides both **sync and async APIs**\"，E2 亦声明 \"Standard synchronous interface, but with async support if you need it\"，两条摘录均直接支持“同时提供同步和异步 API”的需求状态（supported），且无冲突或版本限定。"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "assess_readme",
+            "message": "快速判断摘录不属于来源原文"
+          }
+        }
+      ],
+      "requests": 6,
+      "tokens": {
+        "prompt_tokens": 15840,
+        "completion_tokens": 1204,
+        "total_tokens": 17044
+      },
+      "seconds": 13.86,
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 2,
+        "exact_citations": 2,
+        "supported_citations": 1,
+        "grounded_correct": true
+      }
+    },
+    {
+      "case": "httpx-default-http2",
+      "expected": "unsupported",
+      "assessment": {
+        "repository": "fixture/httpx-default-http2",
+        "requirement_id": "R1",
+        "status": "unsupported",
+        "explanation": "官方文档 docs/http2.md 明确指出：使用 httpx 客户端时 HTTP/2 支持默认未启用（\"HTTP/2 support is not enabled by default\"），原因是 HTTP/1.1 更成熟稳健；未来版本可能改为默认启用。启用需额外配置：先安装可选依赖 `pip install httpx[http2]`，再显式实例化 `httpx.AsyncClient(http2=True)`，或在 CLI 等场景以参数开启。README 仅说明同时支持 HTTP/1.1 与 HTTP/2，未涉及默认开关，不构成支持证据。故该需求（默认开启且无需额外配置）不成立。",
+        "evidence_ids": [
+          "E2",
+          "E3",
+          "E4",
+          "E1"
+        ],
+        "evidence_basis": "explicit_statement",
+        "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+        "conditions": "HTTP/2 需安装可选依赖 httpx[http2] 并显式传入 http2=True（如 httpx.AsyncClient(http2=True)）方可启用；默认使用 HTTP/1.1。文档提到未来版本可能改变默认行为。"
+      },
+      "completion": {
+        "type": "model_submitted",
+        "reason": "reserve_final_requests,tool_budget,token_reserve"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "evidence_gap_or_conditions"
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "verdict": "supported_by_quotes",
+            "reason": "需求要求“HTTP/2 默认开启，无需额外配置”，claim.status=unsupported。摘录 E2/E3 明确“HTTP/2 support is not enabled by default”，E4 说明需安装 httpx[http2] 并显式 AsyncClient(http2=True)。摘录恰好支持“不支持/默认未启用”这一状态；E1 仅提支持 HTTP/1.1 与 HTTP/2，未涉默认开关，不能作为支持证据，符合 claim 说明。版本一致，无矛盾。"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "save_evidence",
+            "message": "摘录必须完整存在于已读取原文"
+          }
+        },
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "save_evidence",
+            "message": "摘录必须完整存在于已读取原文"
+          }
+        }
+      ],
+      "requests": 10,
+      "tokens": {
+        "prompt_tokens": 44397,
+        "completion_tokens": 2128,
+        "total_tokens": 46525
+      },
+      "seconds": 26.49,
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 4,
+        "exact_citations": 4,
+        "supported_citations": 2,
+        "grounded_correct": true
+      }
+    }
+  ]
+}

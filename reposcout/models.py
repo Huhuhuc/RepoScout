@@ -17,6 +17,7 @@ class TaskRequest(BaseModel):
     max_tokens: int = Field(default=60000, ge=4000, le=200000)
     max_followups: int = Field(default=2, ge=0, le=2)
     verify_claims: bool = False
+    strategy: Literal['deep', 'auto'] = 'deep'
 
 
 class EvidenceArgs(BaseModel):

@@ -14,7 +14,7 @@ Windows 双击 `start-reposcout.bat`，首次安装依赖后打开 http://127.0.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.lock
+.\.venv\Scripts\python.exe -m pip install -r requirements.lock.txt
 .\.venv\Scripts\python.exe -m uvicorn reposcout.app:app --host 127.0.0.1 --port 8011
 ```
 
@@ -22,7 +22,7 @@ python -m venv .venv
 
 Windows 自检：`powershell -ExecutionPolicy Bypass -File .\start-reposcout.ps1 -Check`。更换端口加 `-Port 8012`。Linux/macOS 可运行 `bash start-reposcout.sh`（本机尚未实跑该平台）。
 
-本地交付材料：[真实报告](examples/real-investigation.md) · [架构图](docs/architecture.md) · [验收记录](docs/completion-and-evaluation.md) · [截图导览视频](docs/demo/reposcout-walkthrough.mp4)。当前未发布或部署公网。
+本地交付材料：[真实报告](examples/real-investigation.md) · [架构图](docs/architecture.md) · [验收记录](docs/completion-and-evaluation.md) · [截图导览视频](docs/demo/reposcout-walkthrough.mp4)。源码已公开在 GitHub；应用仍为本地运行，未部署公网。
 
 ## 三种模式
 
@@ -86,11 +86,11 @@ DeepSeek 模式新增 `review_evidence` 和 `investigate_gaps`：初步矩阵 �
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-41 项自动测试通过。12 个冻结合成案例已用真实 DeepSeek 跑完：README 单次回答正确 7/12，调查模式正确 12/12；总 Token 分别为 6,133 与 178,197。调查模式可读取额外资料，这不是同资料推理对照，也不代表真实任务准确率 100%。[完整结果与限制](evals/README.md)。
+历史评测记录：12 个冻结合成案例已用真实 DeepSeek 跑完：README 单次回答正确 7/12，调查模式正确 12/12；总 Token 分别为 6,133 与 178,197。调查模式可读取额外资料，这不是同资料推理对照，也不代表真实任务准确率 100%。[完整结果与限制](evals/README.md)。
 
 真实仓库存在性另行验证：搜索返回的 3 个仓库均读取到 GitHub 元数据和 README，不存在的负例返回 404。[验证记录](docs/github-live-verification.json)。可执行 `python -m scripts.verify_live_github` 复查（访问 GitHub，不调用模型）。
 
-`.github/workflows/ci.yml` 已包含 Windows/Linux 与 Python 3.11/3.13 测试矩阵；由于尚未推送，当前仅有本机验证结果。
+`.github/workflows/ci.yml` 已包含 Windows/Linux 与 Python 3.11/3.13 测试矩阵；实际运行状态见 [GitHub Actions](https://github.com/Huhuhuc/RepoScout/actions)。
 
 ## 学习来源
 
@@ -105,3 +105,10 @@ DeepSeek 模式新增 `review_evidence` 和 `investigate_gaps`：初步矩阵 �
 两轮补查、中文上下文、Token 预算、异常检查点与继续调查、版本/条件检查、最终模型复核已实现。59 项自动测试通过。页面刷新后可设置预算和复核开关；中断或部分完成任务有检查点时显示“继续调查”。继续会创建新任务并使用新预算，模型调用可能产生费用。
 
 [最新验收及真实对照结果](docs/reliability-results.md)。同资料的真实仓库小样本中，完整 Agent 和关闭补查均正确 6/6，前者 Token 更多；目前不能证明补查带来额外收益。
+
+
+## 自动策略与当前验收（2026-10-16）
+
+工作台选择 DeepSeek 后，可选择“自动”或“深入”策略。自动策略面向已填写候选、最多三个条件的新任务：先读取 README，一次结构化调用提交原文证据与判断；未知、格式不合法或限制条件缺失时，升级为深入调查。继续调查和复杂任务直接使用深入流程。API 为保持兼容默认 `strategy=deep`，可显式传 `strategy=auto`；仅 DeepSeek 模式使用此选项。
+
+70 项自动测试通过。新增三个真实仓库的 12 项冻结文档任务，已通过完整性校验；完整付费对照尚未运行。两条真实模型复测均回答正确，但仍存在摘录格式纠正和额外调用，尚不能证明整体成本下降。详情见 [本轮结果](docs/adaptive-results.md)。公开仓库 CI 状态请以 Actions 为准。

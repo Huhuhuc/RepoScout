@@ -7,8 +7,10 @@ from .context import snapshot, compact_result
 from .models import (ReportArgs, RepositoryArgs, SearchArgs, EvidenceArgs,
                      DocumentArgs, IssueArgs, FollowupArgs, SourceSliceArgs, OfficialPageArgs)
 from .provider import ModelService
+from .quick import QuickReport
 
 DEFINITIONS = {
+    'assess_readme': (QuickReport, '一次提交所有 README 判断与逐项原文摘录。未知项保留 unknown，程序会转入深入调查。不要生成 evidence_ids。'),
     'read_official_page': (OfficialPageArgs, '读取 official_document_urls 中的仓库已链接文档；外部页版本未固定，需核对适用版本。'),
     'read_repository': (RepositoryArgs, '读取 README；返回资料 ID，正文片段在下一轮 sources 中。'),
     'search_repositories': (SearchArgs, '发现最多三个候选。'),
@@ -67,6 +69,8 @@ def investigate(runtime, service=None):
             tokens=dict(service.usage), context_chars_sent=max(sent_chars, getattr(runtime, 'model_metrics', {}).get('context_chars_sent', 0)))
         return fallback(runtime, reason)
     try:
+        from .quick import prepare, assess
+        quick = prepare(runtime)
         while service.attempts < 12:
             runtime.guard()
             reasons = []
@@ -80,13 +84,17 @@ def investigate(runtime, service=None):
             runtime.closing = bool(reasons) or getattr(runtime, 'closing', False)
             runtime.stop_reason = ','.join(reasons) or getattr(runtime, 'stop_reason', 'research')
             phase = 'finalize' if runtime.closing else 'research'
-            allowed = {'save_evidence', 'read_source', 'submit_report'} if runtime.closing else set(DEFINITIONS)
+            allowed = {'save_evidence', 'read_source', 'submit_report'} if runtime.closing else set(DEFINITIONS) - {'assess_readme'}
+            if quick and not runtime.closing:
+                allowed = {'assess_readme'}
             if not runtime.request.max_followups:
                 allowed.discard('investigate_gaps')
             if service.attempts >= 10 or runtime.calls >= runtime.request.max_tools:
                 allowed = {'submit_report'}
             state = snapshot(runtime, phase, runtime.stop_reason, previous)
             state['budget']['model_requests_remaining'] = 12-service.attempts
+            if quick:
+                state['instruction'] = 'README 已由程序读取。只调用 assess_readme 完整提交逐项判断与原文；缺少依据保持 unknown，程序将自动升级调查。保留配置条件。'
             messages = [{'role':'system', 'content': SYSTEM},
                         {'role':'user', 'content': json.dumps(state, ensure_ascii=False)}]
             chars = sum(len(m['content']) for m in messages)
@@ -112,6 +120,20 @@ def investigate(runtime, service=None):
                     if name not in allowed:
                         raise ValueError('当前已进入收尾阶段，仅允许保存证据、读取已有片段或提交报告')
                     args = json.loads(call['function']['arguments'])
+                    if name == 'assess_readme':
+                        quick = False
+                        proposal = assess(runtime, args)
+                        if proposal is None:
+                            output = {'instruction': '使用已有矩阵和证据补查，不要重复读取 README。'}
+                            previous.append({'tool': name, 'result': output})
+                            runtime.checkpoint()
+                            break
+                        report = finalize_report(runtime, proposal)
+                        if runtime.request.verify_claims:
+                            from .semantic_review import review_report
+                            report = review_report(runtime, service, report)
+                        runtime.emit('submitted', {'message': 'README 快速判断已提交'})
+                        return report
                     if name == 'submit_report':
                         report = finalize_report(runtime, ReportArgs.model_validate(args))
                         if runtime.request.verify_claims:
@@ -121,12 +143,18 @@ def investigate(runtime, service=None):
                         return report
                     output = runtime.call(name, args)
                 except (ValueError, httpx.HTTPError) as error:
+                    if name == 'assess_readme':
+                        quick = False
+                        runtime.routing.update(path='quick_then_deep', reason='invalid_quick_assessment')
                     output = {'error': str(error)[:500] if isinstance(error, ValueError) else type(error).__name__}
                     runtime.emit('tool_error', {'tool':name, 'message':output['error']})
                 previous.append({'tool':name, 'result':compact_result(name, output)})
                 runtime.checkpoint()
             previous = previous[-6:]
             if not calls:
+                if quick:
+                    quick = False
+                    runtime.routing.update(path='quick_then_deep', reason='no_quick_tool_call')
                 previous = [{'error': '请调用 submit_report 或当前阶段允许的工具，不要仅输出文本'}]
             after = progress(runtime)
             no_progress = no_progress+1 if before == after else 0
