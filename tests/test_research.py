@@ -22,6 +22,8 @@ class ResearchTests(unittest.TestCase):
     def runtime(self, max_tools=40):
         r = Runtime(TaskRequest(question='Local model research', mode='github', max_tools=max_tools,
             requirements=[Requirement(id='R1', text='local models')]), lambda: None, lambda *a: None)
+        r.read_documentation=Mock(return_value={'source_ids':[]})
+        r.read_releases=Mock(return_value={'source_ids':[]})
         r.repositories.append('a/b')
         r.add_source('a/b', 'readme', 'README', 'https://github.com/a/b', 'Research agent')
         return r

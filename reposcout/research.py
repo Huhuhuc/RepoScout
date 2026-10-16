@@ -32,7 +32,7 @@ def research_state(runtime, assessments):
                                 before=old['status'], after=item['status'], evidence_ids=item['evidence_ids']))
     return dict(gaps=gaps_for(runtime, assessments), changes=changes,
                 reviews=copy.deepcopy(runtime.reviews), followups=copy.deepcopy(runtime.followups),
-                rounds_used=len(runtime.followups), rounds_limit=2)
+                rounds_used=len(runtime.followups), rounds_limit=runtime.request.max_followups)
 
 
 class ResearchMixin:
@@ -46,13 +46,13 @@ class ResearchMixin:
                       gaps=gaps_for(self, report['assessments']), summary=summary)
         self.reviews.append(copy.deepcopy(review))
         self.emit('review', dict(message=f"第 {review['index']} 次证据检查：{len(review['gaps'])} 个缺口", **review))
-        return dict(gaps=review['gaps'], followup_rounds_remaining=2-len(self.followups),
+        return dict(gaps=review['gaps'], followup_rounds_remaining=self.request.max_followups-len(self.followups),
                     instruction='对缺口调用 investigate_gaps；新资料不是证据，请准确摘录后更新矩阵。')
 
     def investigate_gaps(self, targets):
         if not self.reviews:
             raise ValueError('必须先调用 review_evidence 保存初步矩阵')
-        if len(self.followups) >= 2:
+        if len(self.followups) >= self.request.max_followups:
             raise ValueError('已达到两轮补查上限；未解决项应保留 unknown 或 conflict')
         if self.followups and self.followups[-1]['review_index'] == len(self.reviews):
             raise ValueError('每轮补查后必须先更新 review_evidence')
@@ -84,10 +84,19 @@ class ResearchMixin:
                     source = self.call('read_document', {'repository': target['repository'], 'path': target['document_path']})
                     action['source_ids'] = [source['id']]
                 else:
-                    result = self.call('search_issues', {'repository': target['repository'], 'query': target['query']})
-                    action['source_ids'] = result['source_ids']
-                    if result.get('error'):
-                        action['error'] = result['error']
+                    errors = []
+                    # Official sources first, then community clues. Each read has its own budget.
+                    for tool in ('read_documentation', 'read_releases', 'search_issues'):
+                        args = {'repository': target['repository']}
+                        if tool == 'search_issues': args['query'] = target['query']
+                        try:
+                            result = self.call(tool, args)
+                            action['source_ids'].extend(result.get('source_ids', []))
+                            if result.get('error'): errors.append(result['error'])
+                        except (ValueError, httpx.HTTPError) as error:
+                            errors.append(type(error).__name__)
+                    action['source_ids'] = list(dict.fromkeys(action['source_ids']))
+                    if errors: action['error'] = '; '.join(errors)
                 # Candidate snippets are only retrieval hints, never saved as evidence automatically.
                 terms = signature[2].split()
                 ranked = []
@@ -102,7 +111,7 @@ class ResearchMixin:
                 for _, source, offset in sorted(ranked, key=lambda row: -row[0])[:4]:
                     action['candidates'].append(dict(source_id=source['id'], kind=source['kind'],
                         quote=source['text'][offset:offset+600], needs_review=True))
-                action['status'] = 'partial' if action.get('error') else 'collected' if action['source_ids'] else 'empty'
+                action['status'] = ('partial' if action['source_ids'] else 'failed') if action.get('error') else 'collected' if action['source_ids'] else 'empty'
             except (ValueError, httpx.HTTPError) as error:
                 action['status'], action['error'] = 'failed', type(error).__name__
             except TimeoutError:
@@ -110,4 +119,4 @@ class ResearchMixin:
                 raise
             finally:
                 self.emit('followup', dict(message=f"补查第 {round_['index']} 轮 · {target['repository']} · {target['requirement_id']}", **action))
-        return {**copy.deepcopy(round_), 'next_action': '先保存确切摘录（如有），再调用 review_evidence 更新完整矩阵；未知项允许保持 unknown，之后调用 submit_report。'}
+        return {**copy.deepcopy(round_), 'next_action': '保存确切摘录后更新矩阵；仍有缺口且有新查询方向时 review_evidence 后补查下一轮，否则直接 submit_report。未知项允许保持 unknown。'}

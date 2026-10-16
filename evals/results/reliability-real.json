@@ -1,0 +1,658 @@
+{
+  "dataset": "real-cases.json",
+  "dataset_sha256": "ca8353c8ef7580560f25fc7e1815c4de66f2316d764b5e9f0e8b7fe9c6dd2fde",
+  "scope": "Same frozen source pool. Single-answer baseline receives all texts; agents retrieve from that pool. No-followup disables only investigate_gaps, not direct retrieval. Small repeated regression, not a population accuracy estimate.",
+  "repeats": 2,
+  "rows": [
+    {
+      "id": "real-ollama",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "README 明确说明该工具使用由 Ollama（或 LMStudio）托管的任意 LLM，并提供了「Selecting local model with Ollama」的配置步骤（如 LLM_PROVIDER=ollama、OLLAMA_BASE_URL、LOCAL_LLM），Docker 部分也演示了 LLM_PROVIDER=ollama 与 OLLAMA_BASE_URL 的用法。因此该版本支持使用 Ollama 托管的本地模型。",
+          "quotes": [
+            "Local Deep Researcher is a fully local web research assistant that uses any LLM hosted by [Ollama](https://ollama.com/search) or [LMStudio](https://lmstudio.ai/).",
+            "### Selecting local model with Ollama",
+            "LLM_PROVIDER=ollama\nOLLAMA_BASE_URL=\"http://localhost:11434\" # Ollama service endpoint, defaults to `http://localhost:11434` \nLOCAL_LLM=model # the model to use, defaults to `llama3.2` if not set"
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3605,
+          "completion_tokens": 281,
+          "total_tokens": 3886
+        },
+        "model_requests": 1,
+        "seconds": 2.43
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-ollama",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 开头明确声明 Local Deep Researcher 是「fully local web research assistant that uses any LLM hosted by Ollama or LMStudio」，并设有专门的「Selecting local model with Ollama」章节，给出下载 Ollama、ollama pull 本地模型以及 LLM_PROVIDER=ollama、OLLAMA_BASE_URL、LOCAL_LLM 等配置项，明确支持使用 Ollama 托管的本地模型。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README @03537326ffa0dd90c9702bece2f3aeba5d84162a",
+            "conditions": "需本地运行 Ollama 服务；配置 LLM_PROVIDER=ollama，OLLAMA_BASE_URL 默认 http://localhost:11434，LOCAL_LLM 未设置时默认 llama3.2。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 15922,
+          "completion_tokens": 1211,
+          "total_tokens": 17133
+        },
+        "model_requests": 5,
+        "seconds": 15.2
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-ollama",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 明确说明该助手可使用由 Ollama 托管的任意 LLM（\"uses any LLM hosted by Ollama or LMStudio\"），并给出选择本地 Ollama 模型的操作步骤与配置项，构成对该需求的直接原文支持。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README @ 03537326ffa0dd90c9702bece2f3aeba5d84162a（未标注具体版本号）",
+            "conditions": "需本地安装 Ollama 并 pull 模型；可通过 .env 设置 LLM_PROVIDER=ollama、OLLAMA_BASE_URL（默认 http://localhost:11434）、LOCAL_LLM（默认 llama3.2）。README 未声明版本限制（如最低版本），故按当前 README 描述认定。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 17186,
+          "completion_tokens": 1263,
+          "total_tokens": 18449
+        },
+        "model_requests": 5,
+        "seconds": 15.77
+      }
+    },
+    {
+      "id": "real-json",
+      "repeat": 1,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "README 明确警告 gpt-oss 模型在 Ollama 中不支持 JSON mode，与需求相反。需求版本（该 commit）中的说明恰好否定了此说法，故为 unsupported。",
+          "quotes": [
+            "⚠️ **WARNING (8/6/25)**: The `gpt-oss` models do not support JSON mode in Ollama. Select `use_tool_calling` in the configuration to use tool calling instead of JSON mode.",
+            "8/6/25: Added support for tool calling and [gpt-oss](https://openai.com/index/introducing-gpt-oss/)."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3611,
+          "completion_tokens": 191,
+          "total_tokens": 3802
+        },
+        "model_requests": 1,
+        "seconds": 2.77
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-json",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "README 的 Updates 段落（8/6/25）以警告形式明确指出 gpt-oss 模型在 Ollama 中不支持 JSON mode，并建议改用 tool calling，属原文明确否定该需求，因此该版本说明并未声称支持，而是明确说明不支持。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README 8/6/25 更新说明所述版本",
+            "conditions": "适用于 8/6/25 更新中描述的 gpt-oss 模型与 Ollama 组合；同一段落也说明可改用 use_tool_calling 配置走 tool calling 路径。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 22158,
+          "completion_tokens": 1071,
+          "total_tokens": 23229
+        },
+        "model_requests": 7,
+        "seconds": 18.6
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-json",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "版本说明在 8/6/25 的 Updates 中先写“Added support for tool calling and gpt-oss”，但紧接着以警告明确否定本题断言：`gpt-oss` 模型在 Ollama 中不支持 JSON mode，并要求在配置中选择 use_tool_calling 替代 JSON mode。因此“该版本说明称 gpt-oss 模型在 Ollama 中支持 JSON mode”与原文相反，判定为不支持。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "8/6/25 版本说明（README Updates 条目）",
+            "conditions": "适用于 gpt-oss 模型经由 Ollama 使用；该说明建议改用 tool calling 而非 JSON mode。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 31213,
+          "completion_tokens": 1169,
+          "total_tokens": 32382
+        },
+        "model_requests": 9,
+        "seconds": 24.91
+      }
+    },
+    {
+      "id": "real-pdf",
+      "repeat": 1,
+      "expected": "unknown",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "README 仅描述了以用户给定主题进行网络搜索研究的流程，输入是 topic，资料收集方式为搜索引擎（DuckDuckGo、SearXNG、Tavily、Perplexity），并未提及上传 PDF 文件作为研究资料的功能。因此该需求在提供的资料中无证据支持（不等于已被否定，仅缺证据/未提及）。",
+          "quotes": [
+            "Give it a topic and it will generate a web search query, gather web search results, summarize the results of web search, reflect on the summary to examine knowledge gaps, generate a new search query to address the gaps, and repeat for a user-defined number of cycles.",
+            "By default, it will use [DuckDuckGo](https://duckduckgo.com/) for web search, which does not require an API key. But you can also use [SearXNG](https://docs.searxng.org/), [Tavily](https://tavily.com/) or [Perplexity](https://www.perplexity.ai/hub/blog/introducing-the-sonar-pro-api) by adding their API keys to the environment file."
+          ]
+        },
+        "score": {
+          "correct": false,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 3604,
+          "completion_tokens": 300,
+          "total_tokens": 3904
+        },
+        "model_requests": 1,
+        "seconds": 3.38
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "已读取的 README 片段仅描述本地网络研究助手定位、网络搜索-汇总-反思的迭代工作流，以及 8/6/25 新增 tool calling 与 gpt-oss 支持的更新说明，未出现任何关于上传 PDF 文件作为研究资料的表述，也未见明确否认。因无明确依据，不能判定 supported；同时功能列表未列出亦不构成 unsupported。故记为 unknown（absence_of_evidence）。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": "无留存原文证据；finalize 阶段且工具预算耗尽，未能完成针对 PDF/上传相关关键词的检索。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 21044,
+          "completion_tokens": 1379,
+          "total_tokens": 22423
+        },
+        "model_requests": 7,
+        "seconds": 22.02
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "README 全文（含 Updates 部分）未提及 PDF 上传或本地文件上传能力；仅描述基于 Ollama/LMStudio 的网页搜索研究工作流。缺少可支持或否定的原文依据，且工具预算耗尽无法进一步取证，故记为 unknown。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests,tool_budget"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 29289,
+          "completion_tokens": 1212,
+          "total_tokens": 30501
+        },
+        "model_requests": 10,
+        "seconds": 29.64
+      }
+    },
+    {
+      "id": "real-ollama",
+      "repeat": 2,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "README 明确说明该助手使用由 Ollama 或 LMStudio 托管的任意 LLM，并提供了用 Ollama 选择本地模型的配置说明（LLM_PROVIDER=ollama、OLLAMA_BASE_URL、LOCAL_LLM），Docker 部分也给出 LLM_PROVIDER=ollama 示例。但资料未声明具体版本号，故\"该版本\"应理解为所引用 README 对应的提交版本（ref 03537326...）。",
+          "quotes": [
+            "Local Deep Researcher is a fully local web research assistant that uses any LLM hosted by [Ollama](https://ollama.com/search) or [LMStudio](https://lmstudio.ai/).",
+            "### Selecting local model with Ollama",
+            "LLM_PROVIDER=ollama\nOLLAMA_BASE_URL=\"http://localhost:11434\" # Ollama service endpoint, defaults to `http://localhost:11434` \nLOCAL_LLM=model # the model to use, defaults to `llama3.2` if not set",
+            "-e LLM_PROVIDER=ollama \\"
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 4,
+          "exact_citations": 4,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3605,
+          "completion_tokens": 298,
+          "total_tokens": 3903
+        },
+        "model_requests": 1,
+        "seconds": 3.26
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-ollama",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 开篇明确说明 Local Deep Researcher 可使用由 Ollama 托管的任意 LLM；正文专设“Selecting local model with Ollama”章节，指导下载 Ollama、通过 ollama pull 拉取本地模型，并给出 .env 中 LLM_PROVIDER=ollama、OLLAMA_BASE_URL（默认 http://localhost:11434）、LOCAL_LLM 等配置项。依据充分，直接支持该版本可使用 Ollama 托管的本地模型。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README @ 03537326ffa0dd90c9702bece2f3aeba5d84162a",
+            "conditions": "需在本地运行 Ollama 服务（默认端点 http://localhost:11434）；通过 .env 设置 LLM_PROVIDER=ollama 并用 LOCAL_LLM 指定模型，未设置时默认 llama3.2。README 同时提到 gpt-oss 模型在 Ollama 中不支持 JSON 模式，需改用 use_tool_calling。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 25174,
+          "completion_tokens": 1618,
+          "total_tokens": 26792
+        },
+        "model_requests": 7,
+        "seconds": 22.46
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-ollama",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 开头明确说明该助手使用任何由 Ollama 托管的 LLM，并设有“Selecting local model with Ollama”章节，给出下载 Ollama、拉取本地模型及 .env 配置的完整步骤，属明确支持。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "",
+            "conditions": "需本地安装并运行 Ollama；需在 .env 中按需设置 LLM_PROVIDER=ollama、OLLAMA_BASE_URL（默认 http://localhost:11434）、LOCAL_LLM（默认 llama3.2）；这些值优先于 configuration.py 中的默认配置。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget,evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 30436,
+          "completion_tokens": 1613,
+          "total_tokens": 32049
+        },
+        "model_requests": 8,
+        "seconds": 26.48
+      }
+    },
+    {
+      "id": "real-json",
+      "repeat": 2,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "README 明确说明 gpt-oss 模型在 Ollama 中不支持 JSON mode，并要求改用 tool calling，因此“支持 JSON mode”与资料相反。",
+          "quotes": [
+            "⚠️ **WARNING (8/6/25)**: The `gpt-oss` models do not support JSON mode in Ollama. Select `use_tool_calling` in the configuration to use tool calling instead of JSON mode.",
+            "* 8/6/25: Added support for tool calling and [gpt-oss](https://openai.com/index/introducing-gpt-oss/)."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3611,
+          "completion_tokens": 184,
+          "total_tokens": 3795
+        },
+        "model_requests": 1,
+        "seconds": 4.13
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-json",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "README 更新说明（8/6/25）明确警告：gpt-oss 模型在 Ollama 中不支持 JSON mode，并建议改用 tool calling。属原文明确否定，需求 R1 不成立。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README 8/6/25 更新说明所列版本",
+            "conditions": "针对 gpt-oss 模型在 Ollama 中使用的场景；原文建议改在配置中选择 use_tool_calling 以替代 JSON mode。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 14788,
+          "completion_tokens": 930,
+          "total_tokens": 15718
+        },
+        "model_requests": 5,
+        "seconds": 13.66
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-json",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "需求声称「该版本说明 gpt-oss 模型在 Ollama 中支持 JSON mode」。README 的 8/6/25 更新项在同一处明确警告：gpt-oss 模型在 Ollama 中不支持 JSON mode，并建议在配置中选择 use_tool_calling 改用 tool calling 替代 JSON mode。原文为明确否定陈述，与需求表述相反，故判 unsupported。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README 03537326ffa0dd90c9702bece2f3aeba5d84162a（8/6/25 更新项）",
+            "conditions": "仅针对 Ollama 提供方下的 gpt-oss 模型；如需结构化输出应改用 tool calling（use_tool_calling）"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 26599,
+          "completion_tokens": 1389,
+          "total_tokens": 27988
+        },
+        "model_requests": 8,
+        "seconds": 23.74
+      }
+    },
+    {
+      "id": "real-pdf",
+      "repeat": 2,
+      "expected": "unknown",
+      "same_sources": {
+        "answer": {
+          "status": "unknown",
+          "explanation": "README 未提及任何上传 PDF 文件作为研究资料的功能。README 描述的输入只有用户提供的主题（topic），研究流程为生成搜索查询、收集网页搜索结果、总结、反思知识缺口、再生成新查询并循环；搜索工具选项为 DuckDuckGo、SearXNG、Tavily、Perplexity，均无上传本地 PDF 的相关说明。因此在所提供的资料中无法证实该版本支持上传 PDF 文件。",
+          "quotes": [
+            "Give it a topic and it will generate a web search query, gather web search results, summarize the results of web search, reflect on the summary to examine knowledge gaps, generate a new search query to address the gaps, and repeat for a user-defined number of cycles.",
+            "By default, it will use [DuckDuckGo](https://duckduckgo.com/) for web search, which does not require an API key. But you can also use [SearXNG](https://docs.searxng.org/), [Tavily](https://tavily.com/) or [Perplexity](https://www.perplexity.ai/hub/blog/introducing-the-sonar-pro-api) by adding their API keys to the environment file.",
+            "- Given a user-provided topic, use a local LLM (via [Ollama](https://ollama.com/search) or [LMStudio](https://lmstudio.ai/)) to generate a web search query"
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3604,
+          "completion_tokens": 361,
+          "total_tokens": 3965
+        },
+        "model_requests": 1,
+        "seconds": 3.76
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "当前 README 片段（前言与更新/教程部分）未提及上传 PDF 文件作为研究资料的能力；资料中不存在关于 PDF 上传的任何明确肯定或否定陈述。功能列表未列出该项不构成不支持，故记为未知。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests,tool_budget"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 27770,
+          "completion_tokens": 1629,
+          "total_tokens": 29399
+        },
+        "model_requests": 10,
+        "seconds": 31.58
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/real-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "已读取 README 全文片段（含开头介绍、更新记录、输出与部署章节），未发现任何关于上传 PDF 文件作为研究资料的说明；该工具定位为基于网络搜索（web search）的研究助手，资料收集方式为搜索引擎结果，但 README 未明确否定 PDF 上传能力，故记为未知。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests,tool_budget"
+          },
+          "rounds": 0
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 30089,
+          "completion_tokens": 1224,
+          "total_tokens": 31313
+        },
+        "model_requests": 10,
+        "seconds": 28.0
+      }
+    }
+  ],
+  "model": "deepseek-flash",
+  "summary": {
+    "same_sources": {
+      "tasks": 6,
+      "accuracy": 0.8333333333333334,
+      "grounded_accuracy": 0.8333333333333334,
+      "completion_rate": 1.0,
+      "citation_exactness": 1.0,
+      "citation_support": 0.25,
+      "model_requests": 6,
+      "total_tokens": 23255,
+      "seconds": 19.73
+    },
+    "no_followup": {
+      "tasks": 6,
+      "accuracy": 1.0,
+      "grounded_accuracy": 1.0,
+      "completion_rate": 1.0,
+      "citation_exactness": 1.0,
+      "citation_support": 0.5714285714285714,
+      "model_requests": 41,
+      "total_tokens": 134694,
+      "seconds": 123.52
+    },
+    "agent": {
+      "tasks": 6,
+      "accuracy": 1.0,
+      "grounded_accuracy": 1.0,
+      "completion_rate": 1.0,
+      "citation_exactness": 1.0,
+      "citation_support": 0.5714285714285714,
+      "model_requests": 50,
+      "total_tokens": 172682,
+      "seconds": 148.54
+    }
+  }
+}

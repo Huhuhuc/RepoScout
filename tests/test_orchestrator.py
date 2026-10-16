@@ -28,6 +28,8 @@ class OrchestratorTests(unittest.TestCase):
     def runtime(self, tools=20):
         r = Runtime(TaskRequest(question='Check PDF', requirements=[Requirement(id='R1',text='PDF')],
             repositories=['a/b'], mode='github', max_tools=tools),lambda:None,lambda *a:None)
+        r.read_documentation=Mock(return_value={'source_ids':[]})
+        r.read_releases=Mock(return_value={'source_ids':[]})
         r.repositories=['a/b']
         r.add_source('a/b','readme','README','https://github.com/a/b','An agent.')
         return r
@@ -89,4 +91,4 @@ class OrchestratorTests(unittest.TestCase):
         report=deepseek_agent(r,service)
         self.assertEqual(report['completion']['type'],'model_submitted')
         self.assertEqual(service.attempts,3)
-        self.assertNotIn('investigate_gaps',service.allowed[-1])
+        self.assertIn('investigate_gaps',service.allowed[-1])

@@ -3,10 +3,16 @@ import json
 import re
 
 
+def terms_for(text):
+    english = re.findall(r'[a-zA-Z][a-zA-Z0-9_-]{2,}', text)
+    chinese = re.findall(r'[\u4e00-\u9fff]{2,}', text)
+    grams = [part[i:i+2] for part in chinese for i in range(len(part)-1)]
+    return list(dict.fromkeys(english + chinese + grams))[:80]
+
+
 def excerpts(source, request):
     text = source['text']
-    terms = set(re.findall(r'[a-zA-Z][a-zA-Z0-9_-]{2,}', request.question + ' '.join(r.text for r in request.requirements)))
-    terms = sorted(terms, key=lambda term: (-len(term), term))[:16]
+    terms = terms_for(' '.join(r.text for r in request.requirements) + ' ' + request.question)
     pieces = [{'offset': 0, 'text': text[:1400]}]
     for term in terms:
         at = text.lower().find(term.lower(), 1400)
@@ -20,12 +26,17 @@ def excerpts(source, request):
 
 
 def snapshot(runtime, phase, reason, previous):
-    sources, remaining = [], 10000
+    from .official_docs import linked_urls
+    sources = []
+    quota = max(1, 10000 // max(1, len(runtime.sources)))
     for source in runtime.sources.values():
+        remaining = quota
         entry = {k: source.get(k) for k in ('id','repository','kind','title','ref')}
         entry['total_chars'] = len(source['text'])
         entry['excerpts'] = []
-        for piece in excerpts(source, runtime.request):
+        pieces = excerpts(source, runtime.request)
+        # Prefer matching windows, then introductory context, within each source's fair quota.
+        for piece in pieces[1:] + pieces[:1]:
             if remaining <= 0:
                 break
             snippet = piece['text'][:remaining]
@@ -36,8 +47,9 @@ def snapshot(runtime, phase, reason, previous):
     return {
         'task': runtime.request.model_dump(), 'phase': phase, 'stop_reason': reason,
         'budget': {'tools_remaining': runtime.request.max_tools-runtime.calls,
-                   'followups_remaining': 2-len(runtime.followups)},
+                   'followups_remaining': runtime.request.max_followups-len(runtime.followups)},
         'sources': sources, 'evidence': list(runtime.evidence.values()),
+        'official_document_urls': {repo: linked_urls(runtime, repo)[:8] for repo in runtime.repositories},
         'latest_review': runtime.reviews[-1] if runtime.reviews else None,
         'followups': [{'round': f['index'], 'actions': [
             {k:a.get(k) for k in ('repository','requirement_id','query','document_path','status','source_ids','error')}

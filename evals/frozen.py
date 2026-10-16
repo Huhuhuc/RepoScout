@@ -23,11 +23,17 @@ class FrozenRuntime(Runtime):
     def fetch(self, *args, **kwargs):
         raise AssertionError('冻结评测禁止外部资料网络访问')
 
+    def read_official_page(self, repository, url):
+        self.check_repo(repository)
+        item=next((s for s in self.case['sources'] if s.get('url')==url),None)
+        if not item:raise ValueError('冻结资料中未保存该官方页面；禁止联网读取')
+        return self.add(item)
+
     def add(self, item):
         repo=self.request.repositories[0]
         if repo not in self.repositories:self.repositories.append(repo)
-        return self.add_source(repo,item['kind'],item['path'],f'https://example.invalid/{self.case["id"]}/{item["path"]}',
-                               item['text'],ref='frozen-v1',metadata={'synthetic':True})
+        return self.add_source(repo,item['kind'],item['path'],item.get('url',f'https://example.invalid/{self.case["id"]}/{item["path"]}'),
+                               item['text'],ref=item.get('ref','frozen-v1'),metadata={'synthetic':not bool(item.get('url'))})
 
     def read_repository(self, repository):
         self.check_repo(repository)

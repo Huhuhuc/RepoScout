@@ -31,6 +31,7 @@ def init():
         CREATE TABLE IF NOT EXISTS tasks(id TEXT PRIMARY KEY, created TEXT, status TEXT, request TEXT, result TEXT, error TEXT);
         CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT, task_id TEXT, created TEXT, kind TEXT, payload TEXT);
         CREATE INDEX IF NOT EXISTS events_task ON events(task_id,id);
+        CREATE TABLE IF NOT EXISTS checkpoints(task_id TEXT PRIMARY KEY, payload TEXT NOT NULL, updated TEXT NOT NULL);
         ''')
         con.execute("UPDATE tasks SET status='interrupted', error='服务重启，任务已中断；可重新创建任务。' WHERE status IN ('queued','running')")
 
@@ -56,6 +57,17 @@ def get(ident):
 def recent():
     with connect() as con:
         return [dict(r) for r in con.execute('SELECT id,created,status FROM tasks ORDER BY created DESC LIMIT 40')]
+
+
+def checkpoint(ident, payload):
+    with connect() as con:
+        con.execute('INSERT OR REPLACE INTO checkpoints VALUES(?,?,?)', (ident, json.dumps(payload, ensure_ascii=False), now()))
+
+
+def load_checkpoint(ident):
+    with connect() as con:
+        row = con.execute('SELECT payload FROM checkpoints WHERE task_id=?', (ident,)).fetchone()
+    return json.loads(row['payload']) if row else None
 
 
 def claim(ident):

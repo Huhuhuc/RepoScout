@@ -32,6 +32,9 @@ class Runtime(CollectionMixin, ResearchMixin):
         self.reviews, self.followups = [], []
         self.read_cache = {}
         self.cache_hits = 0
+        self.read_windows = set()
+        self.query_counts = {}
+        self.checkpoint = lambda: None
         self.calls = self.http_calls = 0
         self.started = time.monotonic()
         self.headers = {'Accept': 'application/vnd.github+json', 'User-Agent': 'RepoScout/0.1'}
@@ -142,19 +145,26 @@ class Runtime(CollectionMixin, ResearchMixin):
             if found < 0:
                 return {'source_id': source_id, 'found': False, 'total_chars': len(source['text'])}
             offset = max(0, found - 150)
+        if offset < len(source['text']):
+            self.read_windows.add((source_id, offset, min(offset+2400, len(source['text']))))
         return {'source_id': source_id, 'offset': offset, 'text': source['text'][offset:offset+2400],
                 'total_chars': len(source['text']), 'next_offset': min(offset+2400, len(source['text']))}
+
+    def read_official_page(self, repository, url):
+        from .official_docs import read_page
+        return read_page(self, normalize_repository(repository), url)
 
     def call(self, name, args):
         self.guard()
         if self.calls >= self.request.max_tools:
             raise TimeoutError('工具调用预算已耗尽')
         self.calls += 1
-        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs, ReportArgs, FollowupArgs, SourceSliceArgs
+        from .models import SearchArgs, RepositoryArgs, EvidenceArgs, DocumentArgs, IssueArgs, ReportArgs, FollowupArgs, SourceSliceArgs, OfficialPageArgs
         schemas = {'search_repositories': SearchArgs, 'read_repository': RepositoryArgs, 'save_evidence': EvidenceArgs,
                    'read_documentation': RepositoryArgs, 'read_document': DocumentArgs,
                    'read_releases': RepositoryArgs, 'search_issues': IssueArgs,
-                   'review_evidence': ReportArgs, 'investigate_gaps': FollowupArgs, 'read_source': SourceSliceArgs}
+                   'review_evidence': ReportArgs, 'investigate_gaps': FollowupArgs, 'read_source': SourceSliceArgs,
+                   'read_official_page': OfficialPageArgs}
         if name not in schemas:
             raise ValueError('未知工具')
         parsed = schemas[name].model_validate(args).model_dump()
@@ -162,8 +172,11 @@ class Runtime(CollectionMixin, ResearchMixin):
         import json
         import copy
         key = name + json.dumps(parsed, sort_keys=True, ensure_ascii=False)
-        cacheable = name in ('read_repository', 'read_documentation', 'read_document', 'read_releases', 'search_issues', 'read_source')
+        cacheable = name in ('read_repository', 'read_documentation', 'read_document', 'read_releases', 'search_issues', 'read_source', 'read_official_page')
         if cacheable and key in self.read_cache:
+            self.query_counts[key] = self.query_counts.get(key, 0) + 1
+            if self.query_counts[key] > 1:
+                raise ValueError('该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询')
             self.cache_hits += 1
             self.emit('cache_hit', {'tool': name, 'message': '复用本任务已获取的相同查询结果'})
             return copy.deepcopy(self.read_cache[key])

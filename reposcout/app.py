@@ -76,7 +76,31 @@ def task(ident: str):
     item = store.get(ident)
     if not item:
         raise HTTPException(404,'任务不存在')
+    saved = store.load_checkpoint(ident)
+    item['resumable'] = item['status'] in ('partial', 'failed', 'interrupted', 'cancelled') and bool(saved)
+    if item['resumable'] and not item['result']:
+        from .tools import Runtime
+        from .checkpoint import restore
+        from .orchestrator import fallback
+        runtime = Runtime(TaskRequest.model_validate(item['request']), lambda: None, lambda *args: None)
+        restore(runtime, saved)
+        item['result'] = fallback(runtime, 'interrupted_checkpoint')
     return item
+
+
+@app.post('/api/tasks/{ident}/resume', status_code=201)
+def resume(ident: str):
+    original = task(ident)
+    if not original['resumable']:
+        raise HTTPException(409, '该任务没有可继续的检查点')
+    request = TaskRequest.model_validate(original['request'])
+    if request.mode == 'deepseek' and not settings().key:
+        raise HTTPException(422, '继续调查需要已配置的模型密钥')
+    restored = store.load_checkpoint(ident)
+    new_id = store.create(request.model_dump())
+    store.event(new_id, 'resumed', {'message': '复用已保存资料，使用新一轮预算；模型调用可能产生费用', 'parent_task_id': ident})
+    pool.submit(run, new_id, request, restored)
+    return {'id': new_id, 'parent_task_id': ident}
 
 
 @app.post('/api/tasks/{ident}/cancel')

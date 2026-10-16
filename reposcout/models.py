@@ -14,6 +14,9 @@ class TaskRequest(BaseModel):
     repositories: list[str] = Field(default_factory=list, max_length=3)
     mode: Literal['demo', 'github', 'deepseek'] = 'demo'
     max_tools: int = Field(default=20, ge=1, le=40)
+    max_tokens: int = Field(default=60000, ge=4000, le=200000)
+    max_followups: int = Field(default=2, ge=0, le=2)
+    verify_claims: bool = False
 
 
 class EvidenceArgs(BaseModel):
@@ -35,6 +38,8 @@ class Assessment(BaseModel):
     explanation: str = Field(max_length=1000)
     evidence_ids: list[str] = Field(default_factory=list)
     evidence_basis: Literal['explicit_statement', 'absence_of_evidence', 'uncertain'] = 'uncertain'
+    applicable_version: str = Field(default='', max_length=120)
+    conditions: str = Field(default='', max_length=500)
 
 
 class ReportArgs(BaseModel):
@@ -52,6 +57,10 @@ class SearchArgs(BaseModel):
 
 class DocumentArgs(RepositoryArgs):
     path: str = Field(min_length=1, max_length=300)
+
+
+class OfficialPageArgs(RepositoryArgs):
+    url: str = Field(min_length=1, max_length=1000)
 
 
 class IssueArgs(RepositoryArgs):

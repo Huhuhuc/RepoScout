@@ -43,10 +43,13 @@ def validate_report(runtime, proposed):
             result.append(a.model_dump())
             if requirement.mandatory and a.status == 'unsupported' and repo not in excluded:
                 excluded.append(repo)
+    from .verification import inspect_claims
     return {'summary': proposed.summary, 'assessments': result, 'excluded': excluded,
+            'verification': inspect_claims(runtime, result),
             'research': research_state(runtime, result), 'collections': runtime.collections, 'sources': list(runtime.sources.values()), 'evidence': list(runtime.evidence.values()),
             'requirements': [r.model_dump() for r in runtime.request.requirements],
-            'mode': runtime.request.mode, 'metrics': {'tool_calls': runtime.calls, 'http_requests': runtime.http_calls, 'cache_hits': runtime.cache_hits, **getattr(runtime, 'model_metrics', {})},
+            'mode': runtime.request.mode, 'prior_run_metrics': getattr(runtime, 'prior_metrics', {}),
+            'metrics': {'tool_calls': runtime.calls, 'http_requests': runtime.http_calls, 'cache_hits': runtime.cache_hits, **getattr(runtime, 'model_metrics', {})},
             'limitations': ['仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。', '候选范围有限，未执行全网搜索；不验证 README 中的性能声明。']}
 
 
@@ -54,7 +57,7 @@ def finalize_report(runtime, proposed):
     report = validate_report(runtime, proposed)
     if not runtime.sources:
         raise ValueError('尚未读取任何资料，不能提交调查报告')
-    if report['research']['gaps'] and not runtime.followups and not getattr(runtime, 'closing', False) and runtime.calls+2 <= runtime.request.max_tools:
+    if report['research']['gaps'] and runtime.request.max_followups and not runtime.followups and not getattr(runtime, 'closing', False) and runtime.calls+4 <= runtime.request.max_tools:
         runtime.review_evidence(proposed.assessments, proposed.summary)
         raise ValueError('已保存初步矩阵。请对一个缺口调用 investigate_gaps；其后直接 submit_report，最终复查由程序完成。')
     runtime.review_evidence(proposed.assessments, proposed.summary)
@@ -105,13 +108,17 @@ def deepseek_agent(runtime, service=None):
     return investigate(runtime, service)
 
 
-def run(ident, request):
+def run(ident, request, restored=None):
     if not store.claim(ident):
         return
     def check():
         if store.get(ident)['status'] != 'running':
             raise Cancelled()
     runtime = Runtime(request, check, lambda kind,payload: store.event(ident,kind,payload))
+    from .checkpoint import dump, restore
+    if restored:
+        restore(runtime, restored)
+    runtime.checkpoint = lambda: store.checkpoint(ident, dump(runtime))
     store.event(ident,'plan',{'message':'读取候选资料 → 保存需求证据 → 生成比较矩阵', 'mode':request.mode})
     try:
         report = {'demo':demo_agent,'github':github_agent,'deepseek':deepseek_agent}[request.mode](runtime)
@@ -123,7 +130,11 @@ def run(ident, request):
         partial = validate_report(runtime, ReportArgs(assessments=runtime.reviews[-1]['assessments'] if runtime.reviews else [],summary='预算耗尽，保留已收集资料和最近一次通过结构校验的判断；仍需语义复核。'))
         store.finish(ident,'partial',partial,str(error))
     except Exception as error:
-        store.finish(ident,'failed',error=str(error)[:500] if isinstance(error, ValueError) else type(error).__name__)
+        from .orchestrator import fallback
+        partial = fallback(runtime, 'runtime_error')
+        store.finish(ident,'partial' if runtime.sources else 'failed',partial,type(error).__name__)
+    finally:
+        runtime.checkpoint()
 
 
 def markdown(report):
@@ -148,6 +159,11 @@ def markdown(report):
     for round_ in research.get('followups', []):
         for action in round_['actions']:
             lines.append(f"- 第 {round_['index']} 轮：{action['repository']} / {action['requirement_id']}，查询 {action['query']}，状态 {action['status']}")
+    lines += ['', '## 证据检查（非语义证明）']
+    if report.get('semantic_review'):
+        lines.append(json.dumps(report['semantic_review'], ensure_ascii=False))
+    for check in report.get('verification', []):
+        lines.append(json.dumps(check, ensure_ascii=False))
     lines += ['', '## 采集来源']
     for source in report['sources']:
         lines += [f"- {source['id']} · {source.get('kind', 'readme')} · {source.get('title', source['repository'])} · {source['url']} · ref: {source['ref']} · 抓取: {source['fetched_at']}"]
