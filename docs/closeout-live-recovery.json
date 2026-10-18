@@ -1,0 +1,23 @@
+{
+  "parent_task_id": "e50e6c383fd6465880d5ef20ca13bff1",
+  "parent_status": "partial",
+  "child_task_id": "e95d2742d13146e4b26cf538f974a6dc",
+  "status": "completed",
+  "completion": {
+    "type": "model_submitted",
+    "reason": "evidence_ready"
+  },
+  "metrics": {
+    "tool_calls": 1,
+    "http_requests": 0,
+    "cache_hits": 0,
+    "model_calls": 2,
+    "model_requests": 3,
+    "tokens": {
+      "prompt_tokens": 15517,
+      "completion_tokens": 923,
+      "total_tokens": 16440
+    },
+    "context_chars_sent": 37281
+  }
+}

@@ -118,20 +118,19 @@ class Runtime(CollectionMixin, ResearchMixin):
         self.emit('source', source)
         return source
 
-    def save_evidence(self, source_id, requirement_id, quote):
+    def save_evidence(self, source_id, requirement_id, quote='', span_id=''):
         source = self.sources.get(source_id)
         if not source:
             raise ValueError('来源不存在')
         if requirement_id not in {r.id for r in self.request.requirements}:
             raise ValueError('需求不存在')
-        offset = source['text'].find(quote)
-        if offset < 0:
-            raise ValueError('摘录必须完整存在于已读取原文')
+        from .spans import resolve
+        quote, offset = resolve(source, quote, span_id)
         old = next((e for e in self.evidence.values() if e['source_id'] == source_id and e['requirement_id'] == requirement_id and e['quote'] == quote), None)
         if old:
             return old
         ident = 'E' + str(len(self.evidence) + 1)
-        evidence = {'id': ident, 'source_id': source_id, 'requirement_id': requirement_id, 'quote': quote, 'start': offset, 'end': offset + len(quote)}
+        evidence = {'id': ident, 'source_id': source_id, 'requirement_id': requirement_id, 'quote': quote, 'start': offset, 'end': offset + len(quote), 'selection': 'span' if span_id else 'quote'}
         self.evidence[ident] = evidence
         self.emit('evidence', evidence)
         return evidence
@@ -147,7 +146,9 @@ class Runtime(CollectionMixin, ResearchMixin):
             offset = max(0, found - 150)
         if offset < len(source['text']):
             self.read_windows.add((source_id, offset, min(offset+2400, len(source['text']))))
+        from .spans import segments
         return {'source_id': source_id, 'offset': offset, 'text': source['text'][offset:offset+2400],
+                'spans': segments(source_id, source['text'][offset:offset+2400], offset),
                 'total_chars': len(source['text']), 'next_offset': min(offset+2400, len(source['text']))}
 
     def read_official_page(self, repository, url):

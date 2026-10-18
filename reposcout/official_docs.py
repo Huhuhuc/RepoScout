@@ -25,8 +25,15 @@ def linked_urls(runtime, repository):
     for source in runtime.sources.values():
         if source['repository'] == repository and source['kind'] in ('readme','documentation'):
             for url in re.findall(r'https://[^\s<>"\)]+',source['text']):
-                parsed=urlsplit(url)
-                if parsed.hostname in HOSTS and not parsed.username and not parsed.password and parsed.port in (None,443):
+                try:
+                    parsed=urlsplit(url)
+                    allowed = (parsed.hostname in HOSTS and not parsed.username
+                               and not parsed.password and parsed.port in (None,443))
+                except ValueError:
+                    # README templates and malformed links are untrusted data,
+                    # not a reason to abort the entire investigation.
+                    continue
+                if allowed:
                     urls.add(url.split('#')[0])
     return sorted(urls)
 

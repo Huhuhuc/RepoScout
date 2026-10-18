@@ -7,6 +7,7 @@ from .models import Assessment, ReportArgs
 class QuickClaim(Assessment):
     source_id: str
     quote: str = Field(default='', max_length=1200)
+    span_id: str = Field(default='', max_length=80, description='优先选择原文片段编号，quote 留空；unknown 可均留空。')
 
 
 class QuickReport(BaseModel):
@@ -37,6 +38,7 @@ def prepare(runtime):
 
 def assess(runtime, args):
     from .agent import validate_report
+    from .spans import resolve
     proposed = QuickReport.model_validate(args)
     expected = {(repo, r.id) for repo in runtime.request.repositories for r in runtime.request.requirements}
     keys = [(a.repository, a.requirement_id) for a in proposed.assessments]
@@ -47,9 +49,9 @@ def assess(runtime, args):
         source = runtime.sources.get(claim.source_id)
         if not source or source['repository'] != claim.repository or source['kind'] != 'readme':
             raise ValueError('快速判断来源必须是当前候选的 README')
-        if claim.quote and claim.quote not in source['text']:
-            raise ValueError('快速判断摘录不属于来源原文')
-        if claim.status in ('supported', 'unsupported') and (not claim.quote or claim.evidence_basis != 'explicit_statement'):
+        if claim.quote or claim.span_id:
+            resolve(source, claim.quote, claim.span_id)
+        if claim.status in ('supported', 'unsupported') and (not (claim.quote or claim.span_id) or claim.evidence_basis != 'explicit_statement'):
             raise ValueError('确定性快速判断必须包含明确原文依据')
         if claim.status == 'conflict':
             raise ValueError('冲突需要多来源深入调查')
@@ -57,8 +59,8 @@ def assess(runtime, args):
     for claim in proposed.assessments:
         source = runtime.sources[claim.source_id]
         evidence = [runtime.call('save_evidence', {'source_id': claim.source_id,
-                    'requirement_id': claim.requirement_id, 'quote': claim.quote})['id']] if claim.quote else []
-        values = claim.model_dump(exclude={'source_id', 'quote', 'evidence_ids'})
+                    'requirement_id': claim.requirement_id, 'quote': claim.quote, 'span_id': claim.span_id})['id']] if claim.quote or claim.span_id else []
+        values = claim.model_dump(exclude={'source_id', 'quote', 'span_id', 'evidence_ids'})
         values.update(evidence_ids=evidence, applicable_version=source['ref'])
         assessments.append(Assessment(**values))
     report_args = ReportArgs(assessments=assessments, summary=proposed.summary)

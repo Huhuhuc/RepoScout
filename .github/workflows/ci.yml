@@ -28,6 +28,7 @@ jobs:
       - run: python -m evals.run
       - run: python -m evals.compare
       - run: python -m evals.validate_dataset evals/multi-repo-cases.json
+      - run: python -m scripts.closeout_demo
       - run: node --check web/workspace.js
-      - run: python -m compileall -q reposcout evals
+      - run: python -m compileall -q reposcout evals scripts
       # No model keys and no paid evaluation in CI.

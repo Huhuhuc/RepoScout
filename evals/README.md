@@ -46,3 +46,12 @@ python -m evals.compare --dataset evals/multi-repo-cases.json --max-cases 12 --r
 ```
 
 新增 auto 策略与原有 same_sources / no_followup / agent 共享同一资料池。旧评测结果保持原样。本次修正 grounded_correct：部分完成报告不能计为有证据的成功回答。完整数据集通过完整性校验不等于模型评测通过；模型成绩只在实际生成的结果文件中报告。
+
+
+## 收尾评测（2026-10-18）
+
+原文支持通过 `span_id` 精确选择。完整首轮发现 FastAPI README 中的非标准链接会使 URL 解析异常，失败结果保留于 `results/closeout-2026-10-18.json`。修复链接解析，并统一全资料基线的工具描述后，全部 12 题四策略另行运行，结果位于 `results/closeout-final-2026-10-18.json`；汇总与局限见 [收尾验收](../docs/closeout-results.md)。本轮每策略每题一次，未启用额外语义复核；`max_tools=16`、`max_tokens=60000`，每个 Agent 最多 12 次模型请求。
+
+评测结果每个策略完成即落盘。`--resume` 只补未完成策略，并校验资料、代码哈希、模型与参数；不覆盖既有成绩。状态正确率只看判断标签，严格证据通过率还要求有效最终提交、原文精确匹配和预设证据片段命中。预设片段集合不穷尽所有合理证据，严格分数可能低估语义正确性；`citation_support` 字段只是预设片段命中代理指标，不是人工语义支持率。
+
+基线直接接收所有冻结正文，Agent 从同一资料池按需检索。基线仍生成 quote 文本，Agent 可以选择 span_id，引用精确性对比包含程序约束的作用，不是纯模型能力对比。单次冻结实验不能证明稳定收益、全网搜索质量或生产可用性。

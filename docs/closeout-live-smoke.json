@@ -1,0 +1,175 @@
+{
+  "scope": "Real GitHub plus DeepSeek tasks and recovery; original partial task retained. Recovery cost is additional to parent cost.",
+  "tasks": [
+    {
+      "id": "9cb69ea34c00469888b73275659289ba",
+      "created": "2026-10-18T03:23:25.537738+00:00",
+      "status": "completed",
+      "completion": {
+        "type": "model_submitted",
+        "reason": "evidence_ready"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "invalid_quick_assessment"
+      },
+      "assessments": [
+        {
+          "repository": "encode/httpx",
+          "requirement_id": "R1",
+          "status": "supported",
+          "explanation": "README 明确写明 HTTPX “provides both **sync and async APIs**”，并在特性列表中说明提供标准同步接口、需要时可使用异步支持，足以支撑“同时提供同步和异步 API”的结论。",
+          "evidence_ids": [
+            "E1",
+            "E2"
+          ],
+          "evidence_basis": "explicit_statement",
+          "applicable_version": "README@b5addb64f0161ff6bfe94c124ef76f6a1fba5254（README 未标注具体版本）",
+          "conditions": "README 指向 async 文档页（https://www.python-httpx.org/async/），异步接口需在异步事件循环中与 AsyncClient 配合使用；具体行为以对应版本官方文档为准。"
+        }
+      ],
+      "metrics": {
+        "tool_calls": 4,
+        "http_requests": 3,
+        "cache_hits": 0,
+        "model_calls": 4,
+        "model_requests": 5,
+        "tokens": {
+          "prompt_tokens": 14526,
+          "completion_tokens": 1091,
+          "total_tokens": 15617
+        },
+        "context_chars_sent": 23964
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "encode/httpx",
+            "requirement_id": "R1",
+            "verdict": "supported_by_quotes",
+            "reason": "E1 明确写明“provides both sync and async APIs”，E2 亦列出“Standard synchronous interface, but with async support if you need it”，与 claim.status=supported 一致，且未标注具体版本仅意味着条件限定，不构成反驳。故摘录支持该状态。"
+          }
+        ]
+      },
+      "source_urls": [
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md"
+      ]
+    },
+    {
+      "id": "e50e6c383fd6465880d5ef20ca13bff1",
+      "created": "2026-10-18T03:24:11.851795+00:00",
+      "status": "partial",
+      "completion": {
+        "type": "fallback",
+        "reason": "token_budget"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "quick_then_deep",
+        "reason": "evidence_gap_or_conditions"
+      },
+      "assessments": [
+        {
+          "repository": "encode/httpx",
+          "requirement_id": "R1",
+          "status": "unknown",
+          "explanation": "README 的 Features 与简介仅声明支持 HTTP/1.1 和 HTTP/2，未提及 HTTP/2 是否默认开启，也未说明是否需要通过参数（如 http2=True）或其他配置启用。默认行为与启用条件需查阅官方 HTTP/2 文档确认。",
+          "evidence_ids": [
+            "E1"
+          ],
+          "evidence_basis": "absence_of_evidence",
+          "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+          "conditions": ""
+        }
+      ],
+      "metrics": {
+        "tool_calls": 12,
+        "http_requests": 11,
+        "cache_hits": 0,
+        "model_calls": 6,
+        "model_requests": 6,
+        "tokens": {
+          "prompt_tokens": 36695,
+          "completion_tokens": 934,
+          "total_tokens": 37629
+        },
+        "context_chars_sent": 77247
+      },
+      "semantic_review": null,
+      "source_urls": [
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/quickstart.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/api.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md"
+      ]
+    },
+    {
+      "id": "e95d2742d13146e4b26cf538f974a6dc",
+      "created": "2026-10-18T03:25:25.627754+00:00",
+      "status": "completed",
+      "completion": {
+        "type": "model_submitted",
+        "reason": "evidence_ready"
+      },
+      "routing": {
+        "requested": "auto",
+        "path": "deep",
+        "reason": "explicit_deep_or_complex_or_resumed"
+      },
+      "assessments": [
+        {
+          "repository": "encode/httpx",
+          "requirement_id": "R1",
+          "status": "unsupported",
+          "explanation": "官方 HTTP/2 文档明确指出：使用 httpx 客户端时 HTTP/2 默认未开启，理由是 HTTP/1.1 更成熟稳健；未来版本才可能默认启用。实际使用需安装 httpx[http2] 可选依赖，并在 Client/AsyncClient 上显式设置 http2=True。故“默认开启、无需额外配置”的说法被原文直接否定，但 HTTP/2 能力本身受支持。README 仅声明支持 HTTP/1.1 与 HTTP/2，未提及默认状态。",
+          "evidence_ids": [
+            "E2",
+            "E3",
+            "E1"
+          ],
+          "evidence_basis": "explicit_statement",
+          "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+          "conditions": "HTTP/2 需 pip install httpx[http2] 安装可选依赖，并在 Client/AsyncClient 上设置 http2=True。"
+        }
+      ],
+      "metrics": {
+        "tool_calls": 1,
+        "http_requests": 0,
+        "cache_hits": 0,
+        "model_calls": 2,
+        "model_requests": 3,
+        "tokens": {
+          "prompt_tokens": 15517,
+          "completion_tokens": 923,
+          "total_tokens": 16440
+        },
+        "context_chars_sent": 37281
+      },
+      "semantic_review": {
+        "status": "completed",
+        "independent_model": false,
+        "method": "same_model_separate_prompt",
+        "verdicts": [
+          {
+            "repository": "encode/httpx",
+            "requirement_id": "R1",
+            "verdict": "supported_by_quotes",
+            "reason": "E2 明确写明“HTTP/2 support is not enabled by default”，并指出未来版本才可能默认启用；E3 要求安装 httpx[http2] 并显式设置 http2=True。这些摘录直接支持 claim.status=unsupported，即“默认开启、无需额外配置”不成立。E1 仅声明支持 HTTP/1.1 与 HTTP/2，未提及默认状态，符合 claim 的描述。摘录未反驳 claim，无冲突。"
+          }
+        ]
+      },
+      "source_urls": [
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/quickstart.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/api.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+        "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md"
+      ]
+    }
+  ]
+}

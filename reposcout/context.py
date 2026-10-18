@@ -1,6 +1,7 @@
 """Bounded model views; complete source text remains in local task storage."""
 import json
 import re
+from .spans import segments
 
 
 def terms_for(text):
@@ -40,7 +41,7 @@ def snapshot(runtime, phase, reason, previous):
             if remaining <= 0:
                 break
             snippet = piece['text'][:remaining]
-            entry['excerpts'].append({'offset': piece['offset'], 'text': snippet})
+            entry['excerpts'].extend(segments(source['id'], snippet, piece['offset']))
             remaining -= len(snippet)
         entry['full_text_tool'] = 'read_source(source_id, offset 或 query)'
         sources.append(entry)
@@ -59,6 +60,8 @@ def snapshot(runtime, phase, reason, previous):
 
 
 def compact_result(name, output):
+    if name == 'read_source' and isinstance(output, dict) and 'spans' in output:
+        return {k: v for k, v in output.items() if k != 'text'}
     if isinstance(output, dict) and 'text' in output and 'repository' in output:
         return {k: output.get(k) for k in ('id','repository','kind','title','ref')}
     encoded = json.dumps(output, ensure_ascii=False)

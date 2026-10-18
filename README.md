@@ -1,16 +1,20 @@
 # RepoScout
 
-**让开源选型的每个判断都有原文依据。**
+**让开源选型判断有可核查的原文依据。**
 
-输入需求与最多三个候选仓库，保存调查轨迹、资料和证据，生成比较矩阵。中文工作台采用黑灰与暖橙配色。
+输入候选 GitHub 仓库与需求，Agent 按需读取 README、仓库文档、Release 和 Issue，输出支持 / 不支持 / 未知 / 冲突矩阵，保留来源、执行轨迹和预算记录。
 
-![调研工作台](docs/images/workspace.png)
+这是可本地演示的个人 Agent 项目；源码已公开，应用未部署公网。
 
-布局借鉴成熟工具的工作区与工具轨迹分层，详见 [参考说明](docs/workspace-references.md)。
+![真实任务恢复后的报告](docs/images/closeout-recovery.png)
+
+[最新收尾验收](docs/closeout-results.md) · [三段演示](docs/demo/closeout-walkthrough.md) · [面试说明](docs/interview-guide.md) · [架构](docs/architecture.md) · [CI](https://github.com/Huhuhuc/RepoScout/actions)
 
 ## 运行
 
-Windows 双击 `start-reposcout.bat`，首次安装依赖后打开 http://127.0.0.1:8011 。需要 Python 3.11+。启动器不会覆盖已有 `.env`。
+需要 Python 3.11+。Windows 双击 `start-reposcout.bat`，打开 http://127.0.0.1:8011 。首次安装依赖，已有 `.env` 不会覆盖。
+
+手动启动：
 
 ```powershell
 python -m venv .venv
@@ -18,97 +22,76 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn reposcout.app:app --host 127.0.0.1 --port 8011
 ```
 
-先选择演示模式，使用默认的本地部署、PDF、引用三个条件。示例仓库全部虚构，规则策略确定比较结果；它不模拟真实模型研究质量。
-
-Windows 自检：`powershell -ExecutionPolicy Bypass -File .\start-reposcout.ps1 -Check`。更换端口加 `-Port 8012`。Linux/macOS 可运行 `bash start-reposcout.sh`（本机尚未实跑该平台）。
-
-本地交付材料：[真实报告](examples/real-investigation.md) · [架构图](docs/architecture.md) · [验收记录](docs/completion-and-evaluation.md) · [截图导览视频](docs/demo/reposcout-walkthrough.mp4)。源码已公开在 GitHub；应用仍为本地运行，未部署公网。
+Windows 自检：`powershell -ExecutionPolicy Bypass -File .\start-reposcout.ps1 -Check`。端口占用可加 `-Port 8012`。Linux/macOS 提供 `bash start-reposcout.sh`；CI 覆盖 Linux/Windows 的 Python 测试，macOS 启动器未实机验收。
 
 ## 三种模式
 
-| 模式 | 数据 | 决策 |
+| 模式 | 数据来源 | 行为 |
 |---|---|---|
-| demo | 内置虚构快照 | 明确限定的规则，测试流程 |
-| github | 真实 GitHub README、仓库文档、Release、Issue | 只采集，功能判断为未知 |
-| deepseek | 真实 GitHub README、仓库文档、Release、Issue | 模型动态选工具并提交结构化报告 |
+| demo | 内置虚构资料 | 无需密钥，规则演示流程 |
+| github | 真实 GitHub 资料 | 只采集，功能判断保持未知 |
+| deepseek | 真实 GitHub 资料 | 模型调用工具、保存证据、补查并提交报告 |
 
-GitHub 模式建议输入明确仓库，例如 `langchain-ai/local-deep-researcher`。无候选时直接将问题用作 GitHub 查询；复杂中文查询质量有限。已开始真实 DeepSeek 验收，过程与发现见 docs/deepseek-acceptance.md。
+首次运行建议先用 demo。真实模式建议填写明确仓库（如 `encode/httpx`），最多 3 个候选、8 个条件。复杂中文需求的候选发现仍有限。
 
-## 配置 DeepSeek
+## DeepSeek 配置
 
-复制 `.env.example` 为 `.env`，在本地填写：
+复制 `.env.example` 为 `.env`，本地填写：
 
 ```dotenv
 DEEPSEEK_API_KEY=你的密钥
 DEEPSEEK_MODEL=deepseek-flash
 ```
 
-运行服务后，在页面点击“刷新配置”，再点“测试连接”。配置每次从本地读取，无需重启；已开始的调查继续使用启动时的配置。系统环境变量优先于 `.env`。不要提交真实密钥；`.env` 已被 Git 忽略。可用模型名称以你账户的模型列表为准，测试会提示所选模型是否存在。
+页面点击“刷新配置”和“测试连接”。测试只请求官方模型列表，不生成回答；所选模型需在账户可用列表中。真实调查调用模型会产生费用。配置热读取，进程环境变量优先，已运行任务继续用启动时配置。API 密钥不返回前端，不提交到 Git。
 
-测试连接仅请求官方 `/models`，不会生成回答；认证成功不代表 Agent 工具链已完成真实验收。选择 DeepSeek 调查模式才会发送任务内容并生成回答，产生模型调用费用。页面和状态接口不返回密钥。
+可选 `GITHUB_TOKEN` 使用进程环境变量。模型服务固定为官方 DeepSeek，目前不支持自定义网关。
 
-可选的 `GITHUB_TOKEN` 仍通过进程环境变量配置。模型服务地址固定为官方 DeepSeek，暂不支持自定义网关。
+## 调查策略与可靠性
 
-## 当前实现
+- **自动策略**：对明确候选、最多三个条件的新任务先读取 README，用一次结构化调用尝试完成取证和矩阵；未知、限制条件或参数问题会升级调查。工作台默认自动，API 默认 `strategy=deep`，可显式指定 `strategy=auto`。
+- **深入策略**：模型选择读取与补查工具，最多两轮定向补查；继续已有任务直接进入深入流程。
+- **原文片段选择**：模型可选择 `span_id`，服务端验证来源、位置和长度后截取原文，避免复制 Markdown 时丢失格式。也保留严格匹配的 `quote` 接口；不接受改写或模糊匹配。
+- **证据约束**：确定性判断需有同候选、同需求证据；资料未提及不能直接判不支持，社区 Issue 不能单独支撑确定性功能结论。
+- **有界运行**：最多 12 次模型网络请求（含重试）、60 次资料请求、5 分钟；Token 预算是保守预估控制，不是供应商账单硬上限。
+- **恢复与审计**：SQLite 保存历史、事件与检查点；失败或预算耗尽保留部分报告。继续调查创建关联新任务、复用资料并使用新预算，旧任务不被改成成功。
+- **可选复核**：同一模型用独立提示检查摘录是否支持判断；失败或不足会标记。它不是独立模型事实核验，也不保证语义正确。
 
-- Requirement / Source / Evidence / Assessment 四类数据。
-- 摘录必须属于来源原文，证据必须关联同一候选与需求。
-- 支持、不支持、未知、冲突；违反硬性条件的候选列为 excluded。
-- 单 Agent 工具调用循环，模型参数本地校验。
-- SQLite 历史任务、执行事件、取消、重启中断标记。
-- 工具预算、60 次网络请求上限、12 次模型调用上限、5 分钟任务上限。
-- SSE 进度、证据查看、Markdown/JSON 导出。
-- 调查/收尾阶段切换、最终报告预算预留、任务内只读缓存与有界上下文；无有效最终提交明确标为部分完成。
+## 资料范围
 
-## 多来源采集
+README 与仓库文档固定 commit，保存 URL、抓取时间和内容哈希。每个候选最多扫描四个目录、读取三篇文档、三个 Release 和三个 Issues。Issue 暂不采集评论。
 
-- README 与仓库文档固定到同一个 commit；保存正文、原链接、抓取时间与哈希。
-- 每个候选最多扫描四个目录、读取三篇文档、三个发布记录和三个 Issues。
-- GitHub 采集模式读取最近 Issues；DeepSeek 工具支持按关键词补查。Issue 不包含评论，社区报告不等于官方结论。
-- 页面与导出保留来源类型、版本、状态和采集失败记录；无结果不等于不支持。
-- 官方文档包括仓库维护文档及受支持站点中、由仓库资料明确链接的 HTTPS 文档页；外部页面有大小与重定向限制，版本未固定。
+外部官方文档只读取当前仓库资料明确链接的受支持站点：docs.langchain.com、python.langchain.com、docs.llamaindex.ai、docs.haystack.deepset.ai、docs.n8n.io、docs.dify.ai。限 HTTPS 文本、1 MB、不跟随重定向，不传模型/GitHub 密钥；外部页面版本未固定。无结果、拒绝读取与资料截断都会影响覆盖，不能证明功能不存在。
 
-## 证据缺口驱动补查
-
-DeepSeek 模式新增 `review_evidence` 和 `investigate_gaps`：初步矩阵 → 缺口检查 → 最多两轮定向文档/Issue 补查 → 保存摘录 → 更新矩阵。工作台与导出显示未解决项和判断变化。社区 Issue 不可单独支撑确定性功能判断。
-
-无密钥模式显示结构性缺口，功能判断仍保持未知。完整工具循环同时保留离线模拟回归；真实调用验收见 docs/deepseek-acceptance.md。细节见 [补查设计与验证](docs/evidence-followup.md)。
-
-## 明确的边界
-
-当前没有全网搜索、任意网页读取、多 Agent 或向量检索。支持用户手动从检查点继续；可选同模型独立提示复核引用，不能代替人工事实核验。GitHub HTTP 只允许固定 API 域名且不跟随重定向。报告的引用结构校验不能证明结论语义正确。采集模式不从 README 关键词推断真实能力。DeepSeek 接口配置与真实任务验收记录见 docs/deepseek-acceptance.md。
-
-这是本地单用户原型，无登录、多租户与公网部署能力。保持绑定 127.0.0.1。README 长度和下载大小有限；报告保存抓取时间、ref 和哈希，源正文可能截断。
-
-## 验证
+## 运行测试与评测
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m evals.validate_dataset evals/multi-repo-cases.json
+.\.venv\Scripts\python.exe -m scripts.closeout_demo
 ```
 
-历史评测记录：12 个冻结合成案例已用真实 DeepSeek 跑完：README 单次回答正确 7/12，调查模式正确 12/12；总 Token 分别为 6,133 与 178,197。调查模式可读取额外资料，这不是同资料推理对照，也不代表真实任务准确率 100%。[完整结果与限制](evals/README.md)。
+79 项自动测试通过。默认演示命令在临时数据库里验证取消、检查点恢复和导出，不调用模型、不改个人任务。
 
-真实仓库存在性另行验证：搜索返回的 3 个仓库均读取到 GitHub 元数据和 README，不存在的负例返回 404。[验证记录](docs/github-live-verification.json)。可执行 `python -m scripts.verify_live_github` 复查（访问 GitHub，不调用模型）。
+12 个真实冻结资料任务来自 HTTPX、Pydantic、FastAPI 三个仓库，四策略对照的原始结果、失败案例和成本见 [收尾验收](docs/closeout-results.md)。标签由编码助手依据原文整理，未由独立标注者复核；它不是大规模准确率基准。工程测试通过与模型判断正确是不同指标。
 
-`.github/workflows/ci.yml` 已包含 Windows/Linux 与 Python 3.11/3.13 测试矩阵；实际运行状态见 [GitHub Actions](https://github.com/Huhuhuc/RepoScout/actions)。
+```powershell
+# 以下命令显式调用模型并产生费用，结果另存；默认不覆盖旧文件
+.\.venv\Scripts\python.exe -m evals.compare --dataset evals/multi-repo-cases.json --max-cases 12 --repeats 1 --live --output evals/results/my-comparison.json
+```
+
+中断后，在代码、资料、模型与参数不变时加 `--resume`，只补缺失策略。保留历史结果，不挑选成功样例覆盖失败记录。
+
+## 演示与边界
+
+[实时支持判断报告](examples/closeout-supported.md) · [实时恢复后报告](examples/closeout-recovered.md) · [录屏讲解顺序与命令](docs/demo/closeout-walkthrough.md)
+
+本地单用户应用，无登录、多租户或公网部署能力，请保持绑定 `127.0.0.1`。当前没有全网搜索、多 Agent、向量检索或自主执行第三方代码；并非所有任务都能在预算内完成。项目尚未选择主项目开源许可证；引用资料的上游许可证保存在 `evals/licenses/`。
 
 ## 学习来源
 
 - [GPT Researcher](https://github.com/assafelovic/gpt-researcher)：调研、来源与报告分层。
 - [Local Deep Researcher](https://github.com/langchain-ai/local-deep-researcher)：迭代研究循环。
-- [GitHub REST 文档](https://docs.github.com/en/rest)：公开仓库读取与限流。
+- [GitHub REST 文档](https://docs.github.com/en/rest)：仓库读取与限流。
 
-本版独立编写，未复制上游源码。调研结论位于工作区 docs/2026-10-13-RepoScout开源调研与改进路线.md。
-
-## 可靠性升级（2026-10-16 整理）
-
-两轮补查、中文上下文、Token 预算、异常检查点与继续调查、版本/条件检查、最终模型复核已实现。59 项自动测试通过。页面刷新后可设置预算和复核开关；中断或部分完成任务有检查点时显示“继续调查”。继续会创建新任务并使用新预算，模型调用可能产生费用。
-
-[最新验收及真实对照结果](docs/reliability-results.md)。同资料的真实仓库小样本中，完整 Agent 和关闭补查均正确 6/6，前者 Token 更多；目前不能证明补查带来额外收益。
-
-
-## 自动策略与当前验收（2026-10-16）
-
-工作台选择 DeepSeek 后，可选择“自动”或“深入”策略。自动策略面向已填写候选、最多三个条件的新任务：先读取 README，一次结构化调用提交原文证据与判断；未知、格式不合法或限制条件缺失时，升级为深入调查。继续调查和复杂任务直接使用深入流程。API 为保持兼容默认 `strategy=deep`，可显式传 `strategy=auto`；仅 DeepSeek 模式使用此选项。
-
-70 项自动测试通过。新增三个真实仓库的 12 项冻结文档任务，已通过完整性校验；完整付费对照尚未运行。两条真实模型复测均回答正确，但仍存在摘录格式纠正和额外调用，尚不能证明整体成本下降。详情见 [本轮结果](docs/adaptive-results.md)。公开仓库 CI 状态请以 Actions 为准。
+本项目主体独立编写；界面布局参考说明见 [workspace-references](docs/workspace-references.md)。历史实验保留在 `evals/results/` 与 `docs/` 中，旧版本记录不代表当前版本测试结果。

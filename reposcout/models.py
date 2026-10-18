@@ -23,7 +23,8 @@ class TaskRequest(BaseModel):
 class EvidenceArgs(BaseModel):
     source_id: str
     requirement_id: str
-    quote: str = Field(min_length=1, max_length=1200)
+    quote: str = Field(default='', max_length=1200)
+    span_id: str = Field(default='', max_length=80, description='优先选择 sources.excerpts 或 read_source.spans 中的片段编号，quote 留空。程序截取原文。')
 
 
 class SourceSliceArgs(BaseModel):

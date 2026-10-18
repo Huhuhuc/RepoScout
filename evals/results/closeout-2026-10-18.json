@@ -1,0 +1,2061 @@
+{
+  "dataset": "multi-repo-cases.json",
+  "dataset_sha256": "d865103266afb69e5a2ca6f1e5aa896a7d169f6cae7661ed744e52c4e5718786",
+  "scope": "Same frozen source pool. Single-answer baseline receives all texts; agents retrieve from that pool. No-followup disables only investigate_gaps, not direct retrieval. Small repeated regression, not a population accuracy estimate.",
+  "repeats": 1,
+  "count": 12,
+  "strategies": [
+    "same_sources",
+    "no_followup",
+    "agent",
+    "auto"
+  ],
+  "created_at": "2026-10-18T03:18:28.035846+00:00",
+  "code_sha256": "266b2fbebeaf0896ec713a44df30e3e8d903f064df1299e937909f24961b3ab9",
+  "verify_claims": false,
+  "rows": [
+    {
+      "id": "httpx-sync-async",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "README 明确声明 HTTPX 同时提供同步和异步 API；docs/async.md 进一步说明默认提供标准同步 API，并在需要时提供 AsyncClient。docs/http2.md 也提到 HTTP/2 支持同时存在于 Client 和 AsyncClient 上。",
+          "quotes": [
+            "HTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.",
+            "Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).",
+            "HTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.",
+            "HTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 4,
+          "exact_citations": 4,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 4773,
+          "completion_tokens": 264,
+          "total_tokens": 5037
+        },
+        "model_requests": 1,
+        "seconds": 2.36,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 开篇明确写明 HTTPX \"provides both **sync and async APIs**\"（同时提供同步与异步 API）；功能列表亦列出 \"Standard synchronous interface, but with async support if you need it\"，并给出异步文档链接。两条原文均直接支持该需求。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README 所述当前版本（未标注具体版本号）",
+            "conditions": "Python 3 HTTP 客户端；异步支持需配合异步客户端/事件循环使用，README 未列出额外开关。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 9904,
+          "completion_tokens": 567,
+          "total_tokens": 10471
+        },
+        "model_requests": 3,
+        "seconds": 6.68,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 明确声明“provides both **sync and async APIs**”，并在特性列表中写明“Standard synchronous interface, but with async support if you need it”，两处均直接支持同时提供同步与异步 API 的需求。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README 未标注具体版本（仓库默认分支）",
+            "conditions": "基于仓库 README 的显式声明，未验证具体版本差异。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 13785,
+          "completion_tokens": 722,
+          "total_tokens": 14507
+        },
+        "model_requests": 4,
+        "seconds": 8.78,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 开头与特性列表均明确说明库同时提供同步与异步 API：'provides both sync and async APIs'，以及 'Standard synchronous interface, but with async support if you need it'。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "异步 API 需在 asyncio 等异步环境中使用；同步接口为标准默认接口"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "readme_evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick",
+            "reason": "readme_first"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 2112,
+          "completion_tokens": 243,
+          "total_tokens": 2355
+        },
+        "model_requests": 1,
+        "seconds": 2.38,
+        "tool_errors": [],
+        "span_evidence": 1
+      }
+    },
+    {
+      "id": "httpx-default-http2",
+      "repeat": 1,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "资料明确说明 httpx 客户端默认不启用 HTTP/2，需安装可选依赖 httpx[http2] 并显式传入 http2=True 才启用，因此“默认开启、无需额外配置”与文档相矛盾。",
+          "quotes": [
+            "When using the `httpx` client, HTTP/2 support is not enabled by default, because HTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1 implementation may be considered the more robust option at this point in time.",
+            "If you're issuing highly concurrent requests you might want to consider trying out our HTTP/2 support. You can do so by first making sure to install the optional HTTP/2 dependencies...",
+            "And then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```",
+            "`h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*"
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 4,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 4777,
+          "completion_tokens": 269,
+          "total_tokens": 5046
+        },
+        "model_requests": 1,
+        "seconds": 2.77,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方文档明确说明：使用 httpx 客户端时，HTTP/2 支持默认未开启（not enabled by default），理由是 HTTP/1.1 传输层更成熟稳健，仅未来版本可能默认开启。需要额外安装 httpx[http2] 可选依赖，并显式以 http2=True 实例化 Client/AsyncClient 才能启用。因此“HTTP/2 默认开启、无需额外配置”不成立。",
+            "evidence_ids": [
+              "E3",
+              "E4",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "当前 README/docs 对应版本（httpx，要求 Python 3.9+）",
+            "conditions": "HTTP/2 需安装可选依赖 httpx[http2] 并显式传 http2=True；默认请求走 HTTP/1.1。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 20844,
+          "completion_tokens": 954,
+          "total_tokens": 21798
+        },
+        "model_requests": 5,
+        "seconds": 10.95,
+        "tool_errors": [],
+        "span_evidence": 4
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "README 明确将 HTTP/2 支持列为可选能力：安装说明写「Or, to include the optional HTTP/2 support, use: pip install httpx[http2]」，依赖列表写「`h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*」。即默认的 `pip install httpx` 不包含 HTTP/2，需要额外安装 extras，与「默认开启、无需额外配置」的要求相反。虽然 Features 中列出「HTTP/1.1 and HTTP/2 support」，但那只说明具备该能力，未改变可选的定位。",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "README（当前主分支 master 快照）",
+            "conditions": "默认 `pip install httpx` 未含 h2；需 `pip install httpx[http2]` 获得 HTTP/2 支持"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 33544,
+          "completion_tokens": 1323,
+          "total_tokens": 34867
+        },
+        "model_requests": 8,
+        "seconds": 16.55,
+        "tool_errors": [
+          {
+            "tool": "investigate_gaps",
+            "message": "必须先调用 review_evidence 保存初步矩阵"
+          }
+        ],
+        "span_evidence": 4
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方 HTTP/2 文档明确说明：使用 httpx 客户端时 HTTP/2 支持默认未启用（“HTTP/2 support is not enabled by default”），需要额外配置——先安装可选依赖 httpx[http2]，再以 http2=True 实例化 Client/AsyncClient。因此“HTTP/2 默认开启、无需额外配置”不成立。README 仅笼统列出 HTTP/1.1 与 HTTP/2 支持，未涉及默认行为。",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "文档同时提到“未来版本可能默认启用 HTTP/2”，属未来可能性，不代表当前默认行为"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 18297,
+          "completion_tokens": 931,
+          "total_tokens": 19228
+        },
+        "model_requests": 4,
+        "seconds": 9.52,
+        "tool_errors": [
+          {
+            "tool": "read_official_page",
+            "message": "冻结资料中未保存该官方页面；禁止联网读取"
+          }
+        ],
+        "span_evidence": 3
+      }
+    },
+    {
+      "id": "httpx-force-http2",
+      "repeat": 1,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "文档明确指出与需求相反：启用 http2=True 并不能保证使用 HTTP/2，需要客户端与服务器同时支持 HTTP/2；若服务器仅支持 HTTP/1.1，客户端会改用标准 HTTP/1.1 连接。",
+          "quotes": [
+            "Enabling HTTP/2 support on the client does not *necessarily* mean that your\nrequests and responses will be transported over HTTP/2, since both the client\n*and* the server need to support HTTP/2. If you connect to a server that only\nsupports HTTP/1.1 the client will use a standard HTTP/1.1 connection instead.",
+            "client = httpx.AsyncClient(http2=True)",
+            "print(response.http_version)  # \"HTTP/1.0\", \"HTTP/1.1\", or \"HTTP/2\"."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 4790,
+          "completion_tokens": 232,
+          "total_tokens": 5022
+        },
+        "model_requests": 1,
+        "seconds": 2.4,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-force-http2",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "README 仅说明支持 HTTP/1.1 与 HTTP/2、HTTP/2 为可选依赖 (httpx[http2])，未提及 http2=True 参数，更未说明可在服务器只支持 HTTP/1.1 时强制使用 HTTP/2。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "budget_or_time"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 40926,
+          "completion_tokens": 1299,
+          "total_tokens": 42225
+        },
+        "model_requests": 9,
+        "seconds": 17.71,
+        "tool_errors": [
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          }
+        ],
+        "span_evidence": 5
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-force-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方文档明确说明客户端启用 HTTP/2 支持并不保证请求一定走 HTTP/2：需要客户端和服务器双方都支持；若连接只支持 HTTP/1.1 的服务器，客户端会改用标准 HTTP/1.1 连接。因此“设置 http2=True 后即使服务器只支持 HTTP/1.1 也能保证使用 HTTP/2”不成立。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "",
+            "conditions": "http2=True 仅在安装 httpx[http2] 可选依赖、且服务器也支持 HTTP/2 时才会实际协商为 HTTP/2；可用 response.http_version 检查实际版本。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 28923,
+          "completion_tokens": 947,
+          "total_tokens": 29870
+        },
+        "model_requests": 6,
+        "seconds": 12.39,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-force-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方 HTTP/2 文档明确说明：启用客户端 HTTP/2 支持并不必然意味着请求会走 HTTP/2，需要客户端与服务器都支持；若连接只支持 HTTP/1.1 的服务器，客户端会改用标准 HTTP/1.1 连接。因此 http2=True 无法保证在仅支持 HTTP/1.1 的服务器上使用 HTTP/2，需求不成立。",
+            "evidence_ids": [
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "需要客户端与服务器双方均支持 HTTP/2 才可能使用 HTTP/2；需先安装 httpx[http2] 依赖并开启 http2=True。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 1,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 26288,
+          "completion_tokens": 1046,
+          "total_tokens": 27334
+        },
+        "model_requests": 5,
+        "seconds": 11.38,
+        "tool_errors": [],
+        "span_evidence": 3
+      }
+    },
+    {
+      "id": "httpx-vector",
+      "repeat": 1,
+      "expected": "unknown",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "所提供的资料均来自 HTTPX（一个 Python HTTP 客户端库）的 README 与文档，功能列表涵盖 HTTP 客户端、HTTP/1.1 与 HTTP/2、同步/异步 API、CLI、WSGI/ASGI 传输、超时、类型注解等，未提及任何向量数据库、持久化存储或相似度检索能力。因此\"内置持久化向量数据库\"这一需求在资料中无支持证据，且与项目性质明显不符。",
+          "quotes": [
+            "HTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.",
+            "The HTTPX project relies on these excellent libraries:"
+          ]
+        },
+        "score": {
+          "correct": false,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 4772,
+          "completion_tokens": 225,
+          "total_tokens": 4997
+        },
+        "model_requests": 1,
+        "seconds": 2.45,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-vector",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "README 内容为 HTTPX HTTP 客户端库的文档：开头自述为 Python 3 的全功能 HTTP 客户端，含集成命令行客户端、HTTP/1.1 与 HTTP/2 支持、同步与异步 API；功能列表与 requests 风格特性（连接池、Cookie 持久化、SSL 验证、代理、流式下载等）也未涉及任何数据存储或检索。全文未提及向量数据库、内嵌持久化存储或相似度搜索，既无支持依据也无明确否定陈述，故判定为未知。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": "仅基于 README.md（ref b5addb64）判断；未获得源代码或安装包内实际内容。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests,no_progress"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 29578,
+          "completion_tokens": 1736,
+          "total_tokens": 31314
+        },
+        "model_requests": 9,
+        "seconds": 20.37,
+        "tool_errors": [
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          },
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          }
+        ],
+        "span_evidence": 2
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-vector",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "budget_or_time"
+          },
+          "rounds": 1,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 31581,
+          "completion_tokens": 1027,
+          "total_tokens": 32608
+        },
+        "model_requests": 8,
+        "seconds": 15.54,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/httpx-vector",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "已核查的三份资料（README.md、docs/http2.md、docs/async.md）均为 HTTPX Python HTTP 客户端库的说明，内容涉及内置命令行客户端、HTTP/1.1/HTTP/2 传输、同步/异步 API 与请求方法等，全文及摘录均未提及向量数据库、向量检索、嵌入向量存储或持久化向量存储。按规则，未提及只能判定为 unknown（证据缺失），不能据此判定不支持。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "仅在 README 与 docs/http2.md、docs/async.md 三个文件中检索；未覆盖完整源码仓库、依赖清单或其他文档，结论受检索范围限制。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 1,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 29694,
+          "completion_tokens": 1300,
+          "total_tokens": 30994
+        },
+        "model_requests": 7,
+        "seconds": 19.13,
+        "tool_errors": [
+          {
+            "tool": "investigate_gaps",
+            "message": "每轮补查后必须先更新 review_evidence"
+          }
+        ],
+        "span_evidence": 0
+      }
+    },
+    {
+      "id": "pydantic-strict",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "文档明确说明 strict mode 会在数据不是正确类型时报错而非强制转换，并给出示例：strict=True 时 {'x': '123'} 对 int 字段抛出 ValidationError（Input should be a valid integer）。文档同时指出存在条件限制：对 JSON 输入 strict 规则更宽松（例如日期时间类型在 strict 模式下仍允许字符串），每种类型的具体行为需查阅标准库类型文档和转换表；启用 strict 的已有模型可能让原先被静默转换的输入开始失败。",
+          "quotes": [
+            "When strict mode is enabled, Pydantic will be much\nless lenient when coercing data, and will instead error if the data is not of the correct type.",
+            "Most of the time, strict mode will only allow instances of the type to be provided, although looser rules may apply\nto JSON input (for instance, the [date and time types](../api/standard_library_types.md#date-and-time-types) allow strings\neven in strict mode).",
+            "Input should be a valid integer [type=int_type, input_value='123', input_type=str]",
+            "The strict behavior for each type can be found in the [standard library types](../api/standard_library_types.md) documentation,\nand is summarized in the [conversion table](./conversion_table.md).",
+            "One caveat when enabling strict mode on models an existing application relies on: inputs that were\nbeing quietly coerced will start failing."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 5,
+          "exact_citations": 5,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3558,
+          "completion_tokens": 364,
+          "total_tokens": 3922
+        },
+        "model_requests": 1,
+        "seconds": 3.56,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-strict",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方 strict_mode 文档明确说明 Pydantic 提供 strict mode：启用后大幅减少类型转换宽松度，当数据不是正确类型时会报错；并给出 model_validate(..., strict=True) 对字符串 '123' 传给 int 字段抛出 ValidationError 的示例。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic V2（文档 main 分支）",
+            "conditions": "通过 model_validate 的 strict=True 参数逐次启用，或在模型/字段上启用（pydantic.types.Strict）；注意 JSON 输入有部分宽松例外（如日期时间类型允许字符串）。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 18496,
+          "completion_tokens": 912,
+          "total_tokens": 19408
+        },
+        "model_requests": 5,
+        "seconds": 14.33,
+        "tool_errors": [],
+        "span_evidence": 3
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-strict",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方文档明确说明 Pydantic 提供 strict mode：默认会尝试强制转换，启用 strict mode 后不再宽松转换，而是在数据不是正确类型时直接报错；并给出 strict=True 时字符串 '123' 作为整数字段输入被拒绝并抛出 ValidationError 的示例。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic V2（docs/concepts/strict_mode.md 现行文档）",
+            "conditions": "多数情况下 strict mode 仅接受该类型实例；JSON 输入可能适用更宽松规则（例如日期/时间类型在 strict 模式下仍接受字符串），逐类型行为以标准库类型文档与转换表为准"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 24074,
+          "completion_tokens": 1071,
+          "total_tokens": 25145
+        },
+        "model_requests": 6,
+        "seconds": 17.91,
+        "tool_errors": [],
+        "span_evidence": 3
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-strict",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方文档 docs/concepts/strict_mode.md 明确说明：默认情况下 Pydantic 会尽量将值强制转换为目标类型，而不希望转换、希望直接报错的场景可启用 \"strict mode\"；启用后对数据转换更不宽松，数据不是正确类型时会报错而非转换。文档示例中 MyModel.model_validate({'x': '123'}, strict=True) 抛出 ValidationError（Input should be a valid integer, input_value='123', input_type=str），lax 模式则得到 x=123，直接证明 strict mode 拒绝类型不符输入。README 未提及此能力。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "commit 5adfeaaaea947f81f0f01868604f219084ec151a（Pydantic V2 文档，main 分支）",
+            "conditions": "strict 可通过 model_validate(..., strict=True) 按调用启用，也可在模型上启用；JSON 输入在 strict 模式下部分类型（如 date/time）仍允许字符串，严格程度按类型与输入格式略有差异。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 20055,
+          "completion_tokens": 1599,
+          "total_tokens": 21654
+        },
+        "model_requests": 5,
+        "seconds": 18.31,
+        "tool_errors": [],
+        "span_evidence": 3
+      }
+    },
+    {
+      "id": "pydantic-default-strict",
+      "repeat": 1,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "资料显示相反：默认（非 strict）模式会尽量进行类型转换，例如 README 示例中 id: int 接收字符串 '123' 并被转换为 123，friends 中的 '2' 与 b'3' 也被转换为整数；strict_mode 文档也说明默认情况下会把字符串 '123' 转换为 123。只有在启用 strict 模式（作为验证参数、字段级 strict、Strict() 或配置 strict=True）时，字符串数字才会报错。因此\"默认验证模式拒绝所有可转换字符串数字\"不成立；而且字符串在这里并非\"拒绝\"，而是被转换接受。",
+          "quotes": [
+            "By default, Pydantic will attempt to coerce values to the desired type when possible.",
+            "For example, you can pass the string `'123'` as the input for the [`int` number type](../api/standard_library_types.md#integers),\nand it will be converted to the value `123`.",
+            "external_data = {'id': '123', 'signup_ts': '2017-06-01 12:22', 'friends': [1, '2', b'3']}",
+            "#> User id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]",
+            "print(MyModel.model_validate({'x': '123'}))  # lax mode",
+            "#> x=123",
+            "MyModel.model_validate({'x': '123'}, strict=True)  # strict mode"
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 7,
+          "exact_citations": 7,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 3561,
+          "completion_tokens": 395,
+          "total_tokens": 3956
+        },
+        "model_requests": 1,
+        "seconds": 2.62,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-default-strict",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "README 默认（非 strict）模式示例明确展示：int 字段接受字符串 '123' 并转为 123，friends: list[int] 接受 [1, '2', b'3'] 并转为 [1, 2, 3]。即默认可转换类型的字符串数字会被接受，与“默认验证模式拒绝所有可转换类型的字符串数字”相反。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic v2（README 徽章指向 v2 文档）",
+            "conditions": "仅针对默认（lax）验证模式的 README 示例说明；启用 strict 模式的情形未在 README 中展开。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "no_progress"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 1,
+          "exact_citations": 1,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 22400,
+          "completion_tokens": 888,
+          "total_tokens": 23288
+        },
+        "model_requests": 7,
+        "seconds": 13.54,
+        "tool_errors": [
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          },
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          }
+        ],
+        "span_evidence": 1
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-default-strict",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方严格模式文档明确说明：默认情况下 Pydantic 会尽可能把值强制转换为目标类型（例如字符串 '123' 被转换为整数 123），即默认（lax）模式接受可转换的字符串数字；只有启用 strict mode 才会在类型不符时报错。因此“默认验证模式会拒绝所有可以转换类型的字符串数字”与原文明确表述相反。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic v2（main 分支文档）",
+            "conditions": "默认 lax 模式；strict 模式需显式开启（如 Strict 类型或 strict=True）"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 30713,
+          "completion_tokens": 1101,
+          "total_tokens": 31814
+        },
+        "model_requests": 8,
+        "seconds": 16.95,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-default-strict",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方文档明确说明：默认（lax）模式下 Pydantic 会尝试把值强转为目标类型，例如字符串 '123' 传给 int 会被转为 123；只有启用 strict mode 时才会在类型不符时报错。因此“默认验证模式拒绝所有可转换类型的字符串数字”与原文相反。README 示例也显示默认模型接受 {'id': '123', 'friends': [1, '2', b'3']} 并转为 123 与 [1, 2, 3]。",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "5adfeaaaea947f81f0f01868604f219084ec151a (Pydantic v2 文档，docs/concepts/strict_mode.md)",
+            "conditions": "结论针对默认 lax 模式；strict 模式（如 Strict 类型或 strict=True）下才可能拒绝字符串数字。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "research"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 19304,
+          "completion_tokens": 984,
+          "total_tokens": 20288
+        },
+        "model_requests": 5,
+        "seconds": 12.6,
+        "tool_errors": [],
+        "span_evidence": 3
+      }
+    },
+    {
+      "id": "pydantic-json-date",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "文档明确说明：strict mode 一般情况下只允许对应类型的实例，但对 JSON 输入规则更宽松，例如日期和时间类型即使处于 strict mode 也允许字符串。文档还给出了示例：TypeAdapter(date).validate_json('\"2000-01-01\"', strict=True) 返回 2000-01-01，而 validate_python 在 strict=True 下对同样字符串报错。README 本身未涉及 strict mode，此结论来自 docs/concepts/strict_mode.md。",
+          "quotes": [
+            "Most of the time, strict mode will only allow instances of the type to be provided, although looser rules may apply to JSON input (for instance, the [date and time types](../api/standard_library_types.md#date-and-time-types) allow strings even in strict mode).",
+            "TypeAdapter(date).validate_json('\"2000-01-01\"', strict=True)  # (1)!\n#> 2000-01-01",
+            "1. As mentioned, strict mode is looser when validating from JSON."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 3563,
+          "completion_tokens": 279,
+          "total_tokens": 3842
+        },
+        "model_requests": 1,
+        "seconds": 2.46,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-json-date",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方 strict mode 文档明确说明：多数情况下 strict mode 仅允许类型实例，但对 JSON 输入会放宽规则，例如日期与时间类型即使在 strict mode 下也允许字符串；并给出 TypeAdapter(date).validate_json('\"2000-01-01\"', strict=True) 返回 2000-01-01 的示例。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic V2",
+            "conditions": "仅限 JSON 校验路径（如 validate_json）传入字符串；Python 对象直接校验在 strict mode 下仍拒绝字符串"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 26895,
+          "completion_tokens": 1307,
+          "total_tokens": 28202
+        },
+        "model_requests": 7,
+        "seconds": 16.05,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-json-date",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方文档明确说明 strict 模式在从 JSON 校验时更宽松，日期与时间类型即使在 strict 模式下也允许字符串输入；且给出 TypeAdapter(date).validate_json('\"2000-01-01\"', strict=True) 成功返回 2000-01-01 的示例。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "Pydantic V2 (current docs)",
+            "conditions": "仅限 JSON 输入路径（如 validate_json）；从 Python 对象/字典校验时 strict 模式仍要求真实类型实例。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 24214,
+          "completion_tokens": 1018,
+          "total_tokens": 25232
+        },
+        "model_requests": 6,
+        "seconds": 12.78,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-json-date",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "官方文档 docs/concepts/strict_mode.md 明确说明：严格模式下多数情况只接受对应类型的实例，但对 JSON 输入可适用更宽松规则，例如 date 和 time 类型即使在严格模式下也允许字符串；并给出 TypeAdapter(date).validate_json('\"2000-01-01\"', strict=True) 返回 2000-01-01 的示例。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "5adfeaaaea947f81f0f01868604f219084ec151a",
+            "conditions": "仅针对 JSON 输入路径（validate_json 等 JSON 校验）；非 JSON 的 Python 输入在 strict 模式下仍要求正确类型实例"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "evidence_ready"
+          },
+          "rounds": 1,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 25266,
+          "completion_tokens": 1207,
+          "total_tokens": 26473
+        },
+        "model_requests": 6,
+        "seconds": 13.51,
+        "tool_errors": [],
+        "span_evidence": 2
+      }
+    },
+    {
+      "id": "pydantic-pdf",
+      "repeat": 1,
+      "expected": "unknown",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "资料中没有任何关于 PDF OCR 或文档识别器的内容。README 描述 Pydantic 是“Data validation using Python type hints”，文档为 strict mode 说明，均未提及 PDF、OCR 或文档识别功能，因此该需求在资料中无依据。",
+          "quotes": [
+            "Data validation using Python type hints.",
+            "Fast and extensible, Pydantic plays nicely with your linters/IDE/brain.",
+            "By default, Pydantic will attempt to coerce values to the desired type when possible."
+          ]
+        },
+        "score": {
+          "correct": false,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 3557,
+          "completion_tokens": 169,
+          "total_tokens": 3726
+        },
+        "model_requests": 1,
+        "seconds": 2.35,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "候选仓库实际为 pydantic 数据校验库。README 仅描述其基于 Python 类型提示的数据校验能力（E1、E2），docs/concepts/strict_mode.md 也仅讨论严格模式下的类型强制转换。全部已保存资料与已整理片段中均未提及 PDF 解析、OCR 或文档图像文字识别功能，无法证明支持或明确否定该能力。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": "已检索范围：README.md、docs/concepts/strict_mode.md；未进行 Issue/源码级检索（工具预算耗尽）。"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "reserve_final_requests,tool_budget"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 30644,
+          "completion_tokens": 1371,
+          "total_tokens": 32015
+        },
+        "model_requests": 9,
+        "seconds": 19.78,
+        "tool_errors": [],
+        "span_evidence": 2
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "已存 README 与严格模式文档均只描述 Pydantic 的数据验证与类型强制转换行为，未提及 PDF 解析、OCR 或文档识别功能；针对相关关键词的检索也无结果。既无明确支持陈述，也无明确否定陈述，故判为 unknown。",
+            "evidence_ids": [],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "",
+            "conditions": "基于当前已获取的 README 与 docs/concepts/strict_mode.md 片段；未覆盖仓库全部文档与依赖清单"
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 29261,
+          "completion_tokens": 1108,
+          "total_tokens": 30369
+        },
+        "model_requests": 8,
+        "seconds": 15.64,
+        "tool_errors": [
+          {
+            "tool": "read_source",
+            "message": "该查询已重复执行；请使用新的原文位置、关键词或更新矩阵，勿继续重复查询"
+          }
+        ],
+        "span_evidence": 0
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/pydantic-pdf",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "README 标题与描述为 Pydantic 数据校验库（Data validation using Python type hints），补充查询得到的文档为 strict_mode（严格模式）说明，均未提及 PDF、OCR 或文档识别能力。已收集资料内无支持/否定证据，判为 unknown。",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E4"
+            ],
+            "evidence_basis": "absence_of_evidence",
+            "applicable_version": "5adfeaaaea947f81f0f01868604f219084ec151a",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "model_submitted",
+            "reason": "tool_budget"
+          },
+          "rounds": 1,
+          "routing": {
+            "requested": "auto",
+            "path": "quick_then_deep",
+            "reason": "evidence_gap_or_conditions"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 0,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 32951,
+          "completion_tokens": 1250,
+          "total_tokens": 34201
+        },
+        "model_requests": 8,
+        "seconds": 17.16,
+        "tool_errors": [
+          {
+            "tool": "investigate_gaps",
+            "message": "同一目标 fixture/pydantic-pdf / R1 重复出现；请只保留一个 target，将关键词合并到其 query 字段"
+          }
+        ],
+        "span_evidence": 4
+      }
+    },
+    {
+      "id": "fastapi-websocket",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "README 与 WebSockets 文档均表明 FastAPI 支持 WebSocket：README 在特性列表中列出 \"WebSockets\"（借由 Starlette），文档说明可在 FastAPI 应用里创建 websocket 端点、用 await 收发消息，并支持 Depends/Security/Cookie/Header/Path/Query 依赖。文档还指出需额外安装 `websockets` 库，且 WebSocketException 替代 HTTPException。「路由」一词指在该路径上注册 WebSocket 端点，属支持范围；如需标注为「WebSocket 路由」这类特定 API 名称，资料未使用该术语。",
+          "quotes": [
+            "Many extra features (thanks to Starlette) such as:\n    * **WebSockets**",
+            "You can use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) with **FastAPI**.",
+            "Add `websockets` (a Python library that makes it easy to use the \"WebSocket\" protocol) to your project:",
+            "In your **FastAPI** application, create a `websocket`:",
+            "In your WebSocket route you can `await` for messages and send messages.",
+            "You can receive and send binary, text, and JSON data.",
+            "In WebSocket endpoints you can import from `fastapi` and use:\n\n* `Depends`\n* `Security`\n* `Cookie`\n* `Header`\n* `Path`\n* `Query`",
+            "As this is a WebSocket it doesn't really make sense to raise an `HTTPException`, instead we raise a `WebSocketException`."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 8,
+          "exact_citations": 8,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 10240,
+          "completion_tokens": 408,
+          "total_tokens": 10648
+        },
+        "model_requests": 1,
+        "seconds": 3.26,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2345,
+          "completion_tokens": 56,
+          "total_tokens": 2401
+        },
+        "model_requests": 1,
+        "seconds": 2.0,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2633,
+          "completion_tokens": 52,
+          "total_tokens": 2685
+        },
+        "model_requests": 1,
+        "seconds": 2.12,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick",
+            "reason": "readme_first"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        },
+        "model_requests": 0,
+        "seconds": 0.0,
+        "tool_errors": [],
+        "span_evidence": 0
+      }
+    },
+    {
+      "id": "fastapi-websocket-process",
+      "repeat": 1,
+      "expected": "unsupported",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "文档明确说明该内存列表示例仅在单进程内有效：所有连接保存在内存中的单个列表里，只在进程运行期间有效，并且仅支持单进程。因此它不能直接跨多个进程共享连接；若需要更健壮的方案，文档建议使用 encode/broadcaster（Redis、PostgreSQL 等支持）。",
+          "quotes": [
+            "But keep in mind that, as everything is handled in memory, in a single list, it will only work while the process is running, and will only work with a single process.",
+            "If you need something easy to integrate with FastAPI but that is more robust, supported by Redis, PostgreSQL or others, check [encode/broadcaster](https://github.com/encode/broadcaster)."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 2,
+          "exact_citations": 2,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 10250,
+          "completion_tokens": 213,
+          "total_tokens": 10463
+        },
+        "model_requests": 1,
+        "seconds": 2.76,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket-process",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2366,
+          "completion_tokens": 53,
+          "total_tokens": 2419
+        },
+        "model_requests": 1,
+        "seconds": 1.61,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket-process",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2654,
+          "completion_tokens": 53,
+          "total_tokens": 2707
+        },
+        "model_requests": 1,
+        "seconds": 1.41,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-websocket-process",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick",
+            "reason": "readme_first"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        },
+        "model_requests": 0,
+        "seconds": 0.0,
+        "tool_errors": [],
+        "span_evidence": 0
+      }
+    },
+    {
+      "id": "fastapi-background",
+      "repeat": 1,
+      "expected": "supported",
+      "same_sources": {
+        "answer": {
+          "status": "supported",
+          "explanation": "提供的 FastAPI 教程文档明确指出可定义在返回响应之后运行的后台任务，并在路径操作函数中以 BackgroundTasks 参数配合 .add_task() 添加;依赖注入场景下同样在响应发送后执行。README 与 WebSocket 文档未涉及该行为。",
+          "quotes": [
+            "You can define background tasks to be run *after* returning a response.",
+            "Inside of your *path operation function*, pass your task function to the *background tasks* object with the method `.add_task()`:",
+            "In this example, the messages will be written to the `log.txt` file *after* the response is sent."
+          ]
+        },
+        "score": {
+          "correct": true,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 1,
+          "grounded_correct": true
+        },
+        "tokens": {
+          "prompt_tokens": 10242,
+          "completion_tokens": 190,
+          "total_tokens": 10432
+        },
+        "model_requests": 1,
+        "seconds": 3.04,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-background",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2348,
+          "completion_tokens": 44,
+          "total_tokens": 2392
+        },
+        "model_requests": 1,
+        "seconds": 1.4,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-background",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2636,
+          "completion_tokens": 55,
+          "total_tokens": 2691
+        },
+        "model_requests": 1,
+        "seconds": 1.67,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-background",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick",
+            "reason": "readme_first"
+          }
+        },
+        "score": {
+          "correct": false,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        },
+        "model_requests": 0,
+        "seconds": 0.0,
+        "tool_errors": [],
+        "span_evidence": 0
+      }
+    },
+    {
+      "id": "fastapi-exactly-once",
+      "repeat": 1,
+      "expected": "unknown",
+      "same_sources": {
+        "answer": {
+          "status": "unsupported",
+          "explanation": "提供的资料无法支持该说法。BackgroundTasks 文档只说明任务在返回响应之后运行，且它是来自 starlette.background 的进程内机制；文档未提及进程崩溃后的持久化恢复，也未提及 exactly-once 执行保证。相反，文档在 Caveat 中指出需要跨进程/多服务器的重后台计算应考虑 Celery 等工具，并说明 WebSocket 示例数据仅在内存中、仅进程运行期间有效（类比说明其内存性质）。资料中没有关于崩溃恢复或 exactly-once 的任何表述，因此该保证不成立（无证据支持）。",
+          "quotes": [
+            "You can define background tasks to be run *after* returning a response.",
+            "The class `BackgroundTasks` comes directly from [`starlette.background`](https://starlette.dev/background/).",
+            "If you need to perform heavy background computation and you don't necessarily need it to be run by the same process (for example, you don't need to share memory, variables, etc), you might benefit from using other bigger tools like [Celery](https://docs.celeryq.dev)."
+          ]
+        },
+        "score": {
+          "correct": false,
+          "completed": true,
+          "citation_count": 3,
+          "exact_citations": 3,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 10252,
+          "completion_tokens": 291,
+          "total_tokens": 10543
+        },
+        "model_requests": 1,
+        "seconds": 2.97,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "no_followup": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-exactly-once",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2370,
+          "completion_tokens": 53,
+          "total_tokens": 2423
+        },
+        "model_requests": 1,
+        "seconds": 2.06,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "agent": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-exactly-once",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "deep",
+            "path": "deep",
+            "reason": "explicit_deep_or_complex_or_resumed"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 2658,
+          "completion_tokens": 54,
+          "total_tokens": 2712
+        },
+        "model_requests": 1,
+        "seconds": 1.8,
+        "tool_errors": [],
+        "span_evidence": 0
+      },
+      "auto": {
+        "answer": {
+          "assessment": {
+            "repository": "fixture/fastapi-exactly-once",
+            "requirement_id": "R1",
+            "status": "unknown",
+            "explanation": "未获得足够证据，待进一步核实",
+            "evidence_ids": [],
+            "evidence_basis": "uncertain",
+            "applicable_version": "",
+            "conditions": ""
+          },
+          "completion": {
+            "type": "fallback",
+            "reason": "model_error"
+          },
+          "rounds": 0,
+          "routing": {
+            "requested": "auto",
+            "path": "quick",
+            "reason": "readme_first"
+          }
+        },
+        "score": {
+          "correct": true,
+          "completed": false,
+          "citation_count": 0,
+          "exact_citations": 0,
+          "supported_citations": 0,
+          "grounded_correct": false
+        },
+        "tokens": {
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0
+        },
+        "model_requests": 0,
+        "seconds": 0.0,
+        "tool_errors": [],
+        "span_evidence": 0
+      }
+    }
+  ],
+  "model": "deepseek-flash",
+  "summary": {
+    "same_sources": {
+      "tasks": 12,
+      "accuracy": 0.75,
+      "grounded_accuracy": 0.5833333333333334,
+      "completion_rate": 1.0,
+      "citation_exactness": 0.9361702127659575,
+      "citation_support": 0.14893617021276595,
+      "model_requests": 12,
+      "total_tokens": 77634,
+      "seconds": 33.0
+    },
+    "no_followup": {
+      "tasks": 12,
+      "accuracy": 0.6666666666666666,
+      "grounded_accuracy": 0.5,
+      "completion_rate": 0.5833333333333334,
+      "citation_exactness": 1.0,
+      "citation_support": 0.26666666666666666,
+      "model_requests": 58,
+      "total_tokens": 218356,
+      "seconds": 126.48
+    },
+    "agent": {
+      "tasks": 12,
+      "accuracy": 0.75,
+      "grounded_accuracy": 0.5,
+      "completion_rate": 0.5833333333333334,
+      "citation_exactness": 1.0,
+      "citation_support": 0.38461538461538464,
+      "model_requests": 58,
+      "total_tokens": 235207,
+      "seconds": 123.54
+    },
+    "auto": {
+      "tasks": 12,
+      "accuracy": 0.75,
+      "grounded_accuracy": 0.6666666666666666,
+      "completion_rate": 0.6666666666666666,
+      "citation_exactness": 1.0,
+      "citation_support": 0.35294117647058826,
+      "model_requests": 41,
+      "total_tokens": 182527,
+      "seconds": 103.99
+    }
+  }
+}
