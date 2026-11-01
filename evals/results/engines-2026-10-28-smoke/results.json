@@ -1,0 +1,3166 @@
+{
+  "created_at": "2026-10-28T09:31:57.440544+00:00",
+  "dataset_sha256": "d865103266afb69e5a2ca6f1e5aa896a7d169f6cae7661ed744e52c4e5718786",
+  "code_sha256": "2d3bb442a245c10830e347497c5ec6f1b31f05ae447d77a63773c11a85976bdc",
+  "strategy": "auto",
+  "verify_claims": false,
+  "scope": "2 frozen tasks, one run each; not a statistical benchmark",
+  "rows": [
+    {
+      "id": "httpx-sync-async",
+      "engine": "legacy",
+      "request": {
+        "question": "调查冻结样例：同时提供同步和异步 API",
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "同时提供同步和异步 API",
+            "mandatory": true
+          }
+        ],
+        "repositories": [
+          "fixture/httpx-sync-async"
+        ],
+        "mode": "deepseek",
+        "max_tools": 16,
+        "max_tokens": 60000,
+        "max_followups": 2,
+        "verify_claims": false,
+        "strategy": "auto",
+        "engine": "legacy"
+      },
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 2,
+        "exact_citations": 2,
+        "supported_citations": 1,
+        "grounded_correct": true
+      },
+      "report": {
+        "summary": "候选 fixture/httpx-sync-async（HTTPX）的 README 在两处明确声明同时提供同步与异步 API，证据一致，无冲突项。R1（强制需求）判定为 supported。未发现版本限制说明，适用版本留空。",
+        "assessments": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 明确声明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表亦称提供标准同步接口并可按需使用异步支持。",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "",
+            "conditions": ""
+          }
+        ],
+        "excluded": [],
+        "verification": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "quote_match": true,
+            "has_repository_source": true,
+            "source_refs": [
+              "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+            ],
+            "applicable_version": "",
+            "conditions": "",
+            "semantic_support": "needs_review",
+            "warnings": [
+              "尚未声明结论适用版本"
+            ]
+          }
+        ],
+        "research": {
+          "gaps": [],
+          "changes": [],
+          "reviews": [
+            {
+              "index": 1,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-sync-async",
+                  "requirement_id": "R1",
+                  "status": "supported",
+                  "explanation": "README 明确说明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表也称提供标准同步接口并可选异步支持。",
+                  "evidence_ids": [
+                    "E1",
+                    "E2"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "",
+                  "conditions": ""
+                }
+              ],
+              "gaps": [],
+              "summary": "候选 fixture/httpx-sync-async（HTTPX）README 两处明确声明同时提供同步与异步 API，R1 判为 supported，无需进一步补查。"
+            },
+            {
+              "index": 2,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-sync-async",
+                  "requirement_id": "R1",
+                  "status": "supported",
+                  "explanation": "README 明确声明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表亦称提供标准同步接口并可按需使用异步支持。",
+                  "evidence_ids": [
+                    "E1",
+                    "E2"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "",
+                  "conditions": ""
+                }
+              ],
+              "gaps": [],
+              "summary": "候选 fixture/httpx-sync-async（HTTPX）的 README 在两处明确声明同时提供同步与异步 API，证据一致，无冲突项。R1（强制需求）判定为 supported。未发现版本限制说明，适用版本留空。"
+            }
+          ],
+          "followups": [],
+          "rounds_used": 0,
+          "rounds_limit": 2
+        },
+        "collections": [],
+        "sources": [
+          {
+            "id": "S1",
+            "repository": "fixture/httpx-sync-async",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:31:57.448874+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          },
+          {
+            "id": "E2",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "s on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `req",
+            "start": 1601,
+            "end": 2301,
+            "selection": "span"
+          }
+        ],
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "同时提供同步和异步 API",
+            "mandatory": true
+          }
+        ],
+        "mode": "deepseek",
+        "routing": {
+          "requested": "auto",
+          "path": "quick_then_deep",
+          "reason": "invalid_quick_assessment"
+        },
+        "prior_run_metrics": {},
+        "metrics": {
+          "tool_calls": 4,
+          "http_requests": 0,
+          "cache_hits": 0,
+          "model_calls": 4,
+          "model_requests": 4,
+          "tokens": {
+            "prompt_tokens": 13240,
+            "completion_tokens": 888,
+            "total_tokens": 14128
+          },
+          "context_chars_sent": 21540
+        },
+        "limitations": [
+          "仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。",
+          "候选范围有限，未执行全网搜索；不验证 README 中的性能声明。"
+        ],
+        "completion": {
+          "type": "model_submitted",
+          "reason": "evidence_ready"
+        }
+      },
+      "tokens": {
+        "prompt_tokens": 13240,
+        "completion_tokens": 888,
+        "total_tokens": 14128
+      },
+      "model_requests": 4,
+      "seconds": 12.644,
+      "events": [
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_repository",
+            "arguments": {
+              "repository": "fixture/httpx-sync-async"
+            },
+            "calls": 1
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S1",
+            "repository": "fixture/httpx-sync-async",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:31:57.448874+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "先核查 README；证据不足时自动深入调查"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 4002,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 1,
+            "status": 200,
+            "elapsed_ms": 3112
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 1,
+            "usage": {
+              "prompt_tokens": 2119,
+              "completion_tokens": 316,
+              "total_tokens": 2435
+            }
+          }
+        },
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "assess_readme",
+            "message": "快速判断必须完整覆盖所有候选和条件，且不可重复"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 3980,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 2,
+            "status": 200,
+            "elapsed_ms": 2342
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 2,
+            "usage": {
+              "prompt_tokens": 5645,
+              "completion_tokens": 480,
+              "total_tokens": 6125
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:700:1400"
+            },
+            "calls": 2
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:1601:2301"
+            },
+            "calls": 3
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E2",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "s on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `req",
+            "start": 1601,
+            "end": 2301,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 7357,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 3,
+            "status": 200,
+            "elapsed_ms": 3222
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 3,
+            "usage": {
+              "prompt_tokens": 10219,
+              "completion_tokens": 669,
+              "total_tokens": 10888
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "review_evidence",
+            "arguments": {
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-sync-async",
+                  "requirement_id": "R1",
+                  "status": "supported",
+                  "explanation": "README 明确说明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表也称提供标准同步接口并可选异步支持。",
+                  "evidence_ids": [
+                    "E1",
+                    "E2"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "",
+                  "conditions": ""
+                }
+              ],
+              "summary": "候选 fixture/httpx-sync-async（HTTPX）README 两处明确声明同时提供同步与异步 API，R1 判为 supported，无需进一步补查。"
+            },
+            "calls": 4
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 1 次证据检查：0 个缺口",
+            "index": 1,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-sync-async",
+                "requirement_id": "R1",
+                "status": "supported",
+                "explanation": "README 明确说明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表也称提供标准同步接口并可选异步支持。",
+                "evidence_ids": [
+                  "E1",
+                  "E2"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "",
+                "conditions": ""
+              }
+            ],
+            "gaps": [],
+            "summary": "候选 fixture/httpx-sync-async（HTTPX）README 两处明确声明同时提供同步与异步 API，R1 判为 supported，无需进一步补查。"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "整理最终报告",
+            "phase": "finalize",
+            "context_chars": 6201,
+            "reason": "evidence_ready"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 4,
+            "status": 200,
+            "elapsed_ms": 3928
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 4,
+            "usage": {
+              "prompt_tokens": 13240,
+              "completion_tokens": 888,
+              "total_tokens": 14128
+            }
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 2 次证据检查：0 个缺口",
+            "index": 2,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-sync-async",
+                "requirement_id": "R1",
+                "status": "supported",
+                "explanation": "README 明确声明该库同时提供同步与异步 API：正文写明 \"provides both **sync and async APIs**\"，功能列表亦称提供标准同步接口并可按需使用异步支持。",
+                "evidence_ids": [
+                  "E1",
+                  "E2"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "",
+                "conditions": ""
+              }
+            ],
+            "gaps": [],
+            "summary": "候选 fixture/httpx-sync-async（HTTPX）的 README 在两处明确声明同时提供同步与异步 API，证据一致，无冲突项。R1（强制需求）判定为 supported。未发现版本限制说明，适用版本留空。"
+          }
+        },
+        {
+          "kind": "submitted",
+          "payload": {
+            "message": "最终矩阵通过结构校验，报告已提交"
+          }
+        }
+      ]
+    },
+    {
+      "id": "httpx-sync-async",
+      "engine": "langgraph",
+      "request": {
+        "question": "调查冻结样例：同时提供同步和异步 API",
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "同时提供同步和异步 API",
+            "mandatory": true
+          }
+        ],
+        "repositories": [
+          "fixture/httpx-sync-async"
+        ],
+        "mode": "deepseek",
+        "max_tools": 16,
+        "max_tokens": 60000,
+        "max_followups": 2,
+        "verify_claims": false,
+        "strategy": "auto",
+        "engine": "langgraph"
+      },
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 1,
+        "exact_citations": 1,
+        "supported_citations": 1,
+        "grounded_correct": true
+      },
+      "report": {
+        "summary": "httpx 的 README 明确声明提供 sync 和 async 两套 API，满足“同时提供同步和异步 API”的需求。",
+        "assessments": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "status": "supported",
+            "explanation": "README 两处明确说明同时提供同步与异步 API。",
+            "evidence_ids": [
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": ""
+          }
+        ],
+        "excluded": [],
+        "verification": [
+          {
+            "repository": "fixture/httpx-sync-async",
+            "requirement_id": "R1",
+            "quote_match": true,
+            "has_repository_source": true,
+            "source_refs": [
+              "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+            ],
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "",
+            "semantic_support": "needs_review",
+            "warnings": []
+          }
+        ],
+        "research": {
+          "gaps": [],
+          "changes": [],
+          "reviews": [
+            {
+              "index": 1,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-sync-async",
+                  "requirement_id": "R1",
+                  "status": "supported",
+                  "explanation": "README 两处明确说明同时提供同步与异步 API。",
+                  "evidence_ids": [
+                    "E1"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": ""
+                }
+              ],
+              "gaps": [],
+              "summary": "httpx 的 README 明确声明提供 sync 和 async 两套 API，满足“同时提供同步和异步 API”的需求。"
+            }
+          ],
+          "followups": [],
+          "rounds_used": 0,
+          "rounds_limit": 2
+        },
+        "collections": [],
+        "sources": [
+          {
+            "id": "S1",
+            "repository": "fixture/httpx-sync-async",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:10.126529+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        ],
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "同时提供同步和异步 API",
+            "mandatory": true
+          }
+        ],
+        "mode": "deepseek",
+        "routing": {
+          "requested": "auto",
+          "path": "quick",
+          "reason": "readme_first"
+        },
+        "prior_run_metrics": {},
+        "metrics": {
+          "tool_calls": 2,
+          "http_requests": 0,
+          "cache_hits": 0,
+          "model_calls": 1,
+          "model_requests": 1,
+          "tokens": {
+            "prompt_tokens": 2104,
+            "completion_tokens": 161,
+            "total_tokens": 2265
+          },
+          "context_chars_sent": 3976
+        },
+        "limitations": [
+          "仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。",
+          "候选范围有限，未执行全网搜索；不验证 README 中的性能声明。"
+        ],
+        "completion": {
+          "type": "model_submitted",
+          "reason": "readme_evidence_ready"
+        },
+        "engine": "langgraph"
+      },
+      "tokens": {
+        "prompt_tokens": 2104,
+        "completion_tokens": 161,
+        "total_tokens": 2265
+      },
+      "model_requests": 1,
+      "seconds": 2.285,
+      "events": [
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：prepare",
+            "node": "prepare"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_repository",
+            "arguments": {
+              "repository": "fixture/httpx-sync-async"
+            },
+            "calls": 1
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S1",
+            "repository": "fixture/httpx-sync-async",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:10.126529+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "先核查 README；证据不足时自动深入调查"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：prepare",
+            "node": "prepare",
+            "elapsed_ms": 1,
+            "model_requests": 0,
+            "tokens": 0,
+            "tools_used": 1,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 1,
+            "status": 200,
+            "elapsed_ms": 2226
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 1,
+            "usage": {
+              "prompt_tokens": 2104,
+              "completion_tokens": 161,
+              "total_tokens": 2265
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 2232,
+            "model_requests": 1,
+            "tokens": 2265,
+            "tools_used": 1,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:700:1400"
+            },
+            "calls": 2
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 1 次证据检查：0 个缺口",
+            "index": 1,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-sync-async",
+                "requirement_id": "R1",
+                "status": "supported",
+                "explanation": "README 两处明确说明同时提供同步与异步 API。",
+                "evidence_ids": [
+                  "E1"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": ""
+              }
+            ],
+            "gaps": [],
+            "summary": "httpx 的 README 明确声明提供 sync 和 async 两套 API，满足“同时提供同步和异步 API”的需求。"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 1,
+            "tokens": 2265,
+            "tools_used": 2,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：review",
+            "node": "review"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：review",
+            "node": "review",
+            "elapsed_ms": 1,
+            "model_requests": 1,
+            "tokens": 2265,
+            "tools_used": 2,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：finish",
+            "node": "finish"
+          }
+        },
+        {
+          "kind": "submitted",
+          "payload": {
+            "message": "图执行已结束",
+            "reason": ""
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：finish",
+            "node": "finish",
+            "elapsed_ms": 0,
+            "model_requests": 1,
+            "tokens": 2265,
+            "tools_used": 2,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "httpx-default-http2",
+      "engine": "langgraph",
+      "request": {
+        "question": "调查冻结样例：HTTP/2 默认开启，无需额外配置",
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "HTTP/2 默认开启，无需额外配置",
+            "mandatory": true
+          }
+        ],
+        "repositories": [
+          "fixture/httpx-default-http2"
+        ],
+        "mode": "deepseek",
+        "max_tools": 16,
+        "max_tokens": 60000,
+        "max_followups": 2,
+        "verify_claims": false,
+        "strategy": "auto",
+        "engine": "langgraph"
+      },
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 3,
+        "exact_citations": 3,
+        "supported_citations": 1,
+        "grounded_correct": true
+      },
+      "report": {
+        "summary": "候选仓库 fixture/httpx-default-http2 的官方文档 docs/http2.md 明确否定需求：HTTP/2 默认不启用，必须安装可选依赖 httpx[http2] 并以 http2=True 创建客户端才能启用，且明确提到“未来版本可能默认启用”属可能性。README 的“HTTP/1.1 and HTTP/2 support”只说明具备该能力，未声明默认开启。因此 R1（HTTP/2 默认开启、无需额外配置）判定为 unsupported，无需继续采集。",
+        "assessments": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "官方文档 docs/http2.md 的“Enabling HTTP/2”章节明确说明：使用 httpx 客户端时 HTTP/2 支持默认未启用，并解释是因为 HTTP/1.1 被认为是更成熟的传输层，仅“未来版本可能默认启用”HTTP/2。启用方式为安装可选依赖 httpx[http2] 并以 http2=True 实例化 Client/AsyncClient，与“默认开启、无需额外配置”的要求相反。README 仅笼统列出“HTTP/1.1 and HTTP/2 support”，未说明默认开启，不足以支持该需求。",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E1"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "“未来版本可能默认启用”仅为可能性表述，不构成当前能力；当前版本需显式配置。"
+          }
+        ],
+        "excluded": [
+          "fixture/httpx-default-http2"
+        ],
+        "verification": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "quote_match": true,
+            "has_repository_source": true,
+            "source_refs": [
+              "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+            ],
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "“未来版本可能默认启用”仅为可能性表述，不构成当前能力；当前版本需显式配置。",
+            "semantic_support": "needs_review",
+            "warnings": []
+          }
+        ],
+        "research": {
+          "gaps": [],
+          "changes": [
+            {
+              "repository": "fixture/httpx-default-http2",
+              "requirement_id": "R1",
+              "before": "unknown",
+              "after": "unsupported",
+              "evidence_ids": [
+                "E2",
+                "E3",
+                "E1"
+              ]
+            }
+          ],
+          "reviews": [
+            {
+              "index": 1,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unknown",
+                  "explanation": "README 的功能列表只提到 HTTP/1.1 和 HTTP/2 支持（链接到 http2 文档），没有说明 HTTP/2 是否默认启用、是否需要额外配置或额外依赖，因此无法据此判定。",
+                  "evidence_ids": [
+                    "E1"
+                  ],
+                  "evidence_basis": "uncertain",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": ""
+                }
+              ],
+              "gaps": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "reason": "unresolved",
+                  "status": "unknown"
+                }
+              ],
+              "summary": "README 仅声明支持 HTTP/1.1 与 HTTP/2，并把命令行客户端标为可选依赖，但未说明 HTTP/2 是否默认开启、是否需要额外配置（httpx 实际上需要 h2 扩展与 http2=True）。因此 R1 目前无充分依据，保留 unknown 以便深入调查。"
+            },
+            {
+              "index": 2,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "官方文档 docs/http2.md 明确指出客户端默认不启用 HTTP/2，需安装可选依赖 httpx[http2] 并实例化 Client(http2=True) 才启用；与“默认开启、无需额外配置”的要求相反。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "仅声明“未来版本可能默认启用”为可能性，当前版本不适用。"
+                }
+              ],
+              "gaps": [],
+              "summary": "docs/http2.md 的“Enabling HTTP/2”章节明确说明 HTTP/2 默认未启用，需安装 httpx[http2] 可选依赖并使用 http2=True 实例化客户端，故 R1 不成立。"
+            },
+            {
+              "index": 3,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "官方文档 docs/http2.md 的“Enabling HTTP/2”章节明确说明：使用 httpx 客户端时 HTTP/2 支持默认未启用，并解释是因为 HTTP/1.1 被认为是更成熟的传输层，仅“未来版本可能默认启用”HTTP/2。启用方式为安装可选依赖 httpx[http2] 并以 http2=True 实例化 Client/AsyncClient，与“默认开启、无需额外配置”的要求相反。README 仅笼统列出“HTTP/1.1 and HTTP/2 support”，未说明默认开启，不足以支持该需求。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3",
+                    "E1"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "“未来版本可能默认启用”仅为可能性表述，不构成当前能力；当前版本需显式配置。"
+                }
+              ],
+              "gaps": [],
+              "summary": "候选仓库 fixture/httpx-default-http2 的官方文档 docs/http2.md 明确否定需求：HTTP/2 默认不启用，必须安装可选依赖 httpx[http2] 并以 http2=True 创建客户端才能启用，且明确提到“未来版本可能默认启用”属可能性。README 的“HTTP/1.1 and HTTP/2 support”只说明具备该能力，未声明默认开启。因此 R1（HTTP/2 默认开启、无需额外配置）判定为 unsupported，无需继续采集。"
+            }
+          ],
+          "followups": [
+            {
+              "index": 1,
+              "review_index": 1,
+              "actions": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "query": "http2 default enable optional dependency h2 http2=True",
+                  "document_path": null,
+                  "signature": [
+                    "fixture/httpx-default-http2",
+                    "R1",
+                    "http2 default enable optional dependency h2 http2 true",
+                    null
+                  ],
+                  "status": "collected",
+                  "source_ids": [
+                    "S2",
+                    "S3"
+                  ],
+                  "candidates": [
+                    {
+                      "source_id": "S2",
+                      "kind": "documentation",
+                      "quote": "e prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You ",
+                      "needs_review": true
+                    },
+                    {
+                      "source_id": "S1",
+                      "kind": "readme",
+                      "quote": "sing the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n*",
+                      "needs_review": true
+                    },
+                    {
+                      "source_id": "S3",
+                      "kind": "documentation",
+                      "quote": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as c",
+                      "needs_review": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "rounds_used": 1,
+          "rounds_limit": 2
+        },
+        "collections": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "status": "collected",
+            "source_ids": [
+              "S2",
+              "S3"
+            ],
+            "error": null
+          },
+          {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "release",
+            "status": "empty",
+            "source_ids": [],
+            "error": null
+          },
+          {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "issue",
+            "status": "empty",
+            "source_ids": [],
+            "error": null
+          }
+        ],
+        "sources": [
+          {
+            "id": "S1",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:12.398877+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          },
+          {
+            "id": "S2",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/http2.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md",
+            "text": "# HTTP/2\n\nHTTP/2 is a major new iteration of the HTTP protocol, that provides a far more\nefficient transport, with potential performance benefits. HTTP/2 does not change\nthe core semantics of the request or response, but alters the way that data is\nsent to and from the server.\n\nRather than the text format that HTTP/1.1 uses, HTTP/2 is a binary format.\nThe binary format provides full request and response multiplexing, and efficient\ncompression of HTTP headers. The stream multiplexing means that where HTTP/1.1\nrequires one TCP stream for each concurrent request, HTTP/2 allows a single TCP\nstream to handle multiple concurrent requests.\n\nHTTP/2 also provides support for functionality such as response prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support on the client does not *necessarily* mean that your\nrequests and responses will be transported over HTTP/2, since both the client\n*and* the server need to support HTTP/2. If you connect to a server that only\nsupports HTTP/1.1 the client will use a standard HTTP/1.1 connection instead.\n\nYou can determine which version of the HTTP protocol was used by examining\nthe `.http_version` property on the response.\n\n```python\nclient = httpx.AsyncClient(http2=True)\nresponse = await client.get(...)\nprint(response.http_version)  # \"HTTP/1.0\", \"HTTP/1.1\", or \"HTTP/2\".\n```\n",
+            "fetched_at": "2026-10-28T09:32:18.597424+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "51010101b5aff566dcdfdf94cb5e0ef644caf5411b84749753a9da79d28caaf7"
+          },
+          {
+            "id": "S3",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/async.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+            "text": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as client:\n...     r = await client.get('https://www.example.com/')\n...\n>>> r\n<Response [200 OK]>\n```\n\n!!! tip\n    Use [IPython](https://ipython.readthedocs.io/en/stable/) or Python 3.9+ with `python -m asyncio` to try this code interactively, as they support executing `async`/`await` expressions in the console.\n\n## API Differences\n\nIf you're using an async client then there are a few bits of API that\nuse async methods.\n\n### Making requests\n\nThe request methods are all async, so you should use `response = await client.get(...)` style for all of the following:\n\n* `AsyncClient.get(url, ...)`\n* `AsyncClient.options(url, ...)`\n* `AsyncClient.head(url, ...)`\n* `AsyncClient.post(url, ...)`\n* `AsyncClient.put(url, ...)`\n* `AsyncClient.patch(url, ...)`\n* `AsyncClient.delete(url, ...)`\n* `AsyncClient.request(method, url, ...)`\n* `AsyncClient.send(request, ...)`\n\n### Opening and closing clients\n\nUse `async with httpx.AsyncClient()` if you want a context-managed client...\n\n```python\nasync with httpx.AsyncClient() as client:\n    ...\n```\n\n!!! warning\n    In order to get the most benefit from connection pooling, make sure you're not instantiating multiple client instances - for example by using `async with` inside a \"hot loop\". This can be achieved either by having a single scoped client that's passed throughout wherever it's needed, or by having a single global client instance.\n\nAlternatively, use `await client.aclose()` if you want to close a client explicitly:\n\n```python\nclient = httpx.AsyncClient()\n...\nawait client.aclose()\n```\n\n### Streaming responses\n\nThe `AsyncClient.stream(method, url, ...)` method is an async context block.\n\n```pycon\n>>> client = httpx.AsyncClient()\n>>> async with client.stream('GET', 'https://www.example.com/') as response:\n...     async for chunk in response.aiter_bytes():\n...         ...\n```\n\nThe async response streaming methods are:\n\n* `Response.aread()` - For conditionally reading a response inside a stream block.\n* `Response.aiter_bytes()` - For streaming the response content as bytes.\n* `Response.aiter_text()` - For streaming the response content as text.\n* `Response.aiter_lines()` - For streaming the response content as lines of text.\n* `Response.aiter_raw()` - For streaming the raw response bytes, without applying content decoding.\n* `Response.aclose()` - For closing the response. You don't usually need this, since `.stream` block closes the response automatically on exit.\n\nFor situations when context block usage is not practical, it is possible to enter \"manual mode\" by sending a [`Request` instance](advanced/clients.md#request-instances) using `client.send(..., stream=True)`.\n\nExample in the context of forwarding the response to a streaming web endpoint with [Starlette](https://www.starlette.io):\n\n```python\nimport httpx\nfrom starlette.background import BackgroundTask\nfrom starlette.responses import StreamingResponse\n\nclient = httpx.AsyncClient()\n\nasync def home(request):\n    req = client.build_request(\"GET\", \"https://www.example.com/\")\n    r = await client.send(req, stream=True)\n    return StreamingResponse(r.aiter_text(), background=BackgroundTask(r.aclose))\n```\n\n!!! warning\n    When using this \"manual streaming mode\", it is your duty as a developer to make sure that `Response.aclose()` is called eventually. Failing to do so would leave connections open, most likely resulting in resource leaks down the line.\n\n### Streaming requests\n\nWhen sending a streaming request body with an `AsyncClient` instance, you should use an async bytes generator instead of a bytes generator:\n\n```python\nasync def upload_bytes():\n    ...  # yield byte content\n\nawait client.post(url, content=upload_bytes())\n```\n\n### Explicit transport instances\n\nWhen instantiating a transport instance directly, you need to use `httpx.AsyncHTTPTransport`.\n\nFor instance:\n\n```pycon\n>>> import httpx\n>>> transport = httpx.AsyncHTTPTransport(retries=1)\n>>> async with httpx.AsyncClient(transport=transport) as client:\n>>>     ...\n```\n\n## Supported async environments\n\nHTTPX supports either `asyncio` or `trio` as an async environment.\n\nIt will auto-detect which of those two to use as the backend\nfor socket operations and concurrency primitives.\n\n### [AsyncIO](https://docs.python.org/3/library/asyncio.html)\n\nAsyncIO is Python's [built-in library](https://docs.python.org/3/library/asyncio.html)\nfor writing concurrent code with the async/await syntax.\n\n```python\nimport asyncio\nimport httpx\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nasyncio.run(main())\n```\n\n### [Trio](https://github.com/python-trio/trio)\n\nTrio is [an alternative async library](https://trio.readthedocs.io/en/stable/),\ndesigned around the [the principles of structured concurrency](https://en.wikipedia.org/wiki/Structured_concurrency).\n\n```python\nimport httpx\nimport trio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\ntrio.run(main)\n```\n\n!!! important\n    The `trio` package must be installed to use the Trio backend.\n\n\n### [AnyIO](https://github.com/agronholm/anyio)\n\nAnyIO is an [asynchronous networking and concurrency library](https://anyio.readthedocs.io/) that works on top of either `asyncio` or `trio`. It blends in with native libraries of your chosen backend (defaults to `asyncio`).\n\n```python\nimport httpx\nimport anyio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nanyio.run(main, backend='trio')\n```\n\n## Calling into Python Web Apps\n\nFor details on calling directly into ASGI applications, see [the `ASGITransport` docs](../advanced/transports#asgitransport).",
+            "fetched_at": "2026-10-28T09:32:18.597449+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "b0722b05e5b8aad6b2518fda345907092a5d4f11c337d50242f7a0a03e739e5b"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": " from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI appl",
+            "start": 1320,
+            "end": 2020,
+            "selection": "span"
+          },
+          {
+            "id": "E2",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          },
+          {
+            "id": "E3",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "n do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support ",
+            "start": 1306,
+            "end": 2006,
+            "selection": "span"
+          }
+        ],
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "HTTP/2 默认开启，无需额外配置",
+            "mandatory": true
+          }
+        ],
+        "mode": "deepseek",
+        "routing": {
+          "requested": "auto",
+          "path": "quick_then_deep",
+          "reason": "evidence_gap_or_conditions"
+        },
+        "prior_run_metrics": {},
+        "metrics": {
+          "tool_calls": 10,
+          "http_requests": 0,
+          "cache_hits": 1,
+          "model_calls": 6,
+          "model_requests": 6,
+          "tokens": {
+            "prompt_tokens": 30175,
+            "completion_tokens": 1807,
+            "total_tokens": 31982
+          },
+          "context_chars_sent": 62676
+        },
+        "limitations": [
+          "仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。",
+          "候选范围有限，未执行全网搜索；不验证 README 中的性能声明。"
+        ],
+        "completion": {
+          "type": "model_submitted",
+          "reason": "evidence_ready"
+        },
+        "engine": "langgraph"
+      },
+      "tokens": {
+        "prompt_tokens": 30175,
+        "completion_tokens": 1807,
+        "total_tokens": 31982
+      },
+      "model_requests": 6,
+      "seconds": 21.594,
+      "events": [
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：prepare",
+            "node": "prepare"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_repository",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 1
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S1",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:12.398877+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "先核查 README；证据不足时自动深入调查"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：prepare",
+            "node": "prepare",
+            "elapsed_ms": 1,
+            "model_requests": 0,
+            "tokens": 0,
+            "tools_used": 1,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 1,
+            "status": 200,
+            "elapsed_ms": 3425
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 1,
+            "usage": {
+              "prompt_tokens": 2138,
+              "completion_tokens": 234,
+              "total_tokens": 2372
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 3433,
+            "model_requests": 1,
+            "tokens": 2372,
+            "tools_used": 1,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:1320:2020"
+            },
+            "calls": 2
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": " from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI appl",
+            "start": 1320,
+            "end": 2020,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 1 次证据检查：1 个缺口",
+            "index": 1,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unknown",
+                "explanation": "README 的功能列表只提到 HTTP/1.1 和 HTTP/2 支持（链接到 http2 文档），没有说明 HTTP/2 是否默认启用、是否需要额外配置或额外依赖，因此无法据此判定。",
+                "evidence_ids": [
+                  "E1"
+                ],
+                "evidence_basis": "uncertain",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": ""
+              }
+            ],
+            "gaps": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "reason": "unresolved",
+                "status": "unknown"
+              }
+            ],
+            "summary": "README 仅声明支持 HTTP/1.1 与 HTTP/2，并把命令行客户端标为可选依赖，但未说明 HTTP/2 是否默认开启、是否需要额外配置（httpx 实际上需要 h2 扩展与 http2=True）。因此 R1 目前无充分依据，保留 unknown 以便深入调查。"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "快速核查仍有缺口或条件待确认，进入深入调查"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 1,
+            "tokens": 2372,
+            "tools_used": 2,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "assess_readme",
+                "result": {
+                  "instruction": "使用已有矩阵补查，不要重新读取 README"
+                }
+              }
+            ],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 2,
+            "status": 200,
+            "elapsed_ms": 2736
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 2,
+            "usage": {
+              "prompt_tokens": 6231,
+              "completion_tokens": 357,
+              "total_tokens": 6588
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 2748,
+            "model_requests": 2,
+            "tokens": 6588,
+            "tools_used": 2,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 2
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_documentation",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 3
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S2",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/http2.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md",
+            "text": "# HTTP/2\n\nHTTP/2 is a major new iteration of the HTTP protocol, that provides a far more\nefficient transport, with potential performance benefits. HTTP/2 does not change\nthe core semantics of the request or response, but alters the way that data is\nsent to and from the server.\n\nRather than the text format that HTTP/1.1 uses, HTTP/2 is a binary format.\nThe binary format provides full request and response multiplexing, and efficient\ncompression of HTTP headers. The stream multiplexing means that where HTTP/1.1\nrequires one TCP stream for each concurrent request, HTTP/2 allows a single TCP\nstream to handle multiple concurrent requests.\n\nHTTP/2 also provides support for functionality such as response prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support on the client does not *necessarily* mean that your\nrequests and responses will be transported over HTTP/2, since both the client\n*and* the server need to support HTTP/2. If you connect to a server that only\nsupports HTTP/1.1 the client will use a standard HTTP/1.1 connection instead.\n\nYou can determine which version of the HTTP protocol was used by examining\nthe `.http_version` property on the response.\n\n```python\nclient = httpx.AsyncClient(http2=True)\nresponse = await client.get(...)\nprint(response.http_version)  # \"HTTP/1.0\", \"HTTP/1.1\", or \"HTTP/2\".\n```\n",
+            "fetched_at": "2026-10-28T09:32:18.597424+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "51010101b5aff566dcdfdf94cb5e0ef644caf5411b84749753a9da79d28caaf7"
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S3",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/async.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+            "text": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as client:\n...     r = await client.get('https://www.example.com/')\n...\n>>> r\n<Response [200 OK]>\n```\n\n!!! tip\n    Use [IPython](https://ipython.readthedocs.io/en/stable/) or Python 3.9+ with `python -m asyncio` to try this code interactively, as they support executing `async`/`await` expressions in the console.\n\n## API Differences\n\nIf you're using an async client then there are a few bits of API that\nuse async methods.\n\n### Making requests\n\nThe request methods are all async, so you should use `response = await client.get(...)` style for all of the following:\n\n* `AsyncClient.get(url, ...)`\n* `AsyncClient.options(url, ...)`\n* `AsyncClient.head(url, ...)`\n* `AsyncClient.post(url, ...)`\n* `AsyncClient.put(url, ...)`\n* `AsyncClient.patch(url, ...)`\n* `AsyncClient.delete(url, ...)`\n* `AsyncClient.request(method, url, ...)`\n* `AsyncClient.send(request, ...)`\n\n### Opening and closing clients\n\nUse `async with httpx.AsyncClient()` if you want a context-managed client...\n\n```python\nasync with httpx.AsyncClient() as client:\n    ...\n```\n\n!!! warning\n    In order to get the most benefit from connection pooling, make sure you're not instantiating multiple client instances - for example by using `async with` inside a \"hot loop\". This can be achieved either by having a single scoped client that's passed throughout wherever it's needed, or by having a single global client instance.\n\nAlternatively, use `await client.aclose()` if you want to close a client explicitly:\n\n```python\nclient = httpx.AsyncClient()\n...\nawait client.aclose()\n```\n\n### Streaming responses\n\nThe `AsyncClient.stream(method, url, ...)` method is an async context block.\n\n```pycon\n>>> client = httpx.AsyncClient()\n>>> async with client.stream('GET', 'https://www.example.com/') as response:\n...     async for chunk in response.aiter_bytes():\n...         ...\n```\n\nThe async response streaming methods are:\n\n* `Response.aread()` - For conditionally reading a response inside a stream block.\n* `Response.aiter_bytes()` - For streaming the response content as bytes.\n* `Response.aiter_text()` - For streaming the response content as text.\n* `Response.aiter_lines()` - For streaming the response content as lines of text.\n* `Response.aiter_raw()` - For streaming the raw response bytes, without applying content decoding.\n* `Response.aclose()` - For closing the response. You don't usually need this, since `.stream` block closes the response automatically on exit.\n\nFor situations when context block usage is not practical, it is possible to enter \"manual mode\" by sending a [`Request` instance](advanced/clients.md#request-instances) using `client.send(..., stream=True)`.\n\nExample in the context of forwarding the response to a streaming web endpoint with [Starlette](https://www.starlette.io):\n\n```python\nimport httpx\nfrom starlette.background import BackgroundTask\nfrom starlette.responses import StreamingResponse\n\nclient = httpx.AsyncClient()\n\nasync def home(request):\n    req = client.build_request(\"GET\", \"https://www.example.com/\")\n    r = await client.send(req, stream=True)\n    return StreamingResponse(r.aiter_text(), background=BackgroundTask(r.aclose))\n```\n\n!!! warning\n    When using this \"manual streaming mode\", it is your duty as a developer to make sure that `Response.aclose()` is called eventually. Failing to do so would leave connections open, most likely resulting in resource leaks down the line.\n\n### Streaming requests\n\nWhen sending a streaming request body with an `AsyncClient` instance, you should use an async bytes generator instead of a bytes generator:\n\n```python\nasync def upload_bytes():\n    ...  # yield byte content\n\nawait client.post(url, content=upload_bytes())\n```\n\n### Explicit transport instances\n\nWhen instantiating a transport instance directly, you need to use `httpx.AsyncHTTPTransport`.\n\nFor instance:\n\n```pycon\n>>> import httpx\n>>> transport = httpx.AsyncHTTPTransport(retries=1)\n>>> async with httpx.AsyncClient(transport=transport) as client:\n>>>     ...\n```\n\n## Supported async environments\n\nHTTPX supports either `asyncio` or `trio` as an async environment.\n\nIt will auto-detect which of those two to use as the backend\nfor socket operations and concurrency primitives.\n\n### [AsyncIO](https://docs.python.org/3/library/asyncio.html)\n\nAsyncIO is Python's [built-in library](https://docs.python.org/3/library/asyncio.html)\nfor writing concurrent code with the async/await syntax.\n\n```python\nimport asyncio\nimport httpx\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nasyncio.run(main())\n```\n\n### [Trio](https://github.com/python-trio/trio)\n\nTrio is [an alternative async library](https://trio.readthedocs.io/en/stable/),\ndesigned around the [the principles of structured concurrency](https://en.wikipedia.org/wiki/Structured_concurrency).\n\n```python\nimport httpx\nimport trio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\ntrio.run(main)\n```\n\n!!! important\n    The `trio` package must be installed to use the Trio backend.\n\n\n### [AnyIO](https://github.com/agronholm/anyio)\n\nAnyIO is an [asynchronous networking and concurrency library](https://anyio.readthedocs.io/) that works on top of either `asyncio` or `trio`. It blends in with native libraries of your chosen backend (defaults to `asyncio`).\n\n```python\nimport httpx\nimport anyio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nanyio.run(main, backend='trio')\n```\n\n## Calling into Python Web Apps\n\nFor details on calling directly into ASGI applications, see [the `ASGITransport` docs](../advanced/transports#asgitransport).",
+            "fetched_at": "2026-10-28T09:32:18.597449+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "b0722b05e5b8aad6b2518fda345907092a5d4f11c337d50242f7a0a03e739e5b"
+          }
+        },
+        {
+          "kind": "collection",
+          "payload": {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "status": "collected",
+            "source_ids": [
+              "S2",
+              "S3"
+            ],
+            "error": null
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 2,
+            "tokens": 6588,
+            "tools_used": 3,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "read_documentation",
+                "result": {
+                  "repository": "fixture/httpx-default-http2",
+                  "kind": "documentation",
+                  "status": "collected",
+                  "source_ids": [
+                    "S2",
+                    "S3"
+                  ],
+                  "error": null
+                }
+              }
+            ],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "investigate_gaps",
+            "arguments": {
+              "targets": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "query": "http2 default enable optional dependency h2 http2=True",
+                  "document_path": null
+                }
+              ]
+            },
+            "calls": 4
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_documentation",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 5
+          }
+        },
+        {
+          "kind": "cache_hit",
+          "payload": {
+            "tool": "read_documentation",
+            "message": "复用本任务已获取的相同查询结果"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_releases",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 6
+          }
+        },
+        {
+          "kind": "collection",
+          "payload": {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "release",
+            "status": "empty",
+            "source_ids": [],
+            "error": null
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "search_issues",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2",
+              "query": "http2 default enable optional dependency h2 http2=True"
+            },
+            "calls": 7
+          }
+        },
+        {
+          "kind": "collection",
+          "payload": {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "issue",
+            "status": "empty",
+            "source_ids": [],
+            "error": null
+          }
+        },
+        {
+          "kind": "followup",
+          "payload": {
+            "message": "补查第 1 轮 · fixture/httpx-default-http2 · R1",
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "query": "http2 default enable optional dependency h2 http2=True",
+            "document_path": null,
+            "signature": [
+              "fixture/httpx-default-http2",
+              "R1",
+              "http2 default enable optional dependency h2 http2 true",
+              null
+            ],
+            "status": "collected",
+            "source_ids": [
+              "S2",
+              "S3"
+            ],
+            "candidates": [
+              {
+                "source_id": "S2",
+                "kind": "documentation",
+                "quote": "e prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You ",
+                "needs_review": true
+              },
+              {
+                "source_id": "S1",
+                "kind": "readme",
+                "quote": "sing the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n*",
+                "needs_review": true
+              },
+              {
+                "source_id": "S3",
+                "kind": "documentation",
+                "quote": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as c",
+                "needs_review": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 2,
+            "tokens": 6588,
+            "tools_used": 7,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "read_documentation",
+                "result": {
+                  "repository": "fixture/httpx-default-http2",
+                  "kind": "documentation",
+                  "status": "collected",
+                  "source_ids": [
+                    "S2",
+                    "S3"
+                  ],
+                  "error": null
+                }
+              },
+              {
+                "tool": "investigate_gaps",
+                "result": {
+                  "index": 1,
+                  "review_index": 1,
+                  "actions": [
+                    {
+                      "repository": "fixture/httpx-default-http2",
+                      "requirement_id": "R1",
+                      "query": "http2 default enable optional dependency h2 http2=True",
+                      "document_path": null,
+                      "signature": [
+                        "fixture/httpx-default-http2",
+                        "R1",
+                        "http2 default enable optional dependency h2 http2 true",
+                        null
+                      ],
+                      "status": "collected",
+                      "source_ids": [
+                        "S2",
+                        "S3"
+                      ],
+                      "candidates": [
+                        {
+                          "source_id": "S2",
+                          "kind": "documentation",
+                          "quote": "e prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You ",
+                          "needs_review": true
+                        },
+                        {
+                          "source_id": "S1",
+                          "kind": "readme",
+                          "quote": "sing the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n*",
+                          "needs_review": true
+                        },
+                        {
+                          "source_id": "S3",
+                          "kind": "documentation",
+                          "quote": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as c",
+                          "needs_review": true
+                        }
+                      ]
+                    }
+                  ],
+                  "next_action": "保存确切摘录后更新矩阵；仍有缺口且有新查询方向时 review_evidence 后补查下一轮，否则直接 submit_report。未知项允许保持 unknown。"
+                }
+              }
+            ],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 3,
+            "status": 200,
+            "elapsed_ms": 2758
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 3,
+            "usage": {
+              "prompt_tokens": 12635,
+              "completion_tokens": 513,
+              "total_tokens": 13148
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 2767,
+            "model_requests": 3,
+            "tokens": 13148,
+            "tools_used": 7,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 2
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S2",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S2:700:1400"
+            },
+            "calls": 8
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E2",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 3,
+            "tokens": 13148,
+            "tools_used": 8,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "save_evidence",
+                "result": {
+                  "id": "E2",
+                  "source_id": "S2",
+                  "requirement_id": "R1",
+                  "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+                  "start": 700,
+                  "end": 1400,
+                  "selection": "span"
+                }
+              }
+            ],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S2",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S2:1306:2006"
+            },
+            "calls": 9
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E3",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "n do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support ",
+            "start": 1306,
+            "end": 2006,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 0,
+            "model_requests": 3,
+            "tokens": 13148,
+            "tools_used": 9,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "save_evidence",
+                "result": {
+                  "id": "E2",
+                  "source_id": "S2",
+                  "requirement_id": "R1",
+                  "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+                  "start": 700,
+                  "end": 1400,
+                  "selection": "span"
+                }
+              },
+              {
+                "tool": "save_evidence",
+                "result": {
+                  "id": "E3",
+                  "source_id": "S2",
+                  "requirement_id": "R1",
+                  "quote": "n do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support ",
+                  "start": 1306,
+                  "end": 2006,
+                  "selection": "span"
+                }
+              }
+            ],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 4,
+            "status": 200,
+            "elapsed_ms": 5030
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 4,
+            "usage": {
+              "prompt_tokens": 19209,
+              "completion_tokens": 1125,
+              "total_tokens": 20334
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 5039,
+            "model_requests": 4,
+            "tokens": 20334,
+            "tools_used": 9,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "submit_report",
+            "message": "重复判断"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 4,
+            "tokens": 20334,
+            "tools_used": 9,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "submit_report",
+                "result": {
+                  "error": "重复判断"
+                }
+              }
+            ],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 5,
+            "status": 200,
+            "elapsed_ms": 3236
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 5,
+            "usage": {
+              "prompt_tokens": 25300,
+              "completion_tokens": 1392,
+              "total_tokens": 26692
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 3247,
+            "model_requests": 5,
+            "tokens": 26692,
+            "tools_used": 9,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "review_evidence",
+            "arguments": {
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "官方文档 docs/http2.md 明确指出客户端默认不启用 HTTP/2，需安装可选依赖 httpx[http2] 并实例化 Client(http2=True) 才启用；与“默认开启、无需额外配置”的要求相反。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "仅声明“未来版本可能默认启用”为可能性，当前版本不适用。"
+                }
+              ],
+              "summary": "docs/http2.md 的“Enabling HTTP/2”章节明确说明 HTTP/2 默认未启用，需安装 httpx[http2] 可选依赖并使用 http2=True 实例化客户端，故 R1 不成立。"
+            },
+            "calls": 10
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 2 次证据检查：0 个缺口",
+            "index": 2,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unsupported",
+                "explanation": "官方文档 docs/http2.md 明确指出客户端默认不启用 HTTP/2，需安装可选依赖 httpx[http2] 并实例化 Client(http2=True) 才启用；与“默认开启、无需额外配置”的要求相反。",
+                "evidence_ids": [
+                  "E2",
+                  "E3"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": "仅声明“未来版本可能默认启用”为可能性，当前版本不适用。"
+              }
+            ],
+            "gaps": [],
+            "summary": "docs/http2.md 的“Enabling HTTP/2”章节明确说明 HTTP/2 默认未启用，需安装 httpx[http2] 可选依赖并使用 http2=True 实例化客户端，故 R1 不成立。"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 5,
+            "tokens": 26692,
+            "tools_used": 10,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [
+              {
+                "tool": "review_evidence",
+                "result": {
+                  "gaps": [],
+                  "followup_rounds_remaining": 1,
+                  "instruction": "对缺口调用 investigate_gaps；新资料不是证据，请准确摘录后更新矩阵。"
+                }
+              }
+            ],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：decide",
+            "node": "decide"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 6,
+            "status": 200,
+            "elapsed_ms": 4260
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 6,
+            "usage": {
+              "prompt_tokens": 30175,
+              "completion_tokens": 1807,
+              "total_tokens": 31982
+            }
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：decide",
+            "node": "decide",
+            "elapsed_ms": 4264,
+            "model_requests": 6,
+            "tokens": 31982,
+            "tools_used": 10,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 1
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：tools",
+            "node": "tools"
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 3 次证据检查：0 个缺口",
+            "index": 3,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unsupported",
+                "explanation": "官方文档 docs/http2.md 的“Enabling HTTP/2”章节明确说明：使用 httpx 客户端时 HTTP/2 支持默认未启用，并解释是因为 HTTP/1.1 被认为是更成熟的传输层，仅“未来版本可能默认启用”HTTP/2。启用方式为安装可选依赖 httpx[http2] 并以 http2=True 实例化 Client/AsyncClient，与“默认开启、无需额外配置”的要求相反。README 仅笼统列出“HTTP/1.1 and HTTP/2 support”，未说明默认开启，不足以支持该需求。",
+                "evidence_ids": [
+                  "E2",
+                  "E3",
+                  "E1"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": "“未来版本可能默认启用”仅为可能性表述，不构成当前能力；当前版本需显式配置。"
+              }
+            ],
+            "gaps": [],
+            "summary": "候选仓库 fixture/httpx-default-http2 的官方文档 docs/http2.md 明确否定需求：HTTP/2 默认不启用，必须安装可选依赖 httpx[http2] 并以 http2=True 创建客户端才能启用，且明确提到“未来版本可能默认启用”属可能性。README 的“HTTP/1.1 and HTTP/2 support”只说明具备该能力，未声明默认开启。因此 R1（HTTP/2 默认开启、无需额外配置）判定为 unsupported，无需继续采集。"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：tools",
+            "node": "tools",
+            "elapsed_ms": 1,
+            "model_requests": 6,
+            "tokens": 31982,
+            "tools_used": 10,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：review",
+            "node": "review"
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：review",
+            "node": "review",
+            "elapsed_ms": 0,
+            "model_requests": 6,
+            "tokens": 31982,
+            "tools_used": 10,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        },
+        {
+          "kind": "graph_node",
+          "payload": {
+            "message": "执行图节点：finish",
+            "node": "finish"
+          }
+        },
+        {
+          "kind": "submitted",
+          "payload": {
+            "message": "图执行已结束",
+            "reason": ""
+          }
+        },
+        {
+          "kind": "graph_result",
+          "payload": {
+            "message": "节点完成：finish",
+            "node": "finish",
+            "elapsed_ms": 1,
+            "model_requests": 6,
+            "tokens": 31982,
+            "tools_used": 10,
+            "tools_limit": 16,
+            "token_limit": 60000,
+            "stop_reason": "",
+            "feedback": [],
+            "remaining_calls": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "httpx-default-http2",
+      "engine": "legacy",
+      "request": {
+        "question": "调查冻结样例：HTTP/2 默认开启，无需额外配置",
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "HTTP/2 默认开启，无需额外配置",
+            "mandatory": true
+          }
+        ],
+        "repositories": [
+          "fixture/httpx-default-http2"
+        ],
+        "mode": "deepseek",
+        "max_tools": 16,
+        "max_tokens": 60000,
+        "max_followups": 2,
+        "verify_claims": false,
+        "strategy": "auto",
+        "engine": "legacy"
+      },
+      "score": {
+        "correct": true,
+        "completed": true,
+        "citation_count": 3,
+        "exact_citations": 3,
+        "supported_citations": 1,
+        "grounded_correct": true
+      },
+      "report": {
+        "summary": "候选仓库 fixture/httpx-default-http2 的官方文档明确否定 R1：docs/http2.md 指出 httpx 客户端默认不启用 HTTP/2（not enabled by default），需安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端；README 的依赖清单中 HTTP/2 支持同样标注为 httpx[http2] 可选依赖。故「HTTP/2 默认开启、无需额外配置」判定为 unsupported（explicit_statement）。文档提到未来版本可能将 HTTP/2 设为默认，属于版本限制说明，不代表当前能力。无遗留缺口或冲突。",
+        "assessments": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "status": "unsupported",
+            "explanation": "docs/http2.md 明确说明 HTTP/2 支持默认未启用（not enabled by default），需先安装可选依赖 httpx[http2]，再以 Client/AsyncClient(http2=True) 实例化客户端才能启用；README 也把 HTTP/2 支持标注为可选依赖 httpx[http2]。因此「默认开启、无需额外配置」不成立。",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E4"
+            ],
+            "evidence_basis": "explicit_statement",
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "需 pip install httpx[http2] 且以 http2=True 创建 Client/AsyncClient；文档提及未来版本可能默认启用，当前不适用"
+          }
+        ],
+        "excluded": [
+          "fixture/httpx-default-http2"
+        ],
+        "verification": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "requirement_id": "R1",
+            "quote_match": true,
+            "has_repository_source": true,
+            "source_refs": [
+              "b5addb64f0161ff6bfe94c124ef76f6a1fba5254"
+            ],
+            "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "conditions": "需 pip install httpx[http2] 且以 http2=True 创建 Client/AsyncClient；文档提及未来版本可能默认启用，当前不适用",
+            "semantic_support": "needs_review",
+            "warnings": []
+          }
+        ],
+        "research": {
+          "gaps": [],
+          "changes": [
+            {
+              "repository": "fixture/httpx-default-http2",
+              "requirement_id": "R1",
+              "before": "unknown",
+              "after": "unsupported",
+              "evidence_ids": [
+                "E2",
+                "E3",
+                "E4"
+              ]
+            }
+          ],
+          "reviews": [
+            {
+              "index": 1,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unknown",
+                  "explanation": "README 仅声明支持 HTTP/1.1 与 HTTP/2，未说明 HTTP/2 是否默认开启、是否需额外配置（官方文档链接中提到 http2 页面，但 README 正文未给出默认行为）。",
+                  "evidence_ids": [
+                    "E1"
+                  ],
+                  "evidence_basis": "absence_of_evidence",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": ""
+                }
+              ],
+              "gaps": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "reason": "unresolved",
+                  "status": "unknown"
+                }
+              ],
+              "summary": "唯一候选 fixture/httpx-default-http2 的 README 只提到「支持 HTTP/1.1 和 HTTP/2」，未说明 HTTP/2 是否默认启用或是否需要额外配置（如 pip install httpx[http2] 或 http2=True）。因此 R1 暂判 unknown，需进一步核查官方文档中 HTTP/2 章节的默认行为描述。"
+            },
+            {
+              "index": 2,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "官方文档 docs/http2.md 明确说明在使用 httpx 客户端时 HTTP/2 支持默认未启用（not enabled by default），需要安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端才能开启。因此「默认开启、无需额外配置」不成立。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3",
+                    "E4"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "需 pip install httpx[http2] 且 Client/AsyncClient(http2=True)"
+                }
+              ],
+              "gaps": [],
+              "summary": "docs/http2.md 明确：HTTP/2 默认未启用，需安装 httpx[http2] 并以 http2=True 创建客户端；README 亦标注 HTTP/2 支持为可选依赖。故 R1（默认开启、无需额外配置）判定为 unsupported。"
+            },
+            {
+              "index": 3,
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "docs/http2.md 明确说明 HTTP/2 支持默认未启用（not enabled by default），需先安装可选依赖 httpx[http2]，再以 Client/AsyncClient(http2=True) 实例化客户端才能启用；README 也把 HTTP/2 支持标注为可选依赖 httpx[http2]。因此「默认开启、无需额外配置」不成立。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3",
+                    "E4"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "需 pip install httpx[http2] 且以 http2=True 创建 Client/AsyncClient；文档提及未来版本可能默认启用，当前不适用"
+                }
+              ],
+              "gaps": [],
+              "summary": "候选仓库 fixture/httpx-default-http2 的官方文档明确否定 R1：docs/http2.md 指出 httpx 客户端默认不启用 HTTP/2（not enabled by default），需安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端；README 的依赖清单中 HTTP/2 支持同样标注为 httpx[http2] 可选依赖。故「HTTP/2 默认开启、无需额外配置」判定为 unsupported（explicit_statement）。文档提到未来版本可能将 HTTP/2 设为默认，属于版本限制说明，不代表当前能力。无遗留缺口或冲突。"
+            }
+          ],
+          "followups": [],
+          "rounds_used": 0,
+          "rounds_limit": 2
+        },
+        "collections": [
+          {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "status": "collected",
+            "source_ids": [
+              "S2",
+              "S3"
+            ],
+            "error": null
+          }
+        ],
+        "sources": [
+          {
+            "id": "S1",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:33.978051+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          },
+          {
+            "id": "S2",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/http2.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md",
+            "text": "# HTTP/2\n\nHTTP/2 is a major new iteration of the HTTP protocol, that provides a far more\nefficient transport, with potential performance benefits. HTTP/2 does not change\nthe core semantics of the request or response, but alters the way that data is\nsent to and from the server.\n\nRather than the text format that HTTP/1.1 uses, HTTP/2 is a binary format.\nThe binary format provides full request and response multiplexing, and efficient\ncompression of HTTP headers. The stream multiplexing means that where HTTP/1.1\nrequires one TCP stream for each concurrent request, HTTP/2 allows a single TCP\nstream to handle multiple concurrent requests.\n\nHTTP/2 also provides support for functionality such as response prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support on the client does not *necessarily* mean that your\nrequests and responses will be transported over HTTP/2, since both the client\n*and* the server need to support HTTP/2. If you connect to a server that only\nsupports HTTP/1.1 the client will use a standard HTTP/1.1 connection instead.\n\nYou can determine which version of the HTTP protocol was used by examining\nthe `.http_version` property on the response.\n\n```python\nclient = httpx.AsyncClient(http2=True)\nresponse = await client.get(...)\nprint(response.http_version)  # \"HTTP/1.0\", \"HTTP/1.1\", or \"HTTP/2\".\n```\n",
+            "fetched_at": "2026-10-28T09:32:42.516607+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "51010101b5aff566dcdfdf94cb5e0ef644caf5411b84749753a9da79d28caaf7"
+          },
+          {
+            "id": "S3",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/async.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+            "text": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as client:\n...     r = await client.get('https://www.example.com/')\n...\n>>> r\n<Response [200 OK]>\n```\n\n!!! tip\n    Use [IPython](https://ipython.readthedocs.io/en/stable/) or Python 3.9+ with `python -m asyncio` to try this code interactively, as they support executing `async`/`await` expressions in the console.\n\n## API Differences\n\nIf you're using an async client then there are a few bits of API that\nuse async methods.\n\n### Making requests\n\nThe request methods are all async, so you should use `response = await client.get(...)` style for all of the following:\n\n* `AsyncClient.get(url, ...)`\n* `AsyncClient.options(url, ...)`\n* `AsyncClient.head(url, ...)`\n* `AsyncClient.post(url, ...)`\n* `AsyncClient.put(url, ...)`\n* `AsyncClient.patch(url, ...)`\n* `AsyncClient.delete(url, ...)`\n* `AsyncClient.request(method, url, ...)`\n* `AsyncClient.send(request, ...)`\n\n### Opening and closing clients\n\nUse `async with httpx.AsyncClient()` if you want a context-managed client...\n\n```python\nasync with httpx.AsyncClient() as client:\n    ...\n```\n\n!!! warning\n    In order to get the most benefit from connection pooling, make sure you're not instantiating multiple client instances - for example by using `async with` inside a \"hot loop\". This can be achieved either by having a single scoped client that's passed throughout wherever it's needed, or by having a single global client instance.\n\nAlternatively, use `await client.aclose()` if you want to close a client explicitly:\n\n```python\nclient = httpx.AsyncClient()\n...\nawait client.aclose()\n```\n\n### Streaming responses\n\nThe `AsyncClient.stream(method, url, ...)` method is an async context block.\n\n```pycon\n>>> client = httpx.AsyncClient()\n>>> async with client.stream('GET', 'https://www.example.com/') as response:\n...     async for chunk in response.aiter_bytes():\n...         ...\n```\n\nThe async response streaming methods are:\n\n* `Response.aread()` - For conditionally reading a response inside a stream block.\n* `Response.aiter_bytes()` - For streaming the response content as bytes.\n* `Response.aiter_text()` - For streaming the response content as text.\n* `Response.aiter_lines()` - For streaming the response content as lines of text.\n* `Response.aiter_raw()` - For streaming the raw response bytes, without applying content decoding.\n* `Response.aclose()` - For closing the response. You don't usually need this, since `.stream` block closes the response automatically on exit.\n\nFor situations when context block usage is not practical, it is possible to enter \"manual mode\" by sending a [`Request` instance](advanced/clients.md#request-instances) using `client.send(..., stream=True)`.\n\nExample in the context of forwarding the response to a streaming web endpoint with [Starlette](https://www.starlette.io):\n\n```python\nimport httpx\nfrom starlette.background import BackgroundTask\nfrom starlette.responses import StreamingResponse\n\nclient = httpx.AsyncClient()\n\nasync def home(request):\n    req = client.build_request(\"GET\", \"https://www.example.com/\")\n    r = await client.send(req, stream=True)\n    return StreamingResponse(r.aiter_text(), background=BackgroundTask(r.aclose))\n```\n\n!!! warning\n    When using this \"manual streaming mode\", it is your duty as a developer to make sure that `Response.aclose()` is called eventually. Failing to do so would leave connections open, most likely resulting in resource leaks down the line.\n\n### Streaming requests\n\nWhen sending a streaming request body with an `AsyncClient` instance, you should use an async bytes generator instead of a bytes generator:\n\n```python\nasync def upload_bytes():\n    ...  # yield byte content\n\nawait client.post(url, content=upload_bytes())\n```\n\n### Explicit transport instances\n\nWhen instantiating a transport instance directly, you need to use `httpx.AsyncHTTPTransport`.\n\nFor instance:\n\n```pycon\n>>> import httpx\n>>> transport = httpx.AsyncHTTPTransport(retries=1)\n>>> async with httpx.AsyncClient(transport=transport) as client:\n>>>     ...\n```\n\n## Supported async environments\n\nHTTPX supports either `asyncio` or `trio` as an async environment.\n\nIt will auto-detect which of those two to use as the backend\nfor socket operations and concurrency primitives.\n\n### [AsyncIO](https://docs.python.org/3/library/asyncio.html)\n\nAsyncIO is Python's [built-in library](https://docs.python.org/3/library/asyncio.html)\nfor writing concurrent code with the async/await syntax.\n\n```python\nimport asyncio\nimport httpx\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nasyncio.run(main())\n```\n\n### [Trio](https://github.com/python-trio/trio)\n\nTrio is [an alternative async library](https://trio.readthedocs.io/en/stable/),\ndesigned around the [the principles of structured concurrency](https://en.wikipedia.org/wiki/Structured_concurrency).\n\n```python\nimport httpx\nimport trio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\ntrio.run(main)\n```\n\n!!! important\n    The `trio` package must be installed to use the Trio backend.\n\n\n### [AnyIO](https://github.com/agronholm/anyio)\n\nAnyIO is an [asynchronous networking and concurrency library](https://anyio.readthedocs.io/) that works on top of either `asyncio` or `trio`. It blends in with native libraries of your chosen backend (defaults to `asyncio`).\n\n```python\nimport httpx\nimport anyio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nanyio.run(main, backend='trio')\n```\n\n## Calling into Python Web Apps\n\nFor details on calling directly into ASGI applications, see [the `ASGITransport` docs](../advanced/transports#asgitransport).",
+            "fetched_at": "2026-10-28T09:32:42.516629+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "b0722b05e5b8aad6b2518fda345907092a5d4f11c337d50242f7a0a03e739e5b"
+          }
+        ],
+        "evidence": [
+          {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          },
+          {
+            "id": "E2",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          },
+          {
+            "id": "E3",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "n do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support ",
+            "start": 1306,
+            "end": 2006,
+            "selection": "span"
+          },
+          {
+            "id": "E4",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "TTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"ht",
+            "start": 4100,
+            "end": 4800,
+            "selection": "span"
+          }
+        ],
+        "requirements": [
+          {
+            "id": "R1",
+            "text": "HTTP/2 默认开启，无需额外配置",
+            "mandatory": true
+          }
+        ],
+        "mode": "deepseek",
+        "routing": {
+          "requested": "auto",
+          "path": "quick_then_deep",
+          "reason": "evidence_gap_or_conditions"
+        },
+        "prior_run_metrics": {},
+        "metrics": {
+          "tool_calls": 10,
+          "http_requests": 0,
+          "cache_hits": 0,
+          "model_calls": 7,
+          "model_requests": 7,
+          "tokens": {
+            "prompt_tokens": 35764,
+            "completion_tokens": 1956,
+            "total_tokens": 37720
+          },
+          "context_chars_sent": 72355
+        },
+        "limitations": [
+          "仅对引用结构和摘录存在性作自动校验；结论的语义支持关系仍需复核。",
+          "候选范围有限，未执行全网搜索；不验证 README 中的性能声明。"
+        ],
+        "completion": {
+          "type": "model_submitted",
+          "reason": "evidence_ready"
+        }
+      },
+      "tokens": {
+        "prompt_tokens": 35764,
+        "completion_tokens": 1956,
+        "total_tokens": 37720
+      },
+      "model_requests": 7,
+      "seconds": 23.935,
+      "events": [
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_repository",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 1
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S1",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "readme",
+            "title": "README.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/README.md",
+            "text": "<p align=\"center\">\n  <a href=\"https://www.python-httpx.org/\"><img width=\"350\" height=\"208\" src=\"https://raw.githubusercontent.com/encode/httpx/master/docs/img/butterfly.png\" alt='HTTPX'></a>\n</p>\n\n<p align=\"center\"><strong>HTTPX</strong> <em>- A next-generation HTTP client for Python.</em></p>\n\n<p align=\"center\">\n<a href=\"https://github.com/encode/httpx/actions\">\n    <img src=\"https://github.com/encode/httpx/workflows/Test%20Suite/badge.svg\" alt=\"Test Suite\">\n</a>\n<a href=\"https://pypi.org/project/httpx/\">\n    <img src=\"https://badge.fury.io/py/httpx.svg\" alt=\"Package version\">\n</a>\n</p>\n\nHTTPX is a fully featured HTTP client library for Python 3. It includes **an integrated command line client**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-help.png\" alt='httpx --help'>\n</p>\n\nSending a request...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/httpx-request.png\" alt='httpx http://httpbin.org/json'>\n</p>\n\n## Features\n\nHTTPX builds on the well-established usability of `requests`, and gives you:\n\n* A broadly [requests-compatible API](https://www.python-httpx.org/compatibility/).\n* An integrated command-line client.\n* HTTP/1.1 [and HTTP/2 support](https://www.python-httpx.org/http2/).\n* Standard synchronous interface, but with [async support if you need it](https://www.python-httpx.org/async/).\n* Ability to make requests directly to [WSGI applications](https://www.python-httpx.org/advanced/transports/#wsgi-transport) or [ASGI applications](https://www.python-httpx.org/advanced/transports/#asgi-transport).\n* Strict timeouts everywhere.\n* Fully type annotated.\n* 100% test coverage.\n\nPlus all the standard features of `requests`...\n\n* International Domains and URLs\n* Keep-Alive & Connection Pooling\n* Sessions with Cookie Persistence\n* Browser-style SSL Verification\n* Basic/Digest Authentication\n* Elegant Key/Value Cookies\n* Automatic Decompression\n* Automatic Content Decoding\n* Unicode Response Bodies\n* Multipart File Uploads\n* HTTP(S) Proxy Support\n* Connection Timeouts\n* Streaming Downloads\n* .netrc Support\n* Chunked Requests\n\n## Installation\n\nInstall with pip:\n\n```shell\n$ pip install httpx\n```\n\nOr, to include the optional HTTP/2 support, use:\n\n```shell\n$ pip install httpx[http2]\n```\n\nHTTPX requires Python 3.9+.\n\n## Documentation\n\nProject documentation is available at [https://www.python-httpx.org/](https://www.python-httpx.org/).\n\nFor a run-through of all the basics, head over to the [QuickStart](https://www.python-httpx.org/quickstart/).\n\nFor more advanced topics, see the [Advanced Usage](https://www.python-httpx.org/advanced/) section, the [async support](https://www.python-httpx.org/async/) section, or the [HTTP/2](https://www.python-httpx.org/http2/) section.\n\nThe [Developer Interface](https://www.python-httpx.org/api/) provides a comprehensive API reference.\n\nTo find out about tools that integrate with HTTPX, see [Third Party Packages](https://www.python-httpx.org/third_party_packages/).\n\n## Contribute\n\nIf you want to contribute with HTTPX check out the [Contributing Guide](https://www.python-httpx.org/contributing/) to learn how to start.\n\n## Dependencies\n\nThe HTTPX project relies on these excellent libraries:\n\n* `httpcore` - The underlying transport implementation for `httpx`.\n  * `h11` - HTTP/1.1 support.\n* `certifi` - SSL certificates.\n* `idna` - Internationalized domain name support.\n* `sniffio` - Async library autodetection.\n\nAs well as these optional installs:\n\n* `h2` - HTTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"https://github.com/encode/httpx/blob/master/LICENSE.md\">BSD licensed</a> code.<br/>Designed & crafted with care.</i><br/>&mdash; 🦋 &mdash;</p>\n",
+            "fetched_at": "2026-10-28T09:32:33.978051+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "d58f476c1273c9c06c978467c6596620d3840ea8c99ba9d32300ab3286f0e0c3"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "先核查 README；证据不足时自动深入调查"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 4042,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 1,
+            "status": 200,
+            "elapsed_ms": 3227
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 1,
+            "usage": {
+              "prompt_tokens": 2153,
+              "completion_tokens": 254,
+              "total_tokens": 2407
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:700:1400"
+            },
+            "calls": 2
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E1",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "ent**, has support for both **HTTP/1.1 and HTTP/2**, and provides both **sync and async APIs**.\n\n---\n\nInstall HTTPX using pip:\n\n```shell\n$ pip install httpx\n```\n\nNow, let's get started:\n\n```pycon\n>>> import httpx\n>>> r = httpx.get('https://www.example.org/')\n>>> r\n<Response [200 OK]>\n>>> r.status_code\n200\n>>> r.headers['content-type']\n'text/html; charset=UTF-8'\n>>> r.text\n'<!doctype html>\\n<html>\\n<head>\\n<title>Example Domain</title>...'\n```\n\nOr, using the command-line client.\n\n```shell\n$ pip install 'httpx[cli]'  # The command line client is an optional dependency.\n```\n\nWhich now allows us to use HTTPX directly from the command-line...\n\n<p align=\"center\">\n  <img width=\"700\" src=\"docs/img/h",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 1 次证据检查：1 个缺口",
+            "index": 1,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unknown",
+                "explanation": "README 仅声明支持 HTTP/1.1 与 HTTP/2，未说明 HTTP/2 是否默认开启、是否需额外配置（官方文档链接中提到 http2 页面，但 README 正文未给出默认行为）。",
+                "evidence_ids": [
+                  "E1"
+                ],
+                "evidence_basis": "absence_of_evidence",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": ""
+              }
+            ],
+            "gaps": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "reason": "unresolved",
+                "status": "unknown"
+              }
+            ],
+            "summary": "唯一候选 fixture/httpx-default-http2 的 README 只提到「支持 HTTP/1.1 和 HTTP/2」，未说明 HTTP/2 是否默认启用或是否需要额外配置（如 pip install httpx[http2] 或 http2=True）。因此 R1 暂判 unknown，需进一步核查官方文档中 HTTP/2 章节的默认行为描述。"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "快速核查仍有缺口或条件待确认，进入深入调查"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 5591,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 2,
+            "status": 200,
+            "elapsed_ms": 2773
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 2,
+            "usage": {
+              "prompt_tokens": 6278,
+              "completion_tokens": 375,
+              "total_tokens": 6653
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_official_page",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2",
+              "url": "https://www.python-httpx.org/http2/"
+            },
+            "calls": 3
+          }
+        },
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "read_official_page",
+            "message": "冻结资料中未保存该官方页面；禁止联网读取"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_source",
+            "arguments": {
+              "source_id": "S1",
+              "offset": 0,
+              "query": "http2"
+            },
+            "calls": 4
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 8408,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 3,
+            "status": 200,
+            "elapsed_ms": 2508
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 3,
+            "usage": {
+              "prompt_tokens": 11239,
+              "completion_tokens": 469,
+              "total_tokens": 11708
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_source",
+            "arguments": {
+              "source_id": "S1",
+              "offset": 4100,
+              "query": ""
+            },
+            "calls": 5
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "read_documentation",
+            "arguments": {
+              "repository": "fixture/httpx-default-http2"
+            },
+            "calls": 6
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S2",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/http2.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/http2.md",
+            "text": "# HTTP/2\n\nHTTP/2 is a major new iteration of the HTTP protocol, that provides a far more\nefficient transport, with potential performance benefits. HTTP/2 does not change\nthe core semantics of the request or response, but alters the way that data is\nsent to and from the server.\n\nRather than the text format that HTTP/1.1 uses, HTTP/2 is a binary format.\nThe binary format provides full request and response multiplexing, and efficient\ncompression of HTTP headers. The stream multiplexing means that where HTTP/1.1\nrequires one TCP stream for each concurrent request, HTTP/2 allows a single TCP\nstream to handle multiple concurrent requests.\n\nHTTP/2 also provides support for functionality such as response prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support on the client does not *necessarily* mean that your\nrequests and responses will be transported over HTTP/2, since both the client\n*and* the server need to support HTTP/2. If you connect to a server that only\nsupports HTTP/1.1 the client will use a standard HTTP/1.1 connection instead.\n\nYou can determine which version of the HTTP protocol was used by examining\nthe `.http_version` property on the response.\n\n```python\nclient = httpx.AsyncClient(http2=True)\nresponse = await client.get(...)\nprint(response.http_version)  # \"HTTP/1.0\", \"HTTP/1.1\", or \"HTTP/2\".\n```\n",
+            "fetched_at": "2026-10-28T09:32:42.516607+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "51010101b5aff566dcdfdf94cb5e0ef644caf5411b84749753a9da79d28caaf7"
+          }
+        },
+        {
+          "kind": "source",
+          "payload": {
+            "id": "S3",
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "title": "docs/async.md",
+            "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/docs/async.md",
+            "text": "# Async Support\n\nHTTPX offers a standard synchronous API by default, but also gives you\nthe option of an async client if you need it.\n\nAsync is a concurrency model that is far more efficient than multi-threading,\nand can provide significant performance benefits and enable the use of\nlong-lived network connections such as WebSockets.\n\nIf you're working with an async web framework then you'll also want to use an\nasync client for sending outgoing HTTP requests.\n\n## Making Async requests\n\nTo make asynchronous requests, you'll need an `AsyncClient`.\n\n```pycon\n>>> async with httpx.AsyncClient() as client:\n...     r = await client.get('https://www.example.com/')\n...\n>>> r\n<Response [200 OK]>\n```\n\n!!! tip\n    Use [IPython](https://ipython.readthedocs.io/en/stable/) or Python 3.9+ with `python -m asyncio` to try this code interactively, as they support executing `async`/`await` expressions in the console.\n\n## API Differences\n\nIf you're using an async client then there are a few bits of API that\nuse async methods.\n\n### Making requests\n\nThe request methods are all async, so you should use `response = await client.get(...)` style for all of the following:\n\n* `AsyncClient.get(url, ...)`\n* `AsyncClient.options(url, ...)`\n* `AsyncClient.head(url, ...)`\n* `AsyncClient.post(url, ...)`\n* `AsyncClient.put(url, ...)`\n* `AsyncClient.patch(url, ...)`\n* `AsyncClient.delete(url, ...)`\n* `AsyncClient.request(method, url, ...)`\n* `AsyncClient.send(request, ...)`\n\n### Opening and closing clients\n\nUse `async with httpx.AsyncClient()` if you want a context-managed client...\n\n```python\nasync with httpx.AsyncClient() as client:\n    ...\n```\n\n!!! warning\n    In order to get the most benefit from connection pooling, make sure you're not instantiating multiple client instances - for example by using `async with` inside a \"hot loop\". This can be achieved either by having a single scoped client that's passed throughout wherever it's needed, or by having a single global client instance.\n\nAlternatively, use `await client.aclose()` if you want to close a client explicitly:\n\n```python\nclient = httpx.AsyncClient()\n...\nawait client.aclose()\n```\n\n### Streaming responses\n\nThe `AsyncClient.stream(method, url, ...)` method is an async context block.\n\n```pycon\n>>> client = httpx.AsyncClient()\n>>> async with client.stream('GET', 'https://www.example.com/') as response:\n...     async for chunk in response.aiter_bytes():\n...         ...\n```\n\nThe async response streaming methods are:\n\n* `Response.aread()` - For conditionally reading a response inside a stream block.\n* `Response.aiter_bytes()` - For streaming the response content as bytes.\n* `Response.aiter_text()` - For streaming the response content as text.\n* `Response.aiter_lines()` - For streaming the response content as lines of text.\n* `Response.aiter_raw()` - For streaming the raw response bytes, without applying content decoding.\n* `Response.aclose()` - For closing the response. You don't usually need this, since `.stream` block closes the response automatically on exit.\n\nFor situations when context block usage is not practical, it is possible to enter \"manual mode\" by sending a [`Request` instance](advanced/clients.md#request-instances) using `client.send(..., stream=True)`.\n\nExample in the context of forwarding the response to a streaming web endpoint with [Starlette](https://www.starlette.io):\n\n```python\nimport httpx\nfrom starlette.background import BackgroundTask\nfrom starlette.responses import StreamingResponse\n\nclient = httpx.AsyncClient()\n\nasync def home(request):\n    req = client.build_request(\"GET\", \"https://www.example.com/\")\n    r = await client.send(req, stream=True)\n    return StreamingResponse(r.aiter_text(), background=BackgroundTask(r.aclose))\n```\n\n!!! warning\n    When using this \"manual streaming mode\", it is your duty as a developer to make sure that `Response.aclose()` is called eventually. Failing to do so would leave connections open, most likely resulting in resource leaks down the line.\n\n### Streaming requests\n\nWhen sending a streaming request body with an `AsyncClient` instance, you should use an async bytes generator instead of a bytes generator:\n\n```python\nasync def upload_bytes():\n    ...  # yield byte content\n\nawait client.post(url, content=upload_bytes())\n```\n\n### Explicit transport instances\n\nWhen instantiating a transport instance directly, you need to use `httpx.AsyncHTTPTransport`.\n\nFor instance:\n\n```pycon\n>>> import httpx\n>>> transport = httpx.AsyncHTTPTransport(retries=1)\n>>> async with httpx.AsyncClient(transport=transport) as client:\n>>>     ...\n```\n\n## Supported async environments\n\nHTTPX supports either `asyncio` or `trio` as an async environment.\n\nIt will auto-detect which of those two to use as the backend\nfor socket operations and concurrency primitives.\n\n### [AsyncIO](https://docs.python.org/3/library/asyncio.html)\n\nAsyncIO is Python's [built-in library](https://docs.python.org/3/library/asyncio.html)\nfor writing concurrent code with the async/await syntax.\n\n```python\nimport asyncio\nimport httpx\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nasyncio.run(main())\n```\n\n### [Trio](https://github.com/python-trio/trio)\n\nTrio is [an alternative async library](https://trio.readthedocs.io/en/stable/),\ndesigned around the [the principles of structured concurrency](https://en.wikipedia.org/wiki/Structured_concurrency).\n\n```python\nimport httpx\nimport trio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\ntrio.run(main)\n```\n\n!!! important\n    The `trio` package must be installed to use the Trio backend.\n\n\n### [AnyIO](https://github.com/agronholm/anyio)\n\nAnyIO is an [asynchronous networking and concurrency library](https://anyio.readthedocs.io/) that works on top of either `asyncio` or `trio`. It blends in with native libraries of your chosen backend (defaults to `asyncio`).\n\n```python\nimport httpx\nimport anyio\n\nasync def main():\n    async with httpx.AsyncClient() as client:\n        response = await client.get('https://www.example.com/')\n        print(response)\n\nanyio.run(main, backend='trio')\n```\n\n## Calling into Python Web Apps\n\nFor details on calling directly into ASGI applications, see [the `ASGITransport` docs](../advanced/transports#asgitransport).",
+            "fetched_at": "2026-10-28T09:32:42.516629+00:00",
+            "ref": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+            "sha": null,
+            "demo": false,
+            "truncated": false,
+            "metadata": {
+              "synthetic": false
+            },
+            "hash": "b0722b05e5b8aad6b2518fda345907092a5d4f11c337d50242f7a0a03e739e5b"
+          }
+        },
+        {
+          "kind": "collection",
+          "payload": {
+            "repository": "fixture/httpx-default-http2",
+            "kind": "documentation",
+            "status": "collected",
+            "source_ids": [
+              "S2",
+              "S3"
+            ],
+            "error": null
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 11949,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 4,
+            "status": 200,
+            "elapsed_ms": 3118
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 4,
+            "usage": {
+              "prompt_tokens": 17225,
+              "completion_tokens": 699,
+              "total_tokens": 17924
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S2",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S2:700:1400"
+            },
+            "calls": 7
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E2",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "ponse prioritization,\nand server push.\n\nFor a comprehensive guide to HTTP/2 you may want to check out \"[http2 explained](https://http2-explained.haxx.se/)\".\n\n## Enabling HTTP/2\n\nWhen using the `httpx` client, HTTP/2 support is not enabled by default, because\nHTTP/1.1 is a mature, battle-hardened transport layer, and our HTTP/1.1\nimplementation may be considered the more robust option at this point in time.\nIt is possible that a future version of `httpx` may enable HTTP/2 support by default.\n\nIf you're issuing highly concurrent requests you might want to consider\ntrying out our HTTP/2 support. You can do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip in",
+            "start": 700,
+            "end": 1400,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S2",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S2:1306:2006"
+            },
+            "calls": 8
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E3",
+            "source_id": "S2",
+            "requirement_id": "R1",
+            "quote": "n do so by first making sure to install\nthe optional HTTP/2 dependencies...\n\n```shell\n$ pip install httpx[http2]\n```\n\nAnd then instantiating a client with HTTP/2 support enabled:\n\n```python\nclient = httpx.AsyncClient(http2=True)\n...\n```\n\nYou can also instantiate a client as a context manager, to ensure that all\nHTTP connections are nicely scoped, and will be closed once the context block\nis exited.\n\n```python\nasync with httpx.AsyncClient(http2=True) as client:\n    ...\n```\n\nHTTP/2 support is available on both `Client` and `AsyncClient`, although it's\ntypically more useful in async contexts if you're issuing lots of concurrent\nrequests.\n\n## Inspecting the HTTP version\n\nEnabling HTTP/2 support ",
+            "start": 1306,
+            "end": 2006,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "save_evidence",
+            "arguments": {
+              "source_id": "S1",
+              "requirement_id": "R1",
+              "quote": "",
+              "span_id": "S1:4100:4800"
+            },
+            "calls": 9
+          }
+        },
+        {
+          "kind": "evidence",
+          "payload": {
+            "id": "E4",
+            "source_id": "S1",
+            "requirement_id": "R1",
+            "quote": "TTP/2 support. *(Optional, with `httpx[http2]`)*\n* `socksio` - SOCKS proxy support. *(Optional, with `httpx[socks]`)*\n* `rich` - Rich terminal support. *(Optional, with `httpx[cli]`)*\n* `click` - Command line client support. *(Optional, with `httpx[cli]`)*\n* `brotli` or `brotlicffi` - Decoding for \"brotli\" compressed responses. *(Optional, with `httpx[brotli]`)*\n* `zstandard` - Decoding for \"zstd\" compressed responses. *(Optional, with `httpx[zstd]`)*\n\nA huge amount of credit is due to `requests` for the API layout that\nmuch of this work follows, as well as to `urllib3` for plenty of design\ninspiration around the lower-level networking details.\n\n---\n\n<p align=\"center\"><i>HTTPX is <a href=\"ht",
+            "start": 4100,
+            "end": 4800,
+            "selection": "span"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 15825,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 5,
+            "status": 200,
+            "elapsed_ms": 4454
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 5,
+            "usage": {
+              "prompt_tokens": 24326,
+              "completion_tokens": 1264,
+              "total_tokens": 25590
+            }
+          }
+        },
+        {
+          "kind": "tool_error",
+          "payload": {
+            "tool": "submit_report",
+            "message": "重复判断"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "调查资料",
+            "phase": "research",
+            "context_chars": 13246,
+            "reason": "research"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 6,
+            "status": 200,
+            "elapsed_ms": 3804
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 6,
+            "usage": {
+              "prompt_tokens": 30649,
+              "completion_tokens": 1558,
+              "total_tokens": 32207
+            }
+          }
+        },
+        {
+          "kind": "action",
+          "payload": {
+            "tool": "review_evidence",
+            "arguments": {
+              "assessments": [
+                {
+                  "repository": "fixture/httpx-default-http2",
+                  "requirement_id": "R1",
+                  "status": "unsupported",
+                  "explanation": "官方文档 docs/http2.md 明确说明在使用 httpx 客户端时 HTTP/2 支持默认未启用（not enabled by default），需要安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端才能开启。因此「默认开启、无需额外配置」不成立。",
+                  "evidence_ids": [
+                    "E2",
+                    "E3",
+                    "E4"
+                  ],
+                  "evidence_basis": "explicit_statement",
+                  "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                  "conditions": "需 pip install httpx[http2] 且 Client/AsyncClient(http2=True)"
+                }
+              ],
+              "summary": "docs/http2.md 明确：HTTP/2 默认未启用，需安装 httpx[http2] 并以 http2=True 创建客户端；README 亦标注 HTTP/2 支持为可选依赖。故 R1（默认开启、无需额外配置）判定为 unsupported。"
+            },
+            "calls": 10
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 2 次证据检查：0 个缺口",
+            "index": 2,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unsupported",
+                "explanation": "官方文档 docs/http2.md 明确说明在使用 httpx 客户端时 HTTP/2 支持默认未启用（not enabled by default），需要安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端才能开启。因此「默认开启、无需额外配置」不成立。",
+                "evidence_ids": [
+                  "E2",
+                  "E3",
+                  "E4"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": "需 pip install httpx[http2] 且 Client/AsyncClient(http2=True)"
+              }
+            ],
+            "gaps": [],
+            "summary": "docs/http2.md 明确：HTTP/2 默认未启用，需安装 httpx[http2] 并以 http2=True 创建客户端；README 亦标注 HTTP/2 支持为可选依赖。故 R1（默认开启、无需额外配置）判定为 unsupported。"
+          }
+        },
+        {
+          "kind": "phase",
+          "payload": {
+            "message": "整理最终报告",
+            "phase": "finalize",
+            "context_chars": 13294,
+            "reason": "evidence_ready"
+          }
+        },
+        {
+          "kind": "model_request",
+          "payload": {
+            "attempt": 7,
+            "status": 200,
+            "elapsed_ms": 3968
+          }
+        },
+        {
+          "kind": "model_usage",
+          "payload": {
+            "call": 7,
+            "usage": {
+              "prompt_tokens": 35764,
+              "completion_tokens": 1956,
+              "total_tokens": 37720
+            }
+          }
+        },
+        {
+          "kind": "review",
+          "payload": {
+            "message": "第 3 次证据检查：0 个缺口",
+            "index": 3,
+            "assessments": [
+              {
+                "repository": "fixture/httpx-default-http2",
+                "requirement_id": "R1",
+                "status": "unsupported",
+                "explanation": "docs/http2.md 明确说明 HTTP/2 支持默认未启用（not enabled by default），需先安装可选依赖 httpx[http2]，再以 Client/AsyncClient(http2=True) 实例化客户端才能启用；README 也把 HTTP/2 支持标注为可选依赖 httpx[http2]。因此「默认开启、无需额外配置」不成立。",
+                "evidence_ids": [
+                  "E2",
+                  "E3",
+                  "E4"
+                ],
+                "evidence_basis": "explicit_statement",
+                "applicable_version": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+                "conditions": "需 pip install httpx[http2] 且以 http2=True 创建 Client/AsyncClient；文档提及未来版本可能默认启用，当前不适用"
+              }
+            ],
+            "gaps": [],
+            "summary": "候选仓库 fixture/httpx-default-http2 的官方文档明确否定 R1：docs/http2.md 指出 httpx 客户端默认不启用 HTTP/2（not enabled by default），需安装可选依赖 httpx[http2] 并通过 http2=True 实例化客户端；README 的依赖清单中 HTTP/2 支持同样标注为 httpx[http2] 可选依赖。故「HTTP/2 默认开启、无需额外配置」判定为 unsupported（explicit_statement）。文档提到未来版本可能将 HTTP/2 设为默认，属于版本限制说明，不代表当前能力。无遗留缺口或冲突。"
+          }
+        },
+        {
+          "kind": "submitted",
+          "payload": {
+            "message": "最终矩阵通过结构校验，报告已提交"
+          }
+        }
+      ]
+    }
+  ],
+  "model": "deepseek-flash"
+}

@@ -61,6 +61,8 @@ def create(request: TaskRequest):
             raise HTTPException(422, str(error))
         if not configured:
             raise HTTPException(422,'未配置 DeepSeek，先使用演示或 GitHub 采集模式')
+    elif request.engine != 'legacy':
+        raise HTTPException(422, 'LangGraph 执行器仅用于 DeepSeek 调查模式')
     ident = store.create(request.model_dump())
     pool.submit(run,ident,request)
     return {'id':ident}
@@ -78,6 +80,10 @@ def task(ident: str):
         raise HTTPException(404,'任务不存在')
     saved = store.load_checkpoint(ident)
     item['resumable'] = item['status'] in ('partial', 'failed', 'interrupted', 'cancelled') and bool(saved)
+    item['graph_recoverable'] = False
+    if item['status'] == 'interrupted' and item['request'].get('engine') == 'langgraph':
+        from .graph_engine import recovery_status
+        item['graph_recoverable'], item['graph_recovery_reason'] = recovery_status(ident)
     if item['resumable'] and not item['result']:
         from .tools import Runtime
         from .checkpoint import restore
@@ -86,6 +92,21 @@ def task(ident: str):
         restore(runtime, saved)
         item['result'] = fallback(runtime, 'interrupted_checkpoint')
     return item
+
+
+@app.post('/api/tasks/{ident}/recover')
+def recover_graph(ident: str):
+    original = task(ident)
+    if not original['graph_recoverable']:
+        raise HTTPException(409, original.get('graph_recovery_reason', '仅可恢复中断的图任务'))
+    request = TaskRequest.model_validate(original['request'])
+    if not settings().key:
+        raise HTTPException(422, '恢复需要配置模型密钥')
+    if not store.queue_recovery(ident):
+        raise HTTPException(409, '任务已被其他恢复请求领取')
+    store.event(ident, 'graph_recovery', {'message': '恢复原图任务，沿用累计预算；未确认节点不自动重放'})
+    pool.submit(run, ident, request, None, True)
+    return {'id': ident}
 
 
 @app.post('/api/tasks/{ident}/resume', status_code=201)

@@ -75,6 +75,12 @@ def claim(ident):
         return con.execute("UPDATE tasks SET status='running' WHERE id=? AND status='queued'", (ident,)).rowcount == 1
 
 
+def queue_recovery(ident):
+    with connect() as con:
+        return con.execute("UPDATE tasks SET status='queued', error=NULL WHERE id=? AND status='interrupted'",
+                           (ident,)).rowcount == 1
+
+
 def finish(ident, status, result=None, error=None):
     with connect() as con:
         return con.execute("UPDATE tasks SET status=?,result=?,error=? WHERE id=? AND status='running'", (status, json.dumps(result, ensure_ascii=False) if result else None, error, ident)).rowcount == 1

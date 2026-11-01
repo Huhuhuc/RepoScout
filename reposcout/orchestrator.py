@@ -39,6 +39,10 @@ unsupported 要求原文明确否定且 evidence_basis=explicit_statement。功�
 phase=finalize 时停止采集，使用现有资料提交最终报告，保留未知和冲突。'''
 
 
+QUICK_INSTRUCTION = 'README 已由程序读取。只调用 assess_readme 完整提交逐项判断与原文；缺少依据保持 unknown，程序将自动升级调查。保留配置条件。'
+FOLLOWUP_INSTRUCTION = '使用已有矩阵和证据补查，不要重复读取 README。'
+
+
 def tool_definitions(names=None):
     return [{'type': 'function', 'function': {'name': name, 'description': desc,
              'parameters': model.model_json_schema()}} for name,(model,desc) in DEFINITIONS.items()
@@ -95,7 +99,7 @@ def investigate(runtime, service=None):
             state = snapshot(runtime, phase, runtime.stop_reason, previous)
             state['budget']['model_requests_remaining'] = 12-service.attempts
             if quick:
-                state['instruction'] = 'README 已由程序读取。只调用 assess_readme 完整提交逐项判断与原文；缺少依据保持 unknown，程序将自动升级调查。保留配置条件。'
+                state['instruction'] = QUICK_INSTRUCTION
             messages = [{'role':'system', 'content': SYSTEM},
                         {'role':'user', 'content': json.dumps(state, ensure_ascii=False)}]
             chars = sum(len(m['content']) for m in messages)
@@ -125,7 +129,7 @@ def investigate(runtime, service=None):
                         quick = False
                         proposal = assess(runtime, args)
                         if proposal is None:
-                            output = {'instruction': '使用已有矩阵和证据补查，不要重复读取 README。'}
+                            output = {'instruction': FOLLOWUP_INSTRUCTION}
                             previous.append({'tool': name, 'result': output})
                             runtime.checkpoint()
                             break

@@ -104,17 +104,24 @@ def github_agent(runtime):
 
 
 def deepseek_agent(runtime, service=None):
+    if runtime.request.engine == 'langgraph':
+        from .graph_engine import investigate
+        from uuid import uuid4
+        return investigate(runtime, service, ident=getattr(runtime, 'task_id', uuid4().hex),
+                           recover=getattr(runtime, 'graph_recover', False))
     from .orchestrator import investigate
     return investigate(runtime, service)
 
 
-def run(ident, request, restored=None):
+def run(ident, request, restored=None, graph_recover=False):
     if not store.claim(ident):
         return
     def check():
         if store.get(ident)['status'] != 'running':
             raise Cancelled()
     runtime = Runtime(request, check, lambda kind,payload: store.event(ident,kind,payload))
+    runtime.task_id = ident
+    runtime.graph_recover = graph_recover
     from .checkpoint import dump, restore
     if restored:
         restore(runtime, restored)

@@ -18,6 +18,7 @@ class TaskRequest(BaseModel):
     max_followups: int = Field(default=2, ge=0, le=2)
     verify_claims: bool = False
     strategy: Literal['deep', 'auto'] = 'deep'
+    engine: Literal['legacy', 'langgraph'] = 'legacy'
 
 
 class EvidenceArgs(BaseModel):
